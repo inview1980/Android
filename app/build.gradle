@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+    defaultConfig {
+        applicationId "my_manage.password_box"
+        minSdkVersion 28
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled  true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //添加如下配置 开启annotation processor
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    def listSubFile = {
+        def resFolder = 'src/main/res/layouts'
+        def files = file(resFolder).listFiles()
+        def folders = []
+        files.each {
+            item1 -> folders.add(item1.absolutePath)
+        }
+        folders.add(file(resFolder).parentFile.absolutePath)
+
+        return folders
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = listSubFile()
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'org.projectlombok:lombok:1.16.8'
+    //添加lombok依赖
+    //    implementation 'org.glassfish:javax.annotation:10.0-b28' //java注解
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+    // https://mvnrepository.com/artifact/org.jasypt/jasypt加密包
+    implementation 'org.jasypt:jasypt:1.9.3'
+    implementation 'org.jetbrains:annotations:15.0'
+    implementation 'com.alibaba:fastjson:1.1.55.android'
+    //本地消息
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
+    // https://mvnrepository.com/artifact/com.githang/android-lite-orm数据库操作
+    implementation group: 'com.githang', name: 'android-lite-orm', version: '1.10.0-beta'
+
+//    implementation 'com.android.support:multidex:1.0.3'
+    implementation files('poi-3.12-android-a.jar')
+    implementation files('poi-ooxml-schemas-3.12-20150511-a.jar')
+
+    //第三方对话框
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
+
+}

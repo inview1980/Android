@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rental_house_tableLayoutId"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayWhite"
+    android:orientation="vertical">
+
+    <TableRow>
+
+        <TextView
+            android:id="@+id/rental_house_communityName_lable"
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_communityName_cn"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/rental_house_communityName_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_houseNumber_cn" />
+
+        <TextView
+            android:id="@+id/rental_house_houseNumber_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_area_cn" />
+
+        <TextView
+            android:id="@+id/rental_house_area_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_man_cn" />
+
+        <TextView
+            android:id="@+id/rental_house_man_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_isContainRealty_cn" />
+
+        <TextView android:id="@+id/rental_house_isContainRealty_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_house_price" />
+
+        <TextView
+            android:id="@+id/rental_house_propertyPrice_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_monthlyRent_cn" />
+
+        <TextView
+            android:id="@+id/rental_house_monthlyRent_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_realtyMoney_cn" />
+
+        <TextView
+            android:id="@+id/rental_house_realtyMoney_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_endDate_cn" />
+
+        <TextView
+            android:id="@+id/rental_house_endDate_txt"
+            style="@style/rental_textView_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </TableRow>
+</TableLayout>

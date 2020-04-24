@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/rental_main_gridview_margin"
+    android:background="@color/grayWhite">
+
+    <TextView
+        android:id="@+id/rental_main_CommunityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="jjjkdj"
+        android:textColor="@color/rentalMainGridViewTitleColor"
+        android:textSize="@dimen/rental_main_gridview_title_fontsize"
+        android:textStyle="bold" />
+
+    <TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rental_roomCount_cn"
+                android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
+        </TableRow>
+
+        <TextView
+            android:id="@+id/rental_main_item_roomTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_roomCount_cn"
+            android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_areaTotal_cn"
+            android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
+
+        <TextView
+            android:id="@+id/rental_main_item_areaTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_areaTotal_cn"
+            android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
+    </TableRow>
+
+</TableLayout>

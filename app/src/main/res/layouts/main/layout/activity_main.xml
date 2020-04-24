@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:context=".MainActivity">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/main_topTxt"
+            style="@style/main_TxtStyle"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="1dp"
+            android:text="" />
+
+        <ImageButton
+            android:id="@+id/main_pwdBtn"
+            style="@style/mainBtnStyle"
+            android:layout_below="@id/main_topTxt"
+            android:background="@mipmap/cabinet" />
+
+        <TextView
+            style="@style/main_TxtStyle"
+            android:layout_alignTop="@+id/main_pwdBtn"
+            android:text="@string/pwdManage_cn" />
+
+        <ImageButton
+            android:id="@+id/main_timeBtn"
+            style="@style/mainBtnStyle"
+            android:layout_below="@+id/main_pwdBtn"
+            android:background="@mipmap/timepic" />
+
+        <TextView
+            style="@style/main_TxtStyle"
+            android:layout_alignTop="@id/main_timeBtn"
+            android:text="@string/timeManage_cn" />
+    </RelativeLayout>
+</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

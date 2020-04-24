@@ -1,0 +1,8 @@
+@startuml
+class RoomDes<<房屋资料>>{
+- int primary_id
+    -String compoundName
+    -String roomNumber
+    -int roomArea
+}
+@enduml

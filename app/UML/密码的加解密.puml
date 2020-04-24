@@ -1,0 +1,34 @@
+@startuml
+title 密码的加解密
+skinparam packageStyle rect/' 加入这行代码，样式纯矩形'/
+namespace 加密 #green{
+class User<<加密前>>{
+- String salt
+    - String userName
+    - String password
+}
+class UserEFS<<加密后>>{
+- String salt
+    - String userName
+    - String password
+}
+User->UserEFS :salt=通过给定盐将随机salt加密
+User->UserEFS :userName=用密码salt将userName加密
+User->UserEFS :password=用密码userName将password加密
+}
+
+package 解密 #gray{
+note "读文件" as NFile
+class UserEnd<<解密后>>{
+    - String salt
+    - String userName
+    - String password
+}
+
+NFile->UserEnd:userName将第二行用salt解密
+NFile->UserEnd:password将第三行用userName解密
+NFile->UserEnd:salt将第一行用盐解密
+
+}
+加密..解密
+@enduml

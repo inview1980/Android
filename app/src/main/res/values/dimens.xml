@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pwdHeight">100dp</dimen>
+    <dimen name="pwdItemWidth">100dp</dimen>
+    <dimen name="pwdItemHeight">40dp</dimen>
+    
+    <dimen name="rental_main_gridview_title_fontsize">25sp</dimen>
+    <dimen name="rental_main_gridview_nomal_fontsize">18sp</dimen>
+    <dimen name="rental_main_gridview_margin">6dp</dimen>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/pwdItemHeight"
+    android:layout_marginTop="@dimen/pwdHeight"
+    android:layout_marginEnd="@dimen/pwdItemHeight"
+    android:columnCount="3"
+    android:orientation="vertical"
+    tools:context=".page.dialog.Login_Activity"
+    tools:ignore="ExtraText">
+
+    <EditText
+        android:id="@+id/dialog_loginPwd"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal"
+        android:hint="@string/input_password_cn"
+        android:inputType="textPassword" />
+
+    <Button
+        android:layout_row="1"
+        android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:layout_gravity="center_horizontal"
+        android:onClick="cancel_OnClick"
+        android:text="@string/cancel_cn" />
+
+    <Button
+        android:layout_row="1"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="center_horizontal"
+        android:onClick="okBtn_onClick"
+        android:text="@string/ok_cn" />
+
+    <Button
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnWeight="1"
+        android:layout_gravity="center_horizontal"
+        android:onClick="resetPasswordBtn_onClick"
+        android:text="@string/reset_password_cn" />
+</GridLayout>

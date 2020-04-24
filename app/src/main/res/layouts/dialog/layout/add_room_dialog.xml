@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:columnCount="2"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:text="@string/rental_communityName_cn" />
+
+    <AutoCompleteTextView
+        android:id="@+id/rental_addRoom_communityName"
+        style="@style/rental_add_edit"
+        android:completionThreshold="0" />
+
+
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:text="@string/rental_houseNumber_cn" />
+
+    <EditText
+        android:id="@+id/rental_addRoom_houseNumber"
+        style="@style/rental_add_edit"
+        android:gravity="center_vertical" />
+
+
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:text="@string/rental_area_cn" />
+
+    <EditText
+        android:id="@+id/rental_addRoom_area"
+        style="@style/rental_add_edit" />
+
+
+
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:text="@string/rental_meterNumber_cn" />
+
+    <EditText
+        android:id="@+id/rental_addRoom_meterNumber"
+        style="@style/rental_add_edit" />
+
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:text="@string/rental_propertyPrice_cn" />
+
+    <EditText
+        android:id="@+id/rental_addRoom_propertyPrice"
+        style="@style/rental_add_edit" />
+
+    <LinearLayout
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_gravity="right"
+        android:layout_marginEnd="50dp">
+
+        <Button
+            android:id="@+id/rental_addRoom_OkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok_cn"
+            android:textSize="@dimen/rental_lable_textSize" />
+
+
+    </LinearLayout>
+</GridLayout>

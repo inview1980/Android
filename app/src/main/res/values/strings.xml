@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">我的管理</string>
+    <string name="passwordDBFileName">pwdDB.dat</string>
+    <string name="rentalFileName">rental.db</string>
+    <string name="defaultPassword">123456</string>
+
+    <string name="pwdManage_cn">密码管理</string>
+    <string name="timeManage_cn">房租管理</string>
+    <string name="name_main_cn">名&#8194;&#8194;称:</string>
+    <string name="address_main_cn">地址:</string>
+    <string name="userName_cn">用户名:</string>
+    <string name="password_cn">密码:</string>
+    <string name="remark_main_cn">备&#8194;&#8194;注:</string>
+    <string name="ok_cn">确定</string>
+    <string name="cancel_cn">取消</string>
+    <string name="addUser_cn">新增用户</string>
+
+</resources>

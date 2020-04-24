@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="old_password_cn">请输入原密码</string>
+    <string name="new_password_cn">请输入新密码</string>
+    <string name="new_password_double_cn">请再输入一遍新密码</string>
+    <string name="check_finger_lock_cn">请验证指纹解锁</string>
+    <string name="input_password_cn">请输入密码</string>
+    <string name="reset_password_cn">重置密码</string>
+    <string name="name_cn">名称:</string>
+    <string name="rental_areaTotal_cn">面积共计:</string>
+    <string name="rental_roomCount_cn">房间数量:</string>
+    <string name="rental_houseNumber_cn">门牌号:</string>
+    <string name="rental_area_cn">面&#8194;&#8194;积:</string>
+    <string name="rental_monthlyRent_cn">月租金:</string>
+    <string name="rental_isContainRealty_cn">含物业:</string>
+    <string name="rental_man_cn">住&#8194;&#8194;户:</string>
+    <string name="rental_realtyMoney_cn">物业费:</string>
+    <string name="rental_endDate_cn">到期日:</string>
+    <string name="rental_communityName_cn">小&#8194;&#8194;区:</string>
+    <string name="rental_house_price">单&#8194;&#8194;价:</string>
+    <string name="rental_meterNumber_cn">电表号:</string>
+    <string name="rental_propertyPrice_cn">物业费单价:</string>
+    <string name="new_cn">新增</string>
+    <string name="tel">联系人电话:</string>
+    <string name="rental_manCardNumber_cn">联系人证件:</string>
+    <string name="rental_propertyBeginDate">物业费开始时间:</string>
+    <string name="endDate">到期时间:</string>
+    <string name="rental_editRoom_rentalBeginDate_cn">房租开始时间:</string>
+    <string name="modify_cn">修改</string>
+    <string name="rental_change_rentmoney_cn"><b>更改月租金</b></string>
+    <string name="rental_change_rentmoney_det_cn">调整租金为:</string>
+    <string name="rental_change_now_rentmoney_cn">现租金为:</string>
+</resources>

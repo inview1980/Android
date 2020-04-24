@@ -1,0 +1,26 @@
+@startuml
+title 用户资料库的加密
+
+class UserItem<<加密前>> #yellow{
+    - String itemName
+    - String address
+    - String userName
+    - String password
+    - String remark
+    +boolean equals()
+    +int hashCode()
+  }
+
+  class UserItemEnd<<加密后>> #DodgerBlue{
+      - String itemName
+      - String address
+      - String userName
+      - String password
+      - String remark
+      +boolean equals()
+      +int hashCode()
+    }
+
+UserItem->UserItemEnd:userName=用指定的密码将userName加密
+UserItem->UserItemEnd:password=用指定的密码将password加密
+@enduml

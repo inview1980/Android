@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/rental_main_gridview_margin"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/rental_communityName_cn" />
+
+        <AutoCompleteTextView
+            android:id="@+id/rental_editRoom_community"
+            style="@style/rental_add_edit"
+            android:layout_columnWeight="1"
+            android:completionThreshold="0"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/rental_houseNumber_cn" />
+
+        <EditText
+            android:id="@+id/rental_editRoom_roomNumber"
+            style="@style/rental_add_edit"
+            android:layout_columnWeight="1"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/rental_monthlyRent_cn" />
+
+        <EditText
+            android:id="@+id/rental_editRoom_realtyMoney"
+            style="@style/rental_add_edit"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/rental_propertyPrice_cn" />
+
+        <EditText
+            android:id="@+id/rental_editRoom_propertyPrice"
+            style="@style/rental_add_edit"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/rental_meterNumber_cn" />
+
+        <EditText
+            android:id="@+id/rental_editRoom_meterNumber"
+            style="@style/rental_add_edit"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/rental_area_cn" />
+
+        <EditText
+            android:id="@+id/rental_editRoom_area"
+            style="@style/rental_add_edit"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_gravity="center_vertical"
+            android:text="@string/rental_man_cn" />
+
+        <LinearLayout
+            android:layout_columnWeight="1"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/rental_editRoom_person"
+                style="@style/rental_add_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:minWidth="@dimen/pwdItemWidth" />
+
+            <Button
+                android:id="@+id/rental_editRoom_add"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/pwdItemHeight"
+                android:background="#00000000"
+                android:text="@string/new_cn" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/tel" />
+
+        <EditText
+            android:id="@+id/rental_editRoom_tel"
+            style="@style/rental_add_edit"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/rental_manCardNumber_cn" />
+
+        <EditText
+            android:id="@+id/rental_editRoom_manCardNumber"
+            style="@style/rental_add_edit"
+            android:enabled="false" />
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:layout_gravity="center_vertical"
+            android:text="@string/rental_isContainRealty_cn" />
+
+        <CheckBox
+            android:id="@+id/rental_editRoom_isContainRealty"
+            style="@style/rental_add_edit"
+            android:enabled="false" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2">
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:layout_height="wrap_content"
+                android:text="@string/rental_editRoom_rentalBeginDate_cn" />
+
+            <TextView
+                android:id="@+id/rental_editRoom_beginDate"
+                style="@style/rental_add_edit"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:minWidth="@dimen/pwdItemWidth" />
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:layout_height="wrap_content"
+                android:text="@string/endDate" />
+
+            <TextView
+                android:id="@+id/rental_editRoom_endDate"
+                style="@style/rental_add_edit"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:minWidth="@dimen/pwdItemWidth" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2">
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:layout_height="wrap_content"
+                android:text="@string/rental_propertyBeginDate" />
+
+            <TextView
+                android:id="@+id/rental_editRoom_propertyBeginDate"
+                style="@style/rental_add_edit"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:minWidth="@dimen/pwdItemWidth" />
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:layout_height="wrap_content"
+                android:text="@string/endDate" />
+
+            <TextView
+                android:id="@+id/rental_editRoom_propertyEndDate"
+                style="@style/rental_add_edit"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:minWidth="@dimen/pwdItemWidth" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_gravity="right"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modify_cn"
+                android:visibility="gone"
+                android:id="@+id/rental_editRoom_changeBtn" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/rental_main_gridview_margin"
+                android:layout_marginEnd="@dimen/rental_main_gridview_margin"
+                android:text="@string/ok_cn"
+                android:visibility="gone"
+                android:id="@+id/rental_editRoom_okBtn" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rental_editRoom_cancelBtn"
+                android:layout_marginEnd="@dimen/rental_main_gridview_margin"
+                android:text="@string/cancel_cn" />
+        </LinearLayout>
+    </GridLayout>
+</ScrollView>
