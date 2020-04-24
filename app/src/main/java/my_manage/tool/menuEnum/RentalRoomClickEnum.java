@@ -90,7 +90,7 @@ public enum RentalRoomClickEnum implements IActivityMenuForData<RentalForHouse> 
 
         }
     },
-    Edit(5, "修改") {
+    Edit(5, "查看详情") {
         @Override
         public void run(RentalForHouse activity, List data, int position) {
             Intent intent = new Intent(activity, NewRoom.class);

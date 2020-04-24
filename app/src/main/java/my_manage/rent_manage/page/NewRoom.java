@@ -226,7 +226,7 @@ public final class NewRoom extends AppCompatActivity implements View.OnClickList
             int myYear = myCalendar.get(Calendar.YEAR);
             int month = myCalendar.get(Calendar.MONTH);
             int day = myCalendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog dpd = new DatePickerDialog(this, DatePickerDialog.BUTTON_POSITIVE, (view1, year, monthOfYear, dayOfMonth) -> {
+            DatePickerDialog dpd = new DatePickerDialog(this, DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, monthOfYear, dayOfMonth) -> {
                 ((TextView) findViewById(view.getId())).setText(year + "-" + (1 + monthOfYear) + "-" + dayOfMonth);
                 isChange = true;
                 okBtn.setEnabled(true);
