@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/rental_main_gridview_margin"
@@ -22,7 +23,8 @@
             style="@style/rental_add_edit"
             android:layout_columnWeight="1"
             android:completionThreshold="0"
-            android:enabled="false" />
+            android:enabled="false"
+            android:labelFor="@id/rental_editRoom_community" />
 
         <TextView
             style="@style/rental_textView_Lable"
@@ -32,7 +34,10 @@
             android:id="@+id/rental_editRoom_roomNumber"
             style="@style/rental_add_edit"
             android:layout_columnWeight="1"
-            android:enabled="false" />
+            android:autofillHints="@string/rental_houseNumber_cn"
+            android:enabled="false"
+            android:labelFor="@+id/rental_editRoom_roomNumber"
+            android:tag="@string/rental_houseNumber_cn" />
 
         <TextView
             style="@style/rental_textView_Lable"
@@ -137,7 +142,7 @@
 
             <TextView
                 android:id="@+id/rental_editRoom_beginDate"
-                style="@style/rental_add_edit"
+                style="@style/rental_textView_Lable"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:minWidth="@dimen/pwdItemWidth" />
@@ -145,15 +150,25 @@
             <TextView
                 style="@style/rental_textView_Lable"
                 android:layout_height="wrap_content"
-                android:text="@string/endDate" />
+                android:text="租期（月）:" />
 
-            <TextView
-                android:id="@+id/rental_editRoom_endDate"
+            <EditText
+                android:id="@+id/rental_editRoom_rentalMonth"
                 style="@style/rental_add_edit"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:minWidth="@dimen/pwdItemWidth" />
         </LinearLayout>
+
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="交费时间:" />
+
+        <TextView
+            android:id="@+id/rental_editRoom_payDate"
+            style="@style/rental_add_edit"
+            android:enabled="false"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -167,7 +182,7 @@
 
             <TextView
                 android:id="@+id/rental_editRoom_propertyBeginDate"
-                style="@style/rental_add_edit"
+                style="@style/rental_textView_Lable"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:minWidth="@dimen/pwdItemWidth" />
@@ -175,16 +190,26 @@
             <TextView
                 style="@style/rental_textView_Lable"
                 android:layout_height="wrap_content"
-                android:text="@string/endDate" />
+                android:text="时长（月）:" />
 
-            <TextView
-                android:id="@+id/rental_editRoom_propertyEndDate"
+            <EditText
+                android:id="@+id/rental_editRoom_propertyMonth"
                 style="@style/rental_add_edit"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:minWidth="@dimen/pwdItemWidth" />
         </LinearLayout>
+        <TextView
+            style="@style/rental_textView_Lable"
+            android:text="@string/remark_main_cn" />
 
+        <EditText
+            android:id="@+id/rental_editRoom_remark"
+            android:layout_columnSpan="2"
+            android:layout_width="match_parent"
+            android:enabled="false"
+            android:minLines="2"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -204,6 +229,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/rental_main_gridview_margin"
                 android:layout_marginEnd="@dimen/rental_main_gridview_margin"
+                android:enabled="false"
                 android:text="@string/ok_cn"
                 android:visibility="gone" />
 
@@ -214,5 +240,7 @@
                 android:layout_marginEnd="@dimen/rental_main_gridview_margin"
                 android:text="@string/cancel_cn" />
         </LinearLayout>
+
+
     </GridLayout>
 </ScrollView>

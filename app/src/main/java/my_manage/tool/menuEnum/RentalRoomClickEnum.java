@@ -84,7 +84,13 @@ public enum RentalRoomClickEnum implements IActivityMenuForData<RentalForHouse> 
 
         }
     },
-    Edit(4, "修改") {
+    PayPropertyCosts(4,"支付物业费"){
+        @Override
+        public void run(RentalForHouse activity, List data, int position) {
+
+        }
+    },
+    Edit(5, "修改") {
         @Override
         public void run(RentalForHouse activity, List data, int position) {
             Intent intent = new Intent(activity, NewRoom.class);
@@ -95,7 +101,7 @@ public enum RentalRoomClickEnum implements IActivityMenuForData<RentalForHouse> 
             activity.startActivity(intent);
         }
     },
-    Del(5, "删除房源") {
+    Del(6, "删除房源") {
         @Override
         public void run(RentalForHouse activity, List data, int position) {
 

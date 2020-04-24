@@ -23,6 +23,12 @@ public final class RentalForHouse extends AppCompatActivity {
     private String title;
 
     @Override
+    protected void onResume() {
+        showList();
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_listview);
@@ -35,7 +41,6 @@ public final class RentalForHouse extends AppCompatActivity {
 
         listView = findViewById(R.id.main_ListViewId);
 
-        showList();
         //list中Item单击弹出菜单
         listView.setOnItemClickListener((adV, v, position, l) ->
                 EnumUtils.menuInit(this, RentalRoomClickEnum.Edit, v, sr, position));

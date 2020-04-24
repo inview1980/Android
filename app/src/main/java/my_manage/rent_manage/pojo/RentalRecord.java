@@ -5,6 +5,7 @@ import com.litesuits.orm.db.enums.AssignType;
 
 import java.util.Calendar;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,7 @@ import lombok.ToString;
 /**
  * 租房记录
  */
-@ToString
+@ToString@EqualsAndHashCode
 public final class RentalRecord {
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     @Setter
@@ -78,6 +79,9 @@ public final class RentalRecord {
     }
 
     public void setRealtyStartDate(Calendar date) {
+        if(date==null)
+            realtyStartDate=0;
+        else
         realtyStartDate = date.getTimeInMillis();
     }
 
@@ -90,7 +94,10 @@ public final class RentalRecord {
     }
 
     public void setStartDate(Calendar localDate) {
-        startDate = localDate.getTimeInMillis();
+        if(localDate==null)
+            startDate=0;
+        else
+            startDate = localDate.getTimeInMillis();
     }
 
     public Calendar getPaymentDate() {
@@ -99,7 +106,9 @@ public final class RentalRecord {
         return calendar;
     }
 
-    public void setPaymentDate(Calendar localDate) {
+    public void setPaymentDate(Calendar localDate) {if(localDate==null)
+        paymentDate=0;
+    else
         paymentDate = localDate.getTimeInMillis();
     }
 
