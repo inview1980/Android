@@ -1,4 +1,4 @@
-package my_manage.password_box.menuEnum;
+package my_manage.tool.menuEnum;
 
 import my_manage.password_box.iface.IActivityMenu;
 import my_manage.password_box.database.PasswordDB;

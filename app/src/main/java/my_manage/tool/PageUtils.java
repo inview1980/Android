@@ -58,6 +58,9 @@ public final class PageUtils {
         //startActivityForResult(intent, activity.PASSWORD_MANAGE_ITEM_DETAILS_ACTIVITY_CODE);
     }
 
+    /**
+     * 输入框失去焦点则关闭
+     */
     public static void closeInput(Activity activity,boolean b){
         if (!b) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);

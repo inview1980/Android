@@ -14,8 +14,8 @@ import java.util.List;
 
 import my_manage.adapter.RentalMainAdapter;
 import my_manage.password_box.R;
-import my_manage.password_box.menuEnum.RentalMainItemLongClickEnum;
-import my_manage.password_box.menuEnum.RentalMainOnOneClickEnum;
+import my_manage.tool.menuEnum.RentalMainItemLongClickEnum;
+import my_manage.tool.menuEnum.RentalMainOnOneClickEnum;
 import my_manage.tool.EnumUtils;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.database.RentDB;

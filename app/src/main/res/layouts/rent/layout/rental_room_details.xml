@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="@dimen/rental_main_gridview_margin"
-    android:layout_height="match_parent">
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <GridLayout
         android:layout_width="match_parent"
@@ -83,12 +85,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:clickable="false"
                 android:minWidth="@dimen/pwdItemWidth" />
 
             <Button
                 android:id="@+id/rental_editRoom_add"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/pwdItemHeight"
+                android:layout_height="wrap_content"
                 android:background="#00000000"
                 android:text="@string/new_cn" />
         </LinearLayout>
@@ -151,9 +154,12 @@
                 android:enabled="false"
                 android:minWidth="@dimen/pwdItemWidth" />
         </LinearLayout>
-        <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_columnSpan="2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2">
+
             <TextView
                 style="@style/rental_textView_Lable"
                 android:layout_height="wrap_content"
@@ -178,32 +184,33 @@
                 android:enabled="false"
                 android:minWidth="@dimen/pwdItemWidth" />
         </LinearLayout>
-        <LinearLayout android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
-            android:layout_gravity="right"
-            >
+            android:layout_gravity="right">
 
             <Button
+                android:id="@+id/rental_editRoom_changeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/modify_cn"
-                android:visibility="gone"
-                android:id="@+id/rental_editRoom_changeBtn" />
+                android:visibility="gone" />
 
             <Button
+                android:id="@+id/rental_editRoom_okBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/rental_main_gridview_margin"
                 android:layout_marginEnd="@dimen/rental_main_gridview_margin"
                 android:text="@string/ok_cn"
-                android:visibility="gone"
-                android:id="@+id/rental_editRoom_okBtn" />
+                android:visibility="gone" />
 
             <Button
+                android:id="@+id/rental_editRoom_cancelBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rental_editRoom_cancelBtn"
                 android:layout_marginEnd="@dimen/rental_main_gridview_margin"
                 android:text="@string/cancel_cn" />
         </LinearLayout>

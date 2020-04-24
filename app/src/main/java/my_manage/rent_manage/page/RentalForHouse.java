@@ -11,8 +11,8 @@ import java.util.List;
 
 import my_manage.adapter.RentalHouseAdapter;
 import my_manage.password_box.R;
-import my_manage.password_box.menuEnum.RentalRoomClickEnum;
-import my_manage.password_box.menuEnum.RentalRoomLongClickEnum;
+import my_manage.tool.menuEnum.RentalRoomClickEnum;
+import my_manage.tool.menuEnum.RentalRoomLongClickEnum;
 import my_manage.tool.EnumUtils;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;

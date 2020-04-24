@@ -1,4 +1,4 @@
-package my_manage.password_box.menuEnum;
+package my_manage.tool.menuEnum;
 
 import android.util.Log;
 

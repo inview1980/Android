@@ -362,6 +362,12 @@ public final class DbHelper {
         return false;
     }
 
+    public List<PersonDetails> getPersonList() {
+        List<PersonDetails> tmpLst=RentDB.getQueryAll(PersonDetails.class);
+        tmpLst.sort((n1, n2) -> Integer.compare(n2.getPrimary_id(), n1.getPrimary_id()));
+        return tmpLst;
+    }
+
     @Data
     public class ExcelData {
         List<RoomDetails> roomDetailsList;

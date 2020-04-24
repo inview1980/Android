@@ -14,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import my_manage.adapter.UserItemAdapter;
 import my_manage.password_box.R;
 import my_manage.password_box.database.PasswordDB;
-import my_manage.password_box.menuEnum.PwdContentMenuEnum;
-import my_manage.password_box.menuEnum.PwdContextActivityLongClickEnum;
+import my_manage.tool.menuEnum.PwdContentMenuEnum;
+import my_manage.tool.menuEnum.PwdContextActivityLongClickEnum;
 import my_manage.tool.EnumUtils;
 
 
