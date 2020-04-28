@@ -13,17 +13,18 @@ import java.io.InputStream;
 import java.util.List;
 
 import my_manage.adapter.RentalMainAdapter;
+import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.tool.menuEnum.RentalMainItemLongClickEnum;
-import my_manage.tool.menuEnum.RentalMainOnOneClickEnum;
-import my_manage.tool.EnumUtils;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.database.RentDB;
 import my_manage.rent_manage.pojo.RoomDetails;
-import my_manage.rent_manage.pojo.show.ShowRoomForMain;
+import my_manage.rent_manage.pojo.show.ShowRoomDetails;
+import my_manage.tool.EnumUtils;
+import my_manage.tool.menuEnum.RentalMainItemLongClickEnum;
+import my_manage.tool.menuEnum.RentalMainOnOneClickEnum;
 
-public final class RentalMainActivity extends AppCompatActivity {
-    public static List<ShowRoomForMain> showRoomForMainList;
+public final class RentalMainActivity extends AppCompatActivity implements IShowList {
+    public static List<ShowRoomDetails> showRoomForMainList;
     private ListView listView;
 
     @Override
@@ -33,13 +34,17 @@ public final class RentalMainActivity extends AppCompatActivity {
         dbInit();
         init();
         setTitle("房屋出租管理");
-//        InputStream is=getResources().openRawResource(R.raw.db);
-//        DbHelper.ExcelData ed = DbHelper.getInstance().readExcel(is);
-//        System.out.println(ed.getRentalRecordList().get(1));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showList();
     }
 
     private void init() {
-        flushView();
+        showList();
+
         listView.setOnItemClickListener((adV, v, position, l) ->
                 RentalMainItemLongClickEnum.ShowRooms.run(this, showRoomForMainList, position));
         listView.setOnItemLongClickListener((AdapterView<?> adapterView, View view, int position, long l) ->
@@ -49,7 +54,7 @@ public final class RentalMainActivity extends AppCompatActivity {
                 EnumUtils.menuInit(this, RentalMainOnOneClickEnum.Add, v, -1));
     }
 
-    public void flushView() {
+    public void showList() {
         showRoomForMainList = DbHelper.getInstance().getShowRoomDesList();
 
 //        Log.i(this.getLocalClassName(), tmpLst.toString());
@@ -64,9 +69,9 @@ public final class RentalMainActivity extends AppCompatActivity {
         RentDB.createCascadeDB(this, filePath);
         Log.i(this.getLocalClassName(), "路径：" + filePath);
 
-        List<RoomDetails> rd = RentDB.getQueryAll(RoomDetails.class);
+        List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsToList();
         if (rd != null && rd.size() != 0) return;
-        //填充数据库内容
+        //当数据库空时，填充数据库内容
         InputStream is = getResources().openRawResource(R.raw.db);
         DbHelper.ExcelData ed = DbHelper.getInstance().readExcel(is);
         RentDB.insertAll(ed.getPersonDetailsList());

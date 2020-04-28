@@ -1,4 +1,4 @@
-package my_manage.password_box.page;
+package my_manage.password_box.fragment;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.fastjson.JSONException;
 import my_manage.password_box.R;
 import my_manage.password_box.database.PasswordDB;
+import my_manage.password_box.page.PasswordManageActivity;
 import my_manage.password_box.pojo.UserItem;
 
 import lombok.NoArgsConstructor;

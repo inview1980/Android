@@ -11,17 +11,21 @@ import lombok.ToString;
 /**
  * 住宅小区
  */
-@ToString@NoArgsConstructor
+@ToString
+@NoArgsConstructor
 public class RoomDetails {
     public RoomDetails(RoomDetails roomDetails) {
-        this.communityName=roomDetails.communityName;
-        this.manId = roomDetails.manId;
-        this.meterNumber=roomDetails.meterNumber;
-        this.propertyPrice=roomDetails.propertyPrice;
-        this.recordId=roomDetails.recordId;
-        this.roomNumber=roomDetails.roomNumber;
-        this.roomArea=roomDetails.roomArea;
-        this.rentalMoney=roomDetails.rentalMoney;
+        if(roomDetails!=null) {
+            this.communityName = roomDetails.communityName;
+            this.manId = roomDetails.manId;
+            this.meterNumber = roomDetails.meterNumber;
+            this.propertyPrice = roomDetails.propertyPrice;
+            this.recordId = roomDetails.recordId;
+            this.roomNumber = roomDetails.roomNumber;
+            this.roomArea = roomDetails.roomArea;
+            this.rentalMoney = roomDetails.rentalMoney;
+            this.isDelete = roomDetails.isDelete;
+        }
     }
 
     /**
@@ -59,8 +63,12 @@ public class RoomDetails {
     /**
      * 月租金
      */
-    @Setter@Getter
+    @Setter
+    @Getter
     private int rentalMoney;
+
+
+    private int isDelete;
 
     @Getter
     @Setter
@@ -81,5 +89,13 @@ public class RoomDetails {
 
     public void setRoomArea(double roomArea) {
         this.roomArea = (int) Math.round(roomArea * 100);
+    }
+
+    public void setIsDelete(boolean isDelete) {
+        this.isDelete = isDelete ? 1 : 0;
+    }
+
+    public boolean getIsDelete() {
+        return isDelete == 1;
     }
 }

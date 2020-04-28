@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/rental_main_gridview_margin_6"
+    android:background="@color/grayWhite"
+    >
+
+    <TableRow>
+
+        <TextView
+            android:text="@string/rental_man_cn"
+            android:textSize="@dimen/rental_lable_textSize" />
+
+        <TextView
+            android:id="@+id/rental_history_item_man"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/rental_lable_textSize" />
+    </TableRow>
+
+
+    <TableRow>
+
+        <TextView
+            android:text="@string/rental_editRoom_rentalBeginDate_cn"
+            android:textSize="@dimen/rental_lable_textSize" />
+
+        <TextView
+            android:id="@+id/rental_history_item_startDate"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/pwdItemWidth"
+            android:textSize="@dimen/rental_lable_textSize" />
+
+        <TextView
+            android:text="@string/endDate"
+            android:textSize="@dimen/rental_lable_textSize" />
+
+        <TextView
+            android:id="@+id/rental_history_item_endDate"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/rental_lable_textSize" />
+    </TableRow>
+</TableLayout>

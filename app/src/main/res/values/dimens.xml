@@ -6,5 +6,6 @@
     
     <dimen name="rental_main_gridview_title_fontsize">25sp</dimen>
     <dimen name="rental_main_gridview_nomal_fontsize">18sp</dimen>
-    <dimen name="rental_main_gridview_margin">6dp</dimen>
+    <dimen name="rental_main_gridview_margin_6">6dp</dimen>
+    <dimen name="rental_main_gridview_margin_3">3dp</dimen>
 </resources>

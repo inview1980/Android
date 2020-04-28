@@ -27,12 +27,11 @@ import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 import lombok.Data;
-import my_manage.tool.StrUtils;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
-import my_manage.rent_manage.pojo.show.ShowRoomForMain;
+import my_manage.tool.StrUtils;
 
 public final class DbHelper {
     private static DbHelper dbHelper;
@@ -47,6 +46,13 @@ public final class DbHelper {
         return dbHelper;
     }
 
+    public List<ShowRoomDetails> getDeleteRoomDetails() {
+        List<ShowRoomDetails> resultLst = new ArrayList<>();
+        List<RoomDetails> roomDetailsList = getRoomDetailsByDelete();
+        room2ShowRoomDetails(resultLst, roomDetailsList);
+        return resultLst;
+    }
+
     /**
      * 统计指定小区中每个房源的资料
      *
@@ -59,7 +65,16 @@ public final class DbHelper {
             roomDetailsList = RentDB.getQueryByWhere(RoomDetails.class, "communityName", new Object[]{compoundName});
         else
             roomDetailsList = RentDB.getQueryAll(RoomDetails.class);
+        //去掉已删除的房源
+        roomDetailsList = roomDetailsList.stream().filter(rd -> !rd.getIsDelete()).collect(Collectors.toList());
+        room2ShowRoomDetails(resultLst, roomDetailsList);
+        return resultLst;
+    }
 
+    /**
+     * 查找数据库，将roomDetailsList中每项数据根据recordID、personID查找相应的值，返回resultLst
+     */
+    private void room2ShowRoomDetails(List<ShowRoomDetails> resultLst, List<RoomDetails> roomDetailsList) {
         for (RoomDetails roomDetails : roomDetailsList) {
             ShowRoomDetails srfh = new ShowRoomDetails(roomDetails);
             //查找此户是否已出租,recordId默认0
@@ -78,19 +93,27 @@ public final class DbHelper {
             }
             resultLst.add(srfh);
         }
-        return resultLst;
     }
 
+    public List<RoomDetails> getRoomDetailsToList() {
+        return RentDB.getQueryAll(RoomDetails.class).stream().filter(rd -> !rd.getIsDelete()).collect(Collectors.toList());
+    }
 
-    public List<ShowRoomForMain> getShowRoomDesList() {
-        List<RoomDetails> roomDetailsList = RentDB.getQueryAll(RoomDetails.class);
+    public List<RoomDetails> getRoomDetailsByDelete() {
+        //查询删除的房屋信息，因为数据库中的true存为int=1
+        return RentDB.getQueryByWhere(RoomDetails.class, "isDelete", new Object[]{1});
+    }
+
+    public List<ShowRoomDetails> getShowRoomDesList() {
+        List<RoomDetails> roomDetailsList = getRoomDetailsToList();
         if (roomDetailsList == null || roomDetailsList.size() == 0) return null;
 
         //载入数据
-        List<ShowRoomForMain> tmpLst = new ArrayList<>();
+        List<ShowRoomDetails> tmpLst = new ArrayList<>();
         roomDetailsList.stream().map(RoomDetails::getCommunityName).distinct().forEach(name -> {
-            ShowRoomForMain sr = new ShowRoomForMain();
-            List<RoomDetails> showRoomDetailsList = roomDetailsList.stream().filter(rd -> name.equals(rd.getCommunityName())).collect(Collectors.toList());
+            ShowRoomDetails sr = new ShowRoomDetails();
+            List<RoomDetails> showRoomDetailsList = roomDetailsList.stream()
+                    .filter(rd -> name.equals(rd.getCommunityName()) && !rd.getIsDelete()).collect(Collectors.toList());
             sr.setRoomCount((int) showRoomDetailsList.stream().map(RoomDetails::getCommunityName).count());
             sr.setCommunityName(name);
             sr.setRoomAreas(showRoomDetailsList.stream().flatMapToDouble(roomDes -> DoubleStream.of(roomDes.getRoomArea())).sum());
@@ -98,11 +121,12 @@ public final class DbHelper {
         });
 
         //加入全部数据
-        ShowRoomForMain sr = new ShowRoomForMain();
+        ShowRoomDetails sr = new ShowRoomDetails();
         sr.setCommunityName("全部房间");
         sr.setRoomAreas(roomDetailsList.stream().flatMapToDouble(rd -> DoubleStream.of(rd.getRoomArea())).sum());
         sr.setRoomCount((int) roomDetailsList.stream().map(RoomDetails::getCommunityName).count());
         tmpLst.add(sr);
+
         return tmpLst;
     }
 
@@ -259,7 +283,9 @@ public final class DbHelper {
             //从1开头，因为0为标题，数据从1开始
             T t = cClass.newInstance();
             for (Map.Entry<Method, String> methodStringEntry : maps.entrySet()) {
-                str2Obj(t, methodStringEntry.getKey(), lst.get(i).get(methodStringEntry.getValue()));
+                String tmp=methodStringEntry.getValue();
+                if(tmp==null)continue;
+                str2Obj(t, methodStringEntry.getKey(), lst.get(i).get(tmp));
             }
             resultLst.add(t);
         }
@@ -284,7 +310,7 @@ public final class DbHelper {
                         object = str;
                         break;
                     case "int":
-                        object = Integer.parseInt(str);
+                        object =(int)Double.parseDouble(str) ;
                         break;
                     case "double":
                         object = Double.parseDouble(str);
@@ -325,6 +351,7 @@ public final class DbHelper {
 
     /**
      * 从指定的sheet读取内容到字典，第一行数据为标题
+     *
      * @param rowsCount 行数
      */
     private List<HashMap<String, String>> readSheetToMap(XSSFSheet sheet, int rowsCount) {
@@ -341,7 +368,11 @@ public final class DbHelper {
             tmp = new HashMap<>();
             for (int j = 0; j < cellsCount; j++) {
                 if (row.getCell(j) == null) continue;
-                tmp.put(heads[j], row.getCell(j).getStringCellValue());
+                if(row.getCell(j).getCellType()==Cell.CELL_TYPE_NUMERIC){
+                    tmp.put(heads[j], ""+row.getCell(j).getNumericCellValue());
+                }else if(row.getCell(j).getCellType()==Cell.CELL_TYPE_STRING) {
+                    tmp.put(heads[j], row.getCell(j).getStringCellValue());
+                }
             }
             resultMap.add(tmp);
         }
@@ -350,10 +381,11 @@ public final class DbHelper {
 
     public boolean saveRoomDes(RoomDetails roomDetails) {
         RoomDetails tmp = RentDB.getInfoById(roomDetails.getRoomNumber(), RoomDetails.class);
-        if (tmp != null) return false;
-        if (RentDB.insert(roomDetails) > 0)
-            return true;
-        return false;
+        if (tmp != null) {
+            return RentDB.update(roomDetails)>0;
+        }else {
+            return RentDB.insert(roomDetails) > 0;
+        }
     }
 
     public boolean delRoomDes(String communityName) {
@@ -363,9 +395,52 @@ public final class DbHelper {
     }
 
     public List<PersonDetails> getPersonList() {
-        List<PersonDetails> tmpLst=RentDB.getQueryAll(PersonDetails.class);
+        List<PersonDetails> tmpLst = RentDB.getQueryAll(PersonDetails.class);
+        if (tmpLst == null) return new ArrayList<>();
         tmpLst.sort((n1, n2) -> Integer.compare(n2.getPrimary_id(), n1.getPrimary_id()));
+        tmpLst.add(new PersonDetails());
         return tmpLst;
+    }
+
+    public List<RentalRecord> getRecords() {
+        return RentDB.getQueryAll(RentalRecord.class);
+    }
+
+    /**
+     * 将房源归入已删除列表，但在数据库中不删除
+     */
+    public boolean delRoomDes(ShowRoomDetails showRoomDetails) {
+        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomNumber(), RoomDetails.class);
+        if (rd == null) return false;
+        rd.setIsDelete(true);
+        return RentDB.update(rd) > 0;
+    }
+
+    public boolean restoreDelete(ShowRoomDetails showRoomDetails) {
+        if (showRoomDetails == null) return false;
+
+        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomNumber(), RoomDetails.class);
+        if (rd == null) return false;
+        rd.setIsDelete(false);
+        return RentDB.update(rd) > 0;
+    }
+
+    /**
+     * 获取指定房号的历史记录
+     */
+    public List<ShowRoomDetails> getHistoryByRoomNumber(String roomNumber) {
+        List<ShowRoomDetails> resultLst = new ArrayList<>();
+        List<RentalRecord> recordList = RentDB.getQueryByWhere(RentalRecord.class, "roomNumber", new Object[]{roomNumber});
+        RoomDetails rd = RentDB.getInfoById(roomNumber, RoomDetails.class);
+        ShowRoomDetails show;
+        for (final RentalRecord record : recordList) {
+            show = new ShowRoomDetails(rd);
+            show.setRentalRecord(record);
+            PersonDetails pd = RentDB.getInfoById(record.getManID(), PersonDetails.class);
+            show.setPersonDetails(pd);
+            resultLst.add(show);
+        }
+        return resultLst;
     }
 
     @Data

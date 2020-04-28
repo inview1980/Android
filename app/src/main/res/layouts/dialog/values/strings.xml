@@ -30,5 +30,4 @@
     <string name="rental_change_rentmoney_cn"><b>更改月租金</b></string>
     <string name="rental_change_rentmoney_det_cn">调整租金为:</string>
     <string name="rental_change_now_rentmoney_cn">现租金为:</string>
-    <string name="rental_codeNumber_cn">证件号码:</string>
 </resources>

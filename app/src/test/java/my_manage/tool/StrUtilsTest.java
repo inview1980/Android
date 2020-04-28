@@ -3,7 +3,7 @@ package my_manage.tool;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import my_manage.password_box.iface.IActivityMenu;
+import my_manage.iface.IActivityMenu;
 import my_manage.password_box.pojo.UserItem;
 
 import org.junit.Test;

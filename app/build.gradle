@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "my_manage.password_box"
         minSdkVersion 28
@@ -78,4 +78,6 @@ dependencies {
     //第三方对话框
     implementation 'com.orhanobut:dialogplus:1.11@aar'
 
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 }

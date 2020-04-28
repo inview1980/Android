@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import my_manage.password_box.R;
-import my_manage.adapter.PwdPageAdapter;
+import my_manage.adapter_page.PwdPageAdapter;
 import my_manage.password_box.database.PasswordDB;
 
 

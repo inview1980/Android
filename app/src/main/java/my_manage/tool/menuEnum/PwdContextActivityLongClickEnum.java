@@ -1,6 +1,6 @@
 package my_manage.tool.menuEnum;
 
-import my_manage.password_box.iface.IActivityMenu;
+import my_manage.iface.IActivityMenu;
 import my_manage.password_box.database.PasswordDB;
 import my_manage.password_box.page.PasswordManageActivity;
 import my_manage.tool.PageUtils;

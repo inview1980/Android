@@ -1,6 +1,4 @@
-package my_manage.adapter;
-
-import android.app.Activity;
+package my_manage.adapter_page;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,7 +8,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import my_manage.password_box.page.PasswordManageItemDetailsFragment;
+import my_manage.password_box.fragment.PasswordManageItemDetailsFragment;
 import my_manage.password_box.pojo.UserItem;
 
 public final class PwdPageAdapter extends FragmentStatePagerAdapter {

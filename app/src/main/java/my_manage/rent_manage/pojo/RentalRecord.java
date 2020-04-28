@@ -13,7 +13,8 @@ import lombok.ToString;
 /**
  * 租房记录
  */
-@ToString@EqualsAndHashCode
+@ToString
+@EqualsAndHashCode
 public final class RentalRecord {
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     @Setter
@@ -65,24 +66,59 @@ public final class RentalRecord {
     @Setter
     @Getter
     private int manID;
+    /**
+     * 押金
+     */
+    @Setter@Getter
+    private int deposit;
+
+    /**
+     * 签合同时间
+     */
+private long contractSigningDate;
+
+    /**
+     * 合同期限（月）
+     */
+@Getter@Setter
+private int contractMonth;
+
+public Calendar getContractSigningDate(){
+    if (contractSigningDate == 0) return null;
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeInMillis(contractSigningDate);
+    return calendar;
+}
+
+public void setContractSigningDate(Calendar date){
+    if (date == null)
+        contractSigningDate = 0;
+    else
+        contractSigningDate = date.getTimeInMillis();
+}
 
     public Calendar getStartDate() {
+        if (startDate == 0) return null;
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(startDate);
         return calendar;
     }
 
     public Calendar getRealtyStartDate() {
+        if (realtyStartDate == 0) return null;
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(realtyStartDate);
         return calendar;
     }
 
     public void setRealtyStartDate(Calendar date) {
-        if(date==null)
-            realtyStartDate=0;
+        if (date == null)
+            realtyStartDate = 0;
         else
-        realtyStartDate = date.getTimeInMillis();
+            realtyStartDate = date.getTimeInMillis();
     }
 
     public double getRealtyMoney() {
@@ -94,22 +130,25 @@ public final class RentalRecord {
     }
 
     public void setStartDate(Calendar localDate) {
-        if(localDate==null)
-            startDate=0;
+        if (localDate == null)
+            startDate = 0;
         else
             startDate = localDate.getTimeInMillis();
     }
 
     public Calendar getPaymentDate() {
+        if (paymentDate == 0) return null;
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(paymentDate);
         return calendar;
     }
 
-    public void setPaymentDate(Calendar localDate) {if(localDate==null)
-        paymentDate=0;
-    else
-        paymentDate = localDate.getTimeInMillis();
+    public void setPaymentDate(Calendar localDate) {
+        if (localDate == null)
+            paymentDate = 0;
+        else
+            paymentDate = localDate.getTimeInMillis();
     }
 
     public double getTotalMoney() {

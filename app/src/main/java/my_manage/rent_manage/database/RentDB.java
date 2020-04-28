@@ -118,7 +118,7 @@ public final class RentDB {
      * @param cla
      * @return
      */
-    public static <T> List<T> getQueryAll(Class<T> cla) {
+     static <T> List<T> getQueryAll(Class<T> cla) {
         return getLiteOrm().query(cla);
     }
 
@@ -151,7 +151,7 @@ public final class RentDB {
      * @return
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
+     static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
         return getLiteOrm().<T>query(new QueryBuilder(cla).where(field + "=?", value));
     }
 
@@ -168,19 +168,19 @@ public final class RentDB {
         return getLiteOrm().<T>query(new QueryBuilder(cla).where(field + " LIKE ?", value));
     }
 
-    /**
-     * 查询 某字段 等于 Value的值 可以指定从1-20，就是分页
-     *
-     * @param cla
-     * @param field
-     * @param value
-     * @param start
-     * @param length
-     * @return
-     */
-    public static <T> List<T> getQueryByWhereLength(Class<T> cla, String field, String[] value, int start, int length) {
-        return getLiteOrm().<T>query(new QueryBuilder(cla).where(field + "=?", value).limit(start, length));
-    }
+//    /**
+//     * 查询 某字段 等于 Value的值 可以指定从1-20，就是分页
+//     *
+//     * @param cla
+//     * @param field
+//     * @param value
+//     * @param start
+//     * @param length
+//     * @return
+//     */
+//    public static <T> List<T> getQueryByWhereLength(Class<T> cla, String field, String[] value, int start, int length) {
+//        return getLiteOrm().<T>query(new QueryBuilder(cla).where(field + "=?", value).limit(start, length));
+//    }
 
     /**
      * 删除所有 某字段等于 Vlaue的值
@@ -201,7 +201,7 @@ public final class RentDB {
      * @param field
      * @param value
      */
-    public static <T> int deleteWhere(Class<T> cla, String field, Object[] value) {
+     static <T> int deleteWhere(Class<T> cla, String field, Object[] value) {
         return getLiteOrm().delete(cla, WhereBuilder.create(cla, field + "=?", value));
     }
 
@@ -242,7 +242,7 @@ public final class RentDB {
                                   String queryValue, String updateCol, String updateValue) {
         getLiteOrm().update(
                 new WhereBuilder(cla).where(queryCol + " = ?",
-                        new String[]{queryValue}),
+                        new Object[]{queryValue}),
                 new ColumnsValue(new String[]{updateCol},
                         new Object[]{updateValue}), ConflictAlgorithm.None);
 

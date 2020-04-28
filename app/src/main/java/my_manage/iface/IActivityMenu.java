@@ -1,4 +1,4 @@
-package my_manage.password_box.iface;
+package my_manage.iface;
 
 import android.app.Activity;
 

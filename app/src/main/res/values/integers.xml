@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="rental_room_details_1width">5</integer>
+    <integer name="rental_room_details_2width">4</integer>
+</resources>

@@ -15,7 +15,7 @@
 ////        List<ShowRoomForHouse> sh = DbHelper.getInstance().getRoomForHouse(roomDetailsList.get(4).getCommunityName());
 ////        assertNotNull(sh);
 ////        System.out.println(sh.get(0));
-//////        System.out.println(sh.get(0).getEndDate());
+//////        System.out.println(sh.get(0).getRentalEndDate());
 ////        System.out.println(sh.get(new Random().nextInt(sh.size())));
 //    }
 //

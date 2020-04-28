@@ -7,17 +7,22 @@ import androidx.test.InstrumentationRegistry;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
+
+import my_manage.rent_manage.pojo.RoomDetails;
 
 
 public class RentDBTest {
 @Test
 public void showDB(){
     RentDB.createCascadeDB( InstrumentationRegistry.getTargetContext(),"/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
+
+    List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsByDelete();
 //    List<RentalRecord> rList = RentDB.getQueryByWhere(RentalRecord.class, "roomDesID", new Object[]{new Random().nextInt(10)});
 //    List<RentalRecord> r2=RentDB.getRentalRecordAll(rList);
 //    List<ShowRoomForMain> rList=DbHelper.getInstance().getShowRoomDesList();
-    boolean t1 = DbHelper.getInstance().toExcel("/storage/emulated/0/Android/data/my_manage.password_box/files/db.xlsx");
-    System.out.println(t1);//F:\program\android\Password saving cabinet\app\db.xlsx
+//    boolean t1 = DbHelper.getInstance().toExcel("/storage/emulated/0/Android/data/my_manage.password_box/files/db.xlsx");
+    System.out.println(rd);//F:\program\android\Password saving cabinet\app\db.xlsx
 
 }
     @Test

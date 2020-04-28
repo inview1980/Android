@@ -1,11 +1,9 @@
 package my_manage.rent_manage.page.viewholder;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.pojo.RoomDetails;
 import my_manage.tool.PageUtils;
 
@@ -41,7 +39,7 @@ public final class AddRoomViewHolder extends ViewHolder implements View.OnFocusC
         init(view);
 
         //设置社区名下拉数据
-        List<String> roomDesList = RentDB.getQueryAll(RoomDetails.class).stream()
+        List<String> roomDesList = DbHelper.getInstance().getRoomDetailsToList().stream()
                 .map(RoomDetails::getCommunityName).distinct()
                 .collect(Collectors.toList());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, roomDesList);

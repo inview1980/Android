@@ -27,7 +27,6 @@ public final class RentalHouseAdapter extends BaseAdapter {
     private TextView endDate;
     private TableLayout tableLayout;
     private String title;
-    private TextView communityName_lable;
     private TextView communityName_txt;
     private TextView propertyPrice;
 
@@ -55,7 +54,7 @@ public final class RentalHouseAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.rental_house_listview_style, viewGroup, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.rental_room_list_item, viewGroup, false);
             houseNumber = view.findViewById(R.id.rental_house_houseNumber_txt);
             area = view.findViewById(R.id.rental_house_area_txt);
             monthlyRent = view.findViewById(R.id.rental_house_monthlyRent_txt);
@@ -64,7 +63,6 @@ public final class RentalHouseAdapter extends BaseAdapter {
             realtyMonty = view.findViewById(R.id.rental_house_realtyMoney_txt);
             endDate = view.findViewById(R.id.rental_house_endDate_txt);
             tableLayout = view.findViewById(R.id.rental_house_tableLayoutId);
-            communityName_lable = view.findViewById(R.id.rental_house_communityName_lable);
             communityName_txt = view.findViewById(R.id.rental_house_communityName_txt);
             propertyPrice = view.findViewById(R.id.rental_house_propertyPrice_txt);
         }
@@ -76,21 +74,20 @@ public final class RentalHouseAdapter extends BaseAdapter {
             isContainRealty.setText(room.get(i).getRentalRecord().getIsContainRealty() ? "是" : "否");
             realtyMonty.setText(String.valueOf(room.get(i).getRentalRecord().getRealtyMoney()));
         }else {
-            //未出租
-            tableLayout.setBackgroundColor(view.getResources().getColor(android.R.color.holo_blue_light));
+            //未出租,改外框颜色
+            tableLayout.setBackground(mContext.getDrawable(R.drawable.blue_borde_2));
         }
         if (room.get(i).getPersonDetails() != null)//用户信息不为空
             manName.setText(room.get(i).getPersonDetails().getName());
-        if (room.get(i).getEndDate() != null) {
-            Calendar date = room.get(i).getEndDate();
+        if (room.get(i).getRentalEndDate() != null) {
+            Calendar date = room.get(i).getRentalEndDate();
             endDate.setText(date.get(Calendar.YEAR) + "-" + (date.get(Calendar.MONTH) + 1) + "-" + date.get(Calendar.DAY_OF_MONTH));
             if (date.before(Calendar.getInstance())) {
-                tableLayout.setBackgroundColor(view.getResources().getColor(R.color.red));
+                tableLayout.setBackground(mContext.getDrawable(R.drawable.red_borde_3));
             }
         }
-        if (title == null) {//显示全部时
+        if (title == null) {//显示“全部房间”时
             communityName_txt.setVisibility(View.VISIBLE);
-            communityName_lable.setVisibility(View.VISIBLE);
             communityName_txt.setText(room.get(i).getCommunityName());
         }
         return view;
