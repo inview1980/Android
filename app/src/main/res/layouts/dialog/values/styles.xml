@@ -1,4 +1,20 @@
 <resources>
 
 
+    <style name="rental_expandable_listview_item">
+        <item name="android:background">#0000</item>
+        <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
+        <item name="android:textSize">@dimen/rental_lable_textSize</item>
+        <item name="android:layout_columnWeight">@integer/rental_room_details_1width</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="rental_room_details_tableRow">
+        <item name="android:layout_marginTop">@dimen/rent_room_details_tableRow_margin</item>
+        <item name="android:layout_marginBottom">@dimen/rent_room_details_tableRow_margin</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <dimen name="rent_room_details_tableRow_margin">1dp</dimen>
 </resources>

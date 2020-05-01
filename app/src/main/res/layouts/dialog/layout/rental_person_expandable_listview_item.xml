@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@color/grayWhite2"
+    android:gravity="start"
+    android:layoutDirection="ltr"
+    android:columnCount="3">
+    <TextView android:id="@+id/rental_person_expandable_details"
+        style="@style/rental_expandable_listview_item"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="查看详情" />
+
+    <TextView android:id="@+id/rental_person_expandable_delete"
+        style="@style/rental_expandable_listview_item" android:layout_gravity="center"
+        android:text="删除" />
+
+    <TextView android:id="@+id/rental_person_expandable_addperson"
+        style="@style/rental_expandable_listview_item" android:layout_gravity="center"
+        android:text="增加租户" />
+</GridLayout>

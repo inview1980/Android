@@ -40,6 +40,16 @@
         android:id="@+id/rental_addPerson_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remark_main_cn" />
+
+    <EditText
+        android:id="@+id/rental_addPerson_remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/rental_addPerson_ok"

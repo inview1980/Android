@@ -6,12 +6,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.Calendar;
 import java.util.stream.IntStream;
@@ -23,20 +20,18 @@ import my_manage.rent_manage.fragment.NewRoomFragment;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
-import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
 import my_manage.tool.menuEnum.CastUtils;
 
 public final class NewRoomFragmentLister implements View.OnClickListener, TextWatcher {
     private NewRoomFragment fragment;
-    private View view;
+    private View            view;
 
     private boolean isChange = false;
 
     public NewRoomFragmentLister(NewRoomFragment fragment, View view) {
         this.fragment = fragment;
         this.view = view;
-//        fragment.initComponents(view);
     }
 
     @Override
@@ -57,9 +52,9 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
                 || view.getId() == R.id.rental_editRoom_propertyBeginDate) {
             // 初始化日期
             Calendar myCalendar = Calendar.getInstance();
-            int myYear = myCalendar.get(Calendar.YEAR);
-            int month = myCalendar.get(Calendar.MONTH);
-            int day = myCalendar.get(Calendar.DAY_OF_MONTH);
+            int      myYear     = myCalendar.get(Calendar.YEAR);
+            int      month      = myCalendar.get(Calendar.MONTH);
+            int      day        = myCalendar.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog dpd = new DatePickerDialog(fragment.getActivity(), DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, monthOfYear, dayOfMonth) -> {
                 ((TextView) this.view.findViewById(view.getId())).setText(year + "-" + (1 + monthOfYear) + "-" + dayOfMonth);
                 isChange = true;
@@ -70,14 +65,26 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         //增加出租户资料
         if (view.getId() == R.id.rental_editRoom_add) {
             //增加租户资料
-            addPerson();
+             PersonExtendableListViewAdapterListener.addPerson(fragment.getActivity(),fragment);
         }
     }
 
     private void updateRoomDetails() {
+        //判断租户是否为空，空则退出
+        PersonDetails pd = (PersonDetails) fragment.getPerson().getSelectedItem();
+        if(pd.getPrimary_id()==0){
+            androidx.appcompat.app.AlertDialog.Builder dialog=new androidx.appcompat.app.AlertDialog.Builder(fragment.getContext());
+            dialog.setTitle("租户未选中").setMessage("未选中租户，请选择租户后再保存")
+                    .setPositiveButton(R.string.ok_cn,null)
+                    .show();
+            return;
+        }
         RoomDetails room = new RoomDetails();
-        room.setCommunityName(fragment.getCommunity().getText().toString());
-        room.setRoomNumber(fragment.getRoomNumber().getText().toString());
+        room.setRecordId(fragment.getShowRoomDetails().getRecordId());//记录的ID
+        room.setCommunityName(fragment.getCommunity().getText().toString());//小区名
+        room.setRoomNumber(fragment.getRoomNumber().getText().toString());//房号
+        room.setWaterMeter(fragment.getWaterMeter().getText().toString())   ;//水表
+        room.setElectricMeter(fragment.getMeterNumber().getText().toString());//电表
         if (StrUtils.isBlank(room.getCommunityName())) {
             showMyDialog("社区不能为空");
             return;
@@ -86,24 +93,36 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
             showMyDialog("房号不能为空");
             return;
         }
-
         Pair<Boolean, Integer> rm = CastUtils.parseInt(fragment.getRentalMoney().getText().toString());//转换物业费成int
-        if (rm.first)
-            room.setRentalMoney(rm.second);
-        room.setMeterNumber(fragment.getMeterNumber().getText().toString());
+        if (rm.first) {room.setRentalMoney(rm.second);}
         Pair<Boolean, Double> pp = CastUtils.parseDouble(fragment.getPropertyPrice().getText().toString());//转换物业费单价为double
-        if (pp.first)
-            room.setPropertyPrice(pp.second);
+        if (pp.first) {room.setPropertyPrice(pp.second);}
         Pair<Boolean, Double> ra = CastUtils.parseDouble(fragment.getArea().getText().toString());//面积转换
-        if (ra.first)
-            room.setRoomArea(ra.second);
-        PersonDetails pd = (PersonDetails) fragment.getPerson().getSelectedItem();
-        room.setManId(pd.getPrimary_id());
+        if (ra.first) {room.setRoomArea(ra.second);}
 
+        room.setManId(pd.getPrimary_id());
+        //更改租户信息
+        updatePerson(pd);
         //将记录也一起更改
         updateRecord(room, pd.getPrimary_id());
+
         RentDB.update(room);
         fragment.getActivity().onBackPressed();
+    }
+
+    private void updatePerson(PersonDetails pd) {
+        if (pd == null) return;
+        String tel   = fragment.getTel().getText().toString();
+        String cord  = fragment.getManCard().getText().toString();
+        String other = fragment.getRentalEditRoomPersonRemark().getText().toString();
+        if (tel.equals(pd.getTel()) && cord.equals(pd.getCord()) && other.equals(pd.getOther())) {
+            //没有更改，退出
+            return;
+        }
+        pd.setTel(tel);
+        pd.setCord(cord);
+        pd.setOther(other);
+        RentDB.update(pd);
     }
 
     private void updateRecord(RoomDetails room, int manId) {
@@ -149,38 +168,6 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         }
     }
 
-    private void addPerson() {
-        ViewHolder viewHolder = new ViewHolder(R.layout.add_person_dialog);
-        DialogPlus dialog = DialogPlus.newDialog(fragment.getContext())
-                .setOnClickListener((dialog1, v) -> {
-                    try {
-                        if (v.getId() == R.id.rental_addPerson_ok) {
-                            EditText name = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_name);
-                            EditText tel = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_tel);
-                            EditText code = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_code);
-                            name.setOnFocusChangeListener((a, b) -> PageUtils.closeInput(fragment.getActivity(), b));
-                            tel.setOnFocusChangeListener((a, b) -> PageUtils.closeInput(fragment.getActivity(), b));
-                            code.setOnFocusChangeListener((a, b) -> PageUtils.closeInput(fragment.getActivity(), b));
-                            if (StrUtils.isNotBlank(name.getText().toString())) {
-                                PersonDetails personDetails = new PersonDetails(name.getText().toString());
-                                personDetails.setCord(code.getText().toString());
-                                personDetails.setTel(tel.getText().toString());
-
-                                if (RentDB.insert(personDetails) > 0) {
-                                    //成功，刷新
-                                    fragment.initSpinner();
-                                    dialog1.dismiss();
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                    }
-                }).setHeader(android.R.layout.browser_link_context_header)
-                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                .setContentHolder(viewHolder)
-                .create();
-        dialog.show();
-    }
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -199,8 +186,6 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
     }
 
 
-
-
     private void showMyDialog(String msg) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this.fragment.getContext());
         dialog.setTitle("错误");
@@ -213,9 +198,9 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         if (StrUtils.isBlank(text)) return null;
         String[] ss = text.split("-");
         if (ss.length >= 3) {
-            Pair<Boolean, Integer> year = CastUtils.parseInt(ss[0]);
+            Pair<Boolean, Integer> year  = CastUtils.parseInt(ss[0]);
             Pair<Boolean, Integer> month = CastUtils.parseInt(ss[1]);
-            Pair<Boolean, Integer> day = CastUtils.parseInt(ss[2]);
+            Pair<Boolean, Integer> day   = CastUtils.parseInt(ss[2]);
             if (year.first && month.first && day.first) {
                 Calendar c = Calendar.getInstance();
                 c.set(year.second, month.second + 1, day.second);

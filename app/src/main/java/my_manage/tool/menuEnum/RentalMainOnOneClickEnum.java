@@ -8,6 +8,7 @@ import lombok.Getter;
 import my_manage.iface.IActivityMenu;
 import my_manage.rent_manage.RentalMainActivity;
 import my_manage.rent_manage.page.RentalForHouseActivity;
+import my_manage.rent_manage.page.ShowPersonExpandActivity;
 
 @AllArgsConstructor
 @Getter
@@ -19,7 +20,13 @@ public enum RentalMainOnOneClickEnum implements IActivityMenu<RentalMainActivity
             RentalMainItemLongClickEnum.Add.run(activity, null, -1);
         }
     },
-    DeleteHouse(2, "显示已删除房源") {
+    ShowPerson(2,"显示租户信息"){
+        @Override
+        public void run(RentalMainActivity activity, int position) {
+            activity.startActivity(new Intent(activity, ShowPersonExpandActivity.class));
+        }
+    },
+    DeleteHouse(3, "显示已删除房源") {
         @Override
         public void run(RentalMainActivity activity, int position) {
             Intent intent = new Intent(activity, RentalForHouseActivity.class);

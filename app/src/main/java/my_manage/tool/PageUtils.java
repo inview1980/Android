@@ -15,6 +15,8 @@ import my_manage.password_box.page.PasswordManageActivity;
 import my_manage.password_box.page.PasswordManageViewPagerHome;
 
 public final class PageUtils {
+    public static String Tag="MyManage";
+
     public static void resetDatabaseAndPassword(Context context) {
         String password =context. getString(R.string.defaultPassword);
 

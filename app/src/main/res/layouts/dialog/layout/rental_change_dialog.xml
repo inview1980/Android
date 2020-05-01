@@ -7,7 +7,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <TextView
+    <TextView android:id="@+id/rental_change_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnSpan="2"
@@ -15,7 +15,7 @@
         android:textSize="@dimen/rental_main_gridview_title_fontsize" />
 
 
-        <TextView
+        <TextView android:id="@+id/rental_change_dialog_lable1"
             style="@style/rental_textView_Lable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         <TextView style="@style/rental_textView_Lable"
             android:id="@+id/rental_changeRent_oldNum"/>
 
-        <TextView
+        <TextView android:id="@+id/rental_change_dialog_lable2"
             style="@style/rental_textView_Lable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

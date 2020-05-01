@@ -4,10 +4,15 @@
     android:id="@+id/main_viewId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/grayWhite"
     tools:context=".page.PasswordManageActivity">
 
+    <ExpandableListView
+        android:id="@+id/main_expandable_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        android:layoutDirection="rtl" />
 
     <ImageButton
         android:id="@+id/main_expandable_add_btn"
@@ -18,8 +23,4 @@
         android:layout_margin="10dp"
         android:src="@drawable/ic_launcher_foreground" />
 
-            <ExpandableListView android:id="@+id/main_expandable_listview"
-                android:layoutDirection="rtl"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
 </RelativeLayout>

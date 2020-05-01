@@ -22,7 +22,7 @@ public final class BuildData {
             rd.setCommunityName("小区名称：" + random.nextInt(CompoundNumber));
             rd.setRoomArea(random.nextDouble() * 100);
             rd.setRoomNumber((random.nextInt(10) + 1) + "-" + random.nextInt(50) + "-" + random.nextInt(50));
-            rd.setMeterNumber(getNumberForString(8));
+            rd.setElectricMeter(getNumberForString(8));
             rd.setManId(random.nextInt(ContactsNumber));
             rList.add(rd);
         }

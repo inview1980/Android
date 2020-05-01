@@ -3,6 +3,7 @@ package my_manage.tool;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -105,14 +106,16 @@ public final class EnumUtils {
      * 小区编辑，新建
      */
     public static <T extends Activity & IShowList> void communityChange(T activity, String communityString) {
-
         ViewHolder viewHolder = new AddRoomViewHolder(activity, R.layout.add_room_dialog, communityString);
         DialogPlus dialog = DialogPlus.newDialog(activity)
                 .setOnClickListener((dialog1, view) -> {
                     if (R.id.rental_addRoom_OkBtn == view.getId()) {
                         //确定
                         View v = viewHolder.getInflatedView();
-                        String comStr = ((AutoCompleteTextView) v.findViewById(R.id.rental_addRoom_communityName)).getText().toString();
+                        AutoCompleteTextView completeTextView=v.findViewById(R.id.rental_addRoom_communityName);
+                        completeTextView.setAdapter(new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1,
+                                DbHelper.getInstance().getCommunityNames()));
+                        String comStr = completeTextView.getText().toString();
                         String houseStr = ((EditText) v.findViewById(R.id.rental_addRoom_houseNumber)).getText().toString();
                         String areaStr = ((EditText) v.findViewById(R.id.rental_addRoom_area)).getText().toString();
                         String meterStr = ((EditText) v.findViewById(R.id.rental_addRoom_meterNumber)).getText().toString();
@@ -125,7 +128,7 @@ public final class EnumUtils {
                                 RoomDetails roomDetails = new RoomDetails();
                                 roomDetails.setCommunityName(comStr);
                                 roomDetails.setRoomNumber(houseStr);
-                                roomDetails.setMeterNumber(meterStr);
+                                roomDetails.setElectricMeter(meterStr);
                                 if (StrUtils.isNotBlank(areaStr))
                                     roomDetails.setRoomArea(Double.parseDouble(areaStr));
                                 if (StrUtils.isNotBlank(proStr))

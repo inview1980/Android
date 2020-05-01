@@ -18,13 +18,14 @@ public class RoomDetails {
         if(roomDetails!=null) {
             this.communityName = roomDetails.communityName;
             this.manId = roomDetails.manId;
-            this.meterNumber = roomDetails.meterNumber;
+            this.electricMeter = roomDetails.electricMeter;
             this.propertyPrice = roomDetails.propertyPrice;
             this.recordId = roomDetails.recordId;
             this.roomNumber = roomDetails.roomNumber;
             this.roomArea = roomDetails.roomArea;
             this.rentalMoney = roomDetails.rentalMoney;
             this.isDelete = roomDetails.isDelete;
+            this.waterMeter=roomDetails.waterMeter;
         }
     }
 
@@ -41,13 +42,15 @@ public class RoomDetails {
     @Getter
     @PrimaryKey(AssignType.BY_MYSELF)
     private String roomNumber;
-    private int roomArea;
+    private int    roomArea;
     /**
      * 电表号
      */
     @Setter
     @Getter
-    private String meterNumber;
+    private String electricMeter;
+    @Setter@Getter
+    private String waterMeter;
 
     /**
      * 现任联系人ID

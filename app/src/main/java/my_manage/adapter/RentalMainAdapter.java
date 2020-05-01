@@ -43,7 +43,7 @@ public final class RentalMainAdapter extends BaseAdapter {
         TextView title = convertView.findViewById(R.id.rental_main_CommunityName);
         TextView areas = convertView.findViewById(R.id.rental_main_item_areaTotal);
         TextView nums = convertView.findViewById(R.id.rental_main_item_roomTotal);
-        title.setText(mData.get(position).getCommunityName());
+        title.setText(mData.get(position).getRoomDetails().getCommunityName());
         areas.setText(String.valueOf(mData.get(position).getRoomAreas()));
         nums.setText(String.valueOf(mData.get(position).getRoomCount()));
         return convertView;

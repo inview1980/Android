@@ -58,7 +58,8 @@
 
     <style name="rental_textView_context">
         <item name="android:layout_marginEnd">3dp</item>
-        <item name="android:minWidth">80dp</item>
+<!--        <item name="android:minWidth">80dp</item>-->
+        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textSize">@dimen/rental_lable_textSize</item>
     </style>
 
@@ -66,14 +67,17 @@
         <item name="android:textSize">@dimen/rental_lable_textSize</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
+        <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
     </style>
 
     <style name="rental_add_edit">
-        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
+        <item name="android:background">@null</item>
         <item name="android:textSize">@dimen/rental_lable_textSize</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_gravity">fill_horizontal</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
     </style>
 
-    <dimen name="rental_lable_textSize">18dp</dimen>
 </resources>

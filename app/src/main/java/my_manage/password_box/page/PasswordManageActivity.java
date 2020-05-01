@@ -93,7 +93,7 @@ public final class PasswordManageActivity extends AppCompatActivity {
 
     //region Description
     //    @Override
-//    public void onClick(View view) {
+//    public void onBorrowedClick(View view) {
 //        EnumUtils.menuInit(this, PwdContentMenuEnum.Add, view, -1);
 //        //初始化菜单
 //        PopupMenu clickMenu = new PopupMenu(this, view);

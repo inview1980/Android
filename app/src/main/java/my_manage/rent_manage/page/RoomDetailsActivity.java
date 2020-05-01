@@ -20,22 +20,25 @@ public final class RoomDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_manage_details_viewpager);
 
-        Bundle bundle=getIntent().getExtras();
-        int currentItem =bundle.getInt("currentItem",0);
-        boolean isHistory=bundle.getBoolean("isHistory");
+        Bundle  bundle         = getIntent().getExtras();
+        int     currentItem    = bundle.getInt("currentItem", 0);
+        boolean isHistory      = bundle.getBoolean("isHistory",false);
+        boolean isRentRoom = bundle.getBoolean("isRentRoom",false);
 
-        //找到控件
         ViewPager vp = findViewById(R.id.pwd_manage_viewPager);
-        if (isHistory) {
+        if (isRentRoom) {
+            setTitle("出租");
+
+        } else if (isHistory) {
             //为出租记录
             setTitle("出租记录");
         } else {
             setTitle("详情");
         }
         String tmp = bundle.getString("ShowRoomDetails");
-        try{
-            List<ShowRoomDetails> data =  JSONArray.parseArray(tmp, ShowRoomDetails.class);
-            vp.setAdapter(new NewRoomPageAdapter(getSupportFragmentManager(), data,isHistory));
+        try {
+            List<ShowRoomDetails> data = JSONArray.parseArray(tmp, ShowRoomDetails.class);
+            vp.setAdapter(new NewRoomPageAdapter(getSupportFragmentManager(), data, isHistory,isRentRoom));
             vp.setCurrentItem(currentItem);
         } catch (Exception e) {
         }

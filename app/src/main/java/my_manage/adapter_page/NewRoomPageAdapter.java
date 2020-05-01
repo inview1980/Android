@@ -14,15 +14,15 @@ import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 public final class NewRoomPageAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> vList = new ArrayList<>();
 
-    public NewRoomPageAdapter(@NonNull FragmentManager fm, List<ShowRoomDetails> vList, boolean isHistory) {
+    public NewRoomPageAdapter(@NonNull FragmentManager fm, List<ShowRoomDetails> vList, boolean isHistory,boolean isRentRoom) {
         super(fm);
-        if (vList == null) {
-            //新增
-            this.vList.add(new NewRoomFragment(null, false));
+        if (isRentRoom) {
+            //出租
+            this.vList.add(new NewRoomFragment(vList.get(0), false,true));
         } else {
             //修改
             for (int i = 0; i < vList.size(); i++) {
-                this.vList.add(new NewRoomFragment(vList.get(i), isHistory));
+                this.vList.add(new NewRoomFragment(vList.get(i), isHistory,false));
             }
         }
     }

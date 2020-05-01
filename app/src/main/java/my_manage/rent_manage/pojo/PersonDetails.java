@@ -19,6 +19,7 @@ public final class PersonDetails {
      * 身份证号码
      */
     private String cord;
+    private String other;
 
     public PersonDetails(String name) {
         this.name = name;

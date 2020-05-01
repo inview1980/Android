@@ -14,12 +14,14 @@ import my_manage.rent_manage.pojo.RoomDetails;
 public final class ShowRoomDetails extends RoomDetails {
     private RentalRecord rentalRecord;
     private PersonDetails personDetails;
+    private RoomDetails roomDetails;
     private double roomAreas;
     private int roomCount;
 
 
     public ShowRoomDetails(RoomDetails roomDetails) {
         super(roomDetails);
+        this.roomDetails=roomDetails;
     }
 
     public Calendar getRentalEndDate() {

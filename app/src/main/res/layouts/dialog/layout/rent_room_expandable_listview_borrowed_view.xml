@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="start"
+    android:layoutDirection="ltr"
+    android:columnCount="4">
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_details"
+        style="@style/rental_expandable_listview_item"
+        android:text="查看详情" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_continue"
+        style="@style/rental_expandable_listview_item"
+        android:text="续租" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_leaseback"
+        style="@style/rental_expandable_listview_item"
+        android:text="退租" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_changed_rent"
+        style="@style/rental_expandable_listview_item"
+        android:text="调整租金" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_changed_deposit"
+        style="@style/rental_expandable_listview_item"
+        android:text="调整押金" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_history"
+        style="@style/rental_expandable_listview_item"
+        android:text="查看出租记录" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_pay_propertycosts"
+        
+        android:layout_columnWeight="@integer/rental_room_details_1width"
+        style="@style/rental_expandable_listview_item"
+        android:text="支付物业费" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_renew_contract"
+        style="@style/rental_expandable_listview_item"
+        android:text="续签合同" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_man_info"
+        style="@style/rental_expandable_listview_item"
+        android:text="租户资料" />
+
+    <TextView android:id="@+id/rent_room_expandable_listview_borrowed_del_room"
+        style="@style/rental_expandable_listview_item"
+        android:text="删除房源" />
+</GridLayout>

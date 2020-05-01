@@ -2,132 +2,77 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rental_house_tableLayoutId"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:gravity="start"
-    android:layoutDirection="ltr"
-    android:orientation="vertical">
+    android:stretchColumns="1"
+    android:shrinkColumns="3"
+    android:layoutDirection="ltr">
 
     <TableRow>
 
         <TextView
             android:id="@+id/rental_house_communityName_txt"
             style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/rental_main_gridview_margin_6"
+            android:layout_span="2"
             android:visibility="gone" />
 
         <TextView
             style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rental_houseNumber_cn" />
 
         <TextView
             android:id="@+id/rental_house_houseNumber_txt"
             style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_area_cn" />
-
-        <TextView
-            android:id="@+id/rental_house_area_txt"
-            style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
+            android:layout_marginEnd="@dimen/rental_main_gridview_margin_6" />
     </TableRow>
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="4">
+    <TableRow>
 
         <TextView
             style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rental_man_cn" />
 
         <TextView
-            android:id="@+id/rental_house_man_txt"
-            style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1.5" />
+            android:id="@+id/rental_person_list_item_name"
+            style="@style/rental_textView_context" />
 
         <TextView
             style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rental_isContainRealty_cn" />
+            android:text="@string/rental_area_cn" />
 
         <TextView
-            android:id="@+id/rental_house_isContainRealty_txt"
-            style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
+            android:id="@+id/rental_person_list_item_tel"
+            android:minWidth="@dimen/pwdItemWidth"
+            style="@style/rental_textView_context" />
+    </TableRow>
+<TableRow>
 
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1" />
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:layout_height="wrap_content"
+        android:text="@string/rental_endDate_cn" />
 
-        <TextView
-            style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_monthlyRent_cn" />
+    <TextView
+        android:id="@+id/rental_house_endDate_txt"
+        style="@style/rental_textView_context"
+        android:layout_columnWeight="@integer/rental_room_details_1width" />
 
-        <TextView
-            android:id="@+id/rental_house_monthlyRent_txt"
-            style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1.5" />
+    <TextView
+        style="@style/rental_textView_Lable"
+        android:layout_height="wrap_content"
+        android:text="@string/rental_monthlyRent_cn" />
 
-        <TextView
-            style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_realtyMoney_cn" />
+    <TextView
+        android:id="@+id/rental_house_monthlyRent_txt"
+        style="@style/rental_textView_context"
+        android:layout_columnWeight="@integer/rental_room_details_2width" />
+</TableRow>
 
-        <TextView
-            android:id="@+id/rental_house_realtyMoney_txt"
-            style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
 
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1" />
 
-        <TextView
-            style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_endDate_cn" />
-
-        <TextView
-            android:id="@+id/rental_house_endDate_txt"
-            style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1.5" />
-
-        <TextView
-            style="@style/rental_textView_Lable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_propertyPrice_cn" />
-
-        <TextView
-            android:id="@+id/rental_house_propertyPrice_txt"
-            style="@style/rental_textView_context"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_columnWeight="1" />
-    </GridLayout>
 </TableLayout>

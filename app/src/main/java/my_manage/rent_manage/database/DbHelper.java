@@ -46,9 +46,15 @@ public final class DbHelper {
         return dbHelper;
     }
 
+    public List<String> getCommunityNames() {
+        return getRoomDetailsToList().stream()
+                .map(RoomDetails::getCommunityName).distinct()
+                .collect(Collectors.toList());
+    }
+
     public List<ShowRoomDetails> getDeleteRoomDetails() {
-        List<ShowRoomDetails> resultLst = new ArrayList<>();
-        List<RoomDetails> roomDetailsList = getRoomDetailsByDelete();
+        List<ShowRoomDetails> resultLst       = new ArrayList<>();
+        List<RoomDetails>     roomDetailsList = getRoomDetailsByDelete();
         room2ShowRoomDetails(resultLst, roomDetailsList);
         return resultLst;
     }
@@ -60,7 +66,7 @@ public final class DbHelper {
      */
     public List<ShowRoomDetails> getRoomForHouse(String compoundName) {
         List<ShowRoomDetails> resultLst = new ArrayList<>();
-        List<RoomDetails> roomDetailsList;
+        List<RoomDetails>     roomDetailsList;
         if (StrUtils.isNotBlank(compoundName))
             roomDetailsList = RentDB.getQueryByWhere(RoomDetails.class, "communityName", new Object[]{compoundName});
         else
@@ -141,8 +147,8 @@ public final class DbHelper {
         //获取类的所有get方法
         Method[] methods = getGetMethod(tList.get(0), fields);
 
-        int columns = heads.length;
-        Row row = sheet.createRow(0);
+        int  columns = heads.length;
+        Row  row     = sheet.createRow(0);
         Cell cell;
         for (int i = 0; i < columns; i++) {
             cell = row.createCell(i);
@@ -155,8 +161,8 @@ public final class DbHelper {
                 for (int j = 0; j < columns; j++) {
                     cell = row.createCell(j);
                     if (methods[j].getReturnType() == Calendar.class) {
-                        Calendar c = (Calendar) methods[j].invoke(tList.get(i));
-                        String str = null == c ? null : c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH);
+                        Calendar c   = (Calendar) methods[j].invoke(tList.get(i));
+                        String   str = null == c ? null : c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH);
                         cell.setCellValue(str);
                     } else {
                         Object obj = methods[j].invoke(tList.get(i));
@@ -177,13 +183,13 @@ public final class DbHelper {
         rd = rd == null ? RentDB.getQueryAll(RoomDetails.class) : rd;
         rr = rr == null ? RentDB.getQueryAll(RentalRecord.class) : rr;
         ct = ct == null ? RentDB.getQueryAll(PersonDetails.class) : ct;
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        boolean isRentalRecordOk = createSheet(rr, workbook, RentalRecord.class.getSimpleName());
-        boolean isRoomDesOk = createSheet(rd, workbook, RoomDetails.class.getSimpleName());
-        boolean isContactsOk = createSheet(ct, workbook, PersonDetails.class.getSimpleName());
+        XSSFWorkbook workbook         = new XSSFWorkbook();
+        boolean      isRentalRecordOk = createSheet(rr, workbook, RentalRecord.class.getSimpleName());
+        boolean      isRoomDesOk      = createSheet(rd, workbook, RoomDetails.class.getSimpleName());
+        boolean      isContactsOk     = createSheet(ct, workbook, PersonDetails.class.getSimpleName());
 
         try {
-            File outFile = new File(filename);
+            File         outFile      = new File(filename);
             OutputStream outputStream = new FileOutputStream(outFile.getAbsolutePath());
             workbook.write(outputStream);
             outputStream.flush();
@@ -199,7 +205,7 @@ public final class DbHelper {
     }
 
     private <T> Field[] getHead(T t) {
-        Field[] fields = t.getClass().getDeclaredFields();
+        Field[]     fields  = t.getClass().getDeclaredFields();
         List<Field> strings = new ArrayList<>();
         for (Field field : fields) {
             field.setAccessible(true);
@@ -209,7 +215,7 @@ public final class DbHelper {
     }
 
     public Method[] getGetMethod(Object ob, Field[] fields) {
-        Method[] m = ob.getClass().getMethods();
+        Method[]     m      = ob.getClass().getMethods();
         List<Method> result = new ArrayList<>();
 
         for (Field field : fields) {
@@ -224,7 +230,7 @@ public final class DbHelper {
 
     public ExcelData readExcel(String filename) {
         if (StrUtils.isBlank(filename)) return null;
-        File inFile = new File(filename);
+        File        inFile      = new File(filename);
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(inFile);
@@ -263,8 +269,8 @@ public final class DbHelper {
         List<HashMap<String, String>> result = readSheetToMap(sheet, rowsCount);
 
         //获取类的所有字段
-        Field[] fields = getHead(cClass);
-        Map<Method, String> maps = getMaps(result, cClass);
+        Field[]             fields = getHead(cClass);
+        Map<Method, String> maps   = getMaps(result, cClass);
 
         try {
             return objToClass(result, maps, cClass);
@@ -283,8 +289,8 @@ public final class DbHelper {
             //从1开头，因为0为标题，数据从1开始
             T t = cClass.newInstance();
             for (Map.Entry<Method, String> methodStringEntry : maps.entrySet()) {
-                String tmp=methodStringEntry.getValue();
-                if(tmp==null)continue;
+                String tmp = methodStringEntry.getValue();
+                if (tmp == null) continue;
                 str2Obj(t, methodStringEntry.getKey(), lst.get(i).get(tmp));
             }
             resultLst.add(t);
@@ -296,7 +302,7 @@ public final class DbHelper {
         if (StrUtils.isNotBlank(str)) {
             try {
                 Object object = null;
-                Class cClass = method.getParameterTypes()[0];
+                Class  cClass = method.getParameterTypes()[0];
                 switch (cClass.getSimpleName()) {
                     case "Calendar":
                         String[] a = str.split("-");
@@ -310,7 +316,7 @@ public final class DbHelper {
                         object = str;
                         break;
                     case "int":
-                        object =(int)Double.parseDouble(str) ;
+                        object = (int) Double.parseDouble(str);
                         break;
                     case "double":
                         object = Double.parseDouble(str);
@@ -336,11 +342,11 @@ public final class DbHelper {
      */
     private Map<Method, String> getMaps(List<HashMap<String, String>> lst, Class cClass) {
         if (lst == null) return null;
-        Method[] methods = Arrays.stream(cClass.getDeclaredMethods()).filter(mt -> mt.getName().startsWith("set")).toArray(Method[]::new);
-        Map<Method, String> result = new HashMap<>();
+        Method[]            methods = Arrays.stream(cClass.getDeclaredMethods()).filter(mt -> mt.getName().startsWith("set")).toArray(Method[]::new);
+        Map<Method, String> result  = new HashMap<>();
         for (int i = 0; i < methods.length; i++) {
-            String methodName = methods[i].getName().substring(3);
-            Set<String> key = lst.get(0).keySet();
+            String      methodName = methods[i].getName().substring(3);
+            Set<String> key        = lst.get(0).keySet();
             for (String s : key) {
                 if (s.equalsIgnoreCase(methodName))
                     result.put(methods[i], s);
@@ -355,11 +361,11 @@ public final class DbHelper {
      * @param rowsCount 行数
      */
     private List<HashMap<String, String>> readSheetToMap(XSSFSheet sheet, int rowsCount) {
-        List<HashMap<String, String>> resultMap = new ArrayList<>();
-        HashMap<String, String> tmp;
-        Row row = sheet.getRow(0);
-        int cellsCount = row.getPhysicalNumberOfCells();
-        String[] heads = new String[cellsCount];
+        List<HashMap<String, String>> resultMap  = new ArrayList<>();
+        HashMap<String, String>       tmp;
+        Row                           row        = sheet.getRow(0);
+        int                           cellsCount = row.getPhysicalNumberOfCells();
+        String[]                      heads      = new String[cellsCount];
         for (int i = 0; i < heads.length; i++) {
             heads[i] = row.getCell(i).getStringCellValue();
         }
@@ -368,9 +374,9 @@ public final class DbHelper {
             tmp = new HashMap<>();
             for (int j = 0; j < cellsCount; j++) {
                 if (row.getCell(j) == null) continue;
-                if(row.getCell(j).getCellType()==Cell.CELL_TYPE_NUMERIC){
-                    tmp.put(heads[j], ""+row.getCell(j).getNumericCellValue());
-                }else if(row.getCell(j).getCellType()==Cell.CELL_TYPE_STRING) {
+                if (row.getCell(j).getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                    tmp.put(heads[j], "" + row.getCell(j).getNumericCellValue());
+                } else if (row.getCell(j).getCellType() == Cell.CELL_TYPE_STRING) {
                     tmp.put(heads[j], row.getCell(j).getStringCellValue());
                 }
             }
@@ -382,8 +388,8 @@ public final class DbHelper {
     public boolean saveRoomDes(RoomDetails roomDetails) {
         RoomDetails tmp = RentDB.getInfoById(roomDetails.getRoomNumber(), RoomDetails.class);
         if (tmp != null) {
-            return RentDB.update(roomDetails)>0;
-        }else {
+            return RentDB.update(roomDetails) > 0;
+        } else {
             return RentDB.insert(roomDetails) > 0;
         }
     }
@@ -394,14 +400,18 @@ public final class DbHelper {
         return false;
     }
 
-    public List<PersonDetails> getPersonList() {
+    public List<PersonDetails> getPersonList(boolean addBlankItem) {
         List<PersonDetails> tmpLst = RentDB.getQueryAll(PersonDetails.class);
         if (tmpLst == null) return new ArrayList<>();
         tmpLst.sort((n1, n2) -> Integer.compare(n2.getPrimary_id(), n1.getPrimary_id()));
-        tmpLst.add(new PersonDetails());
+        //不添加空白的租户
+        if (addBlankItem)
+            tmpLst.add(new PersonDetails());
         return tmpLst;
     }
-
+    public List<PersonDetails> getPersonList() {
+        return getPersonList(true);
+    }
     public List<RentalRecord> getRecords() {
         return RentDB.getQueryAll(RentalRecord.class);
     }
@@ -429,10 +439,10 @@ public final class DbHelper {
      * 获取指定房号的历史记录
      */
     public List<ShowRoomDetails> getHistoryByRoomNumber(String roomNumber) {
-        List<ShowRoomDetails> resultLst = new ArrayList<>();
-        List<RentalRecord> recordList = RentDB.getQueryByWhere(RentalRecord.class, "roomNumber", new Object[]{roomNumber});
-        RoomDetails rd = RentDB.getInfoById(roomNumber, RoomDetails.class);
-        ShowRoomDetails show;
+        List<ShowRoomDetails> resultLst  = new ArrayList<>();
+        List<RentalRecord>    recordList = RentDB.getQueryByWhere(RentalRecord.class, "roomNumber", new Object[]{roomNumber});
+        RoomDetails           rd         = RentDB.getInfoById(roomNumber, RoomDetails.class);
+        ShowRoomDetails       show;
         for (final RentalRecord record : recordList) {
             show = new ShowRoomDetails(rd);
             show.setRentalRecord(record);
@@ -443,11 +453,25 @@ public final class DbHelper {
         return resultLst;
     }
 
+    public List<ShowRoomDetails> getShowRoomDesForPerson(int personId) {
+        List<ShowRoomDetails> result     = new ArrayList<>();
+        PersonDetails         person     = RentDB.getInfoById(personId, PersonDetails.class);
+        ShowRoomDetails       roomDet;
+        List<RentalRecord>    historyLst = RentDB.getQueryByWhere(RentalRecord.class, "manID", new Object[]{personId});
+        for (final RentalRecord record : historyLst) {
+            roomDet = new ShowRoomDetails(RentDB.getInfoById(record.getRoomNumber(), RoomDetails.class));
+            roomDet.setRentalRecord(record);
+            roomDet.setPersonDetails(person);
+            result.add(roomDet);
+        }
+        return result;
+    }
+
     @Data
     public class ExcelData {
-        List<RoomDetails> roomDetailsList;
+        List<RoomDetails>   roomDetailsList;
         List<PersonDetails> personDetailsList;
-        List<RentalRecord> rentalRecordList;
+        List<RentalRecord>  rentalRecordList;
     }
 
 }

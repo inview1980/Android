@@ -8,4 +8,8 @@
     <dimen name="rental_main_gridview_nomal_fontsize">18sp</dimen>
     <dimen name="rental_main_gridview_margin_6">6dp</dimen>
     <dimen name="rental_main_gridview_margin_3">3dp</dimen>
+
+    <dimen name="rental_lable_textSize">17dp</dimen>
+    <dimen name="rent_room_expandable_listview_item_height">42dp</dimen>
+<dimen name="rent_room_details_endPadding">10dp</dimen>
 </resources>
