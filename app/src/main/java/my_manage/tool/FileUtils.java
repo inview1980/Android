@@ -1,7 +1,12 @@
 package my_manage.tool;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+
 import my_manage.password_box.pojo.MyTime;
 
 import java.io.BufferedReader;
@@ -51,8 +56,8 @@ public final class FileUtils {
      * @throws IOException
      */
     private static String readStringFromFile(BufferedReader er) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        String tmp = null;
+        StringBuilder sb  = new StringBuilder();
+        String        tmp = null;
         while ((tmp = er.readLine()) != null) {
             sb.append(tmp);
         }
@@ -69,8 +74,8 @@ public final class FileUtils {
             File file = new File(PATH, timeManageFileName);
             if (file.exists()) file.delete();
             if (!file.createNewFile()) return false;
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-            String str = JSONArray.toJSONString(myTimes);
+            BufferedWriter bw  = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            String         str = JSONArray.toJSONString(myTimes);
             System.out.println(str);
             bw.write(str);
             bw.close();
@@ -82,12 +87,12 @@ public final class FileUtils {
     }
 
     public static String readString(String path, String filename) {
-        File file = new File(path, filename);
-        StringBuilder sb = new StringBuilder();
+        File          file = new File(path, filename);
+        StringBuilder sb   = new StringBuilder();
         if (!file.exists()) return null;
         try {
-            BufferedReader er = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            String tmp = null;
+            BufferedReader er  = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String         tmp = null;
             while ((tmp = er.readLine()) != null) {
                 sb.append(tmp);
             }
@@ -100,7 +105,7 @@ public final class FileUtils {
     }
 
     public static boolean writeStringToFile(String path, String filename, Object object) {
-        if(null==object)return false;
+        if (null == object) return false;
         try {
             File file = new File(path, filename);
             if (file.exists() && !file.delete()) throw new IOException("删除数据库文件失败");
@@ -115,5 +120,24 @@ public final class FileUtils {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static String getPath(Context context, Uri uri) {
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = {"_data"};
+            Cursor   cursor     = null;
+            try {
+                cursor = context.getContentResolver().query(uri, projection, null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+                //                Eat it
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+        return null;
     }
 }

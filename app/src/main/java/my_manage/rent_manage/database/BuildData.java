@@ -23,7 +23,7 @@ public final class BuildData {
             rd.setRoomArea(random.nextDouble() * 100);
             rd.setRoomNumber((random.nextInt(10) + 1) + "-" + random.nextInt(50) + "-" + random.nextInt(50));
             rd.setElectricMeter(getNumberForString(8));
-            rd.setManId(random.nextInt(ContactsNumber));
+//            rd.setManId(random.nextInt(ContactsNumber));
             rList.add(rd);
         }
         return rList;
@@ -50,7 +50,7 @@ public final class BuildData {
             pay.add(Calendar.DAY_OF_YEAR, random.nextInt(100) - 50);
             rentalRecord.setPaymentDate(pay);
             rentalRecord.setIsContainRealty(random.nextBoolean());
-            rentalRecord.setRealtyMoney(random.nextDouble() * 1000);
+            rentalRecord.setPropertyCosts(random.nextDouble() * 1000);
             rentalRecord.setTotalMoney(random.nextDouble() * 10000);
             rentalRecord.setManID(random.nextInt(ContactsNumber));
             rentalRecord.setRoomNumber(roomDetailsList.get(random.nextInt(roomDetailsList.size())).getRoomNumber());

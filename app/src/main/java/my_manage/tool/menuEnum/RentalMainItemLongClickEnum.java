@@ -13,9 +13,9 @@ import my_manage.iface.IActivityMenuForData;
 import my_manage.password_box.R;
 import my_manage.rent_manage.RentalMainActivity;
 import my_manage.rent_manage.database.DbHelper;
+import my_manage.rent_manage.listener.RoomListener;
 import my_manage.rent_manage.page.RentalForHouseActivity;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
-import my_manage.tool.EnumUtils;
 
 /**
  * RentalMainActivity类处理GridView的项目单击事件处理
@@ -27,15 +27,12 @@ public enum RentalMainItemLongClickEnum implements IActivityMenuForData<RentalMa
     Add(2, "增加房源") {
         @Override
         public void run(RentalMainActivity activity, List<ShowRoomDetails> data, int position) {
-//            if (data.size() < position - 1) return;
-
-            Log.i(activity.getPackageName(), "增加房源");
             String title = "";
             if (position >= 0 && data != null && data.size() >= position) {
-                title = data.get(position).getCommunityName();
+                title = data.get(position).getRoomDetails().getCommunityName();
                 if (title.contains("全部")) title = "";
             }
-            EnumUtils.communityChange(activity, title);
+            RoomListener.changedCommunity(activity,title);
         }
     },
     Delete(3, "删除小区") {
@@ -48,7 +45,7 @@ public enum RentalMainItemLongClickEnum implements IActivityMenuForData<RentalMa
             d2.setMessage("确定要删除此小区所有房源吗?");
             d2.setCancelable(true);
             d2.setPositiveButton(R.string.ok_cn, (d, w) -> {
-                boolean isOK = DbHelper.getInstance().delRoomDes(data.get(position).getCommunityName());
+                boolean isOK = DbHelper.getInstance().delRoomDes(data.get(position).getRoomDetails().getCommunityName());
                 if (isOK) {
                     showMessage(activity, "删除此小区成功");
                     activity.showList();
@@ -61,7 +58,7 @@ public enum RentalMainItemLongClickEnum implements IActivityMenuForData<RentalMa
         @Override
         public void run(RentalMainActivity activity, List<ShowRoomDetails> data, int position) {
             Intent intent = new Intent(activity, RentalForHouseActivity.class);
-            intent.putExtra("title", RentalMainActivity.showRoomForMainList.get(position).getCommunityName());
+            intent.putExtra("title", RentalMainActivity.showRoomForMainList.get(position).getRoomDetails().getCommunityName());
             activity.startActivity(intent);
             Log.i(activity.getPackageName(), "显示房源");
         }

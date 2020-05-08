@@ -1,44 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:columnCount="2"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/rental_main_gridview_margin_6"
+    android:background="@color/grayWhite"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:stretchColumns="1">
 
-    <TextView android:id="@+id/rental_change_dialog_title"
+    <TextView
+        android:id="@+id/rental_change_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_columnSpan="2"
         android:text="@string/rental_change_rentmoney_cn"
         android:textSize="@dimen/rental_main_gridview_title_fontsize" />
 
+    <TableRow style="@style/rental_room_details_tableRow">
 
-        <TextView android:id="@+id/rental_change_dialog_lable1"
+
+        <TextView
+            android:id="@+id/rental_change_dialog_lable1"
             style="@style/rental_textView_Lable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rental_change_now_rentmoney_cn" />
 
-        <TextView style="@style/rental_textView_Lable"
-            android:id="@+id/rental_changeRent_oldNum"/>
+        <TextView
+            android:id="@+id/rental_changeRent_oldNum"
+            style="@style/rental_textView_Lable"
+            android:layout_columnWeight="@integer/rental_room_details_1width" />
+    </TableRow>
 
-        <TextView android:id="@+id/rental_change_dialog_lable2"
+    <TableRow style="@style/rental_room_details_tableRow">
+
+
+        <TextView
+            android:id="@+id/rental_change_dialog_lable2"
             style="@style/rental_textView_Lable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rental_change_rentmoney_det_cn" />
 
-        <EditText style="@style/rental_add_edit"
-            android:inputType="number"
-            android:id="@+id/rental_changeRent_newNum"/>
+        <EditText
+            android:id="@+id/rental_changeRent_newNum"
+            style="@style/rental_add_edit"
+            android:layout_columnWeight="@integer/rental_room_details_1width"
+            android:inputType="number" />
+    </TableRow>
 
-    <Button
-        android:id="@+id/rental_changeRent_okBtn"
-        android:text="@string/ok_cn"
-        android:layout_column="1"
-        android:layout_gravity="right"
-        android:layout_marginEnd="@dimen/rental_main_gridview_margin_6" />
 
-</GridLayout>
+    <TableRow
+        style="@style/rental_room_details_tableRow"
+        android:gravity="right">
+
+        <com.deadline.statebutton.StateButton
+            android:id="@+id/rental_changeRent_okBtn"
+            style="@style/StateButtonStyle"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+            app:normalBackgroundColor="@color/banana"
+            app:pressedBackgroundColor="@color/banana"
+            app:round="true"
+            app:unableBackgroundColor="@color/banana"
+            android:text="@string/ok_cn" />
+
+    </TableRow>
+
+</TableLayout>

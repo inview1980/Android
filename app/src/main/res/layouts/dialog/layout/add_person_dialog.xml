@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/rental_main_gridview_margin_6"
@@ -26,9 +27,9 @@
 
     <EditText
         android:id="@+id/rental_addPerson_tel"
-        android:inputType="number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="number" />
 
     <TextView
         style="@style/rental_textView_Lable"
@@ -40,6 +41,7 @@
         android:id="@+id/rental_addPerson_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <TextView
         style="@style/rental_textView_Lable"
         android:layout_width="wrap_content"
@@ -51,11 +53,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
+    <com.deadline.statebutton.StateButton
         android:id="@+id/rental_addPerson_ok"
-        android:layout_width="wrap_content"
+        style="@style/StateButtonStyle"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_margin="@dimen/rental_main_gridview_margin_6"
-        android:text="@string/ok_cn" />
+        android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+        android:text="@string/ok_cn"
+        app:normalBackgroundColor="@color/banana"
+        app:pressedBackgroundColor="@color/banana"
+        app:round="true"
+        app:unableBackgroundColor="@color/banana" />
 </LinearLayout>

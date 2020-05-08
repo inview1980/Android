@@ -14,21 +14,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class RoomDetails {
-    public RoomDetails(RoomDetails roomDetails) {
-        if(roomDetails!=null) {
-            this.communityName = roomDetails.communityName;
-            this.manId = roomDetails.manId;
-            this.electricMeter = roomDetails.electricMeter;
-            this.propertyPrice = roomDetails.propertyPrice;
-            this.recordId = roomDetails.recordId;
-            this.roomNumber = roomDetails.roomNumber;
-            this.roomArea = roomDetails.roomArea;
-            this.rentalMoney = roomDetails.rentalMoney;
-            this.isDelete = roomDetails.isDelete;
-            this.waterMeter=roomDetails.waterMeter;
-        }
-    }
-
     /**
      * 小区名称
      */
@@ -52,23 +37,18 @@ public class RoomDetails {
     @Setter@Getter
     private String waterMeter;
 
-    /**
-     * 现任联系人ID
-     */
-    @Setter
-    @Getter
-    private int manId;
+//    /**
+//     * 现任联系人ID
+//     */
+//    @Setter
+//    @Getter
+//    private int manId;
 
     /**
      * 物业费单价
      */
     private int propertyPrice;
-    /**
-     * 月租金
-     */
-    @Setter
-    @Getter
-    private int rentalMoney;
+
 
 
     private int isDelete;

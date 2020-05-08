@@ -20,6 +20,7 @@ import my_manage.rent_manage.fragment.NewRoomFragment;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
+import my_manage.tool.DateUtils;
 import my_manage.tool.StrUtils;
 import my_manage.tool.menuEnum.CastUtils;
 
@@ -48,8 +49,9 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
             updateRoomDetails();
         }
         //弹出日期选择框，选择日期
-        if (view.getId() == R.id.rental_editRoom_beginDate || view.getId() == R.id.rental_editRoom_payDate
-                || view.getId() == R.id.rental_editRoom_propertyBeginDate) {
+        if (fragment.getOkBtn().getVisibility() == View.VISIBLE && (view.getId() == R.id.rental_editRoom_beginDate
+                || view.getId() == R.id.rental_editRoom_payDate || view.getId() == R.id.rental_editRoom_propertyBeginDate
+                || view.getId() == R.id.rental_editRoom_contract_BeginDate)) {
             // 初始化日期
             Calendar myCalendar = Calendar.getInstance();
             int      myYear     = myCalendar.get(Calendar.YEAR);
@@ -65,42 +67,33 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         //增加出租户资料
         if (view.getId() == R.id.rental_editRoom_add) {
             //增加租户资料
-             PersonExtendableListViewAdapterListener.addPerson(fragment.getActivity(),fragment);
+            PersonListener.addPerson(fragment.getActivity(), fragment);
         }
     }
 
     private void updateRoomDetails() {
         //判断租户是否为空，空则退出
         PersonDetails pd = (PersonDetails) fragment.getPerson().getSelectedItem();
-        if(pd.getPrimary_id()==0){
-            androidx.appcompat.app.AlertDialog.Builder dialog=new androidx.appcompat.app.AlertDialog.Builder(fragment.getContext());
+        if (pd.getPrimary_id() == 0) {
+            androidx.appcompat.app.AlertDialog.Builder dialog = new androidx.appcompat.app.AlertDialog.Builder(fragment.getContext());
             dialog.setTitle("租户未选中").setMessage("未选中租户，请选择租户后再保存")
-                    .setPositiveButton(R.string.ok_cn,null)
+                    .setPositiveButton(R.string.ok_cn, null)
                     .show();
             return;
         }
         RoomDetails room = new RoomDetails();
-        room.setRecordId(fragment.getShowRoomDetails().getRecordId());//记录的ID
+        room.setRecordId(fragment.getShowRoomDetails().getRoomDetails().getRecordId());//记录的ID
         room.setCommunityName(fragment.getCommunity().getText().toString());//小区名
         room.setRoomNumber(fragment.getRoomNumber().getText().toString());//房号
-        room.setWaterMeter(fragment.getWaterMeter().getText().toString())   ;//水表
+        room.setWaterMeter(fragment.getWaterMeter().getText().toString());//水表
         room.setElectricMeter(fragment.getMeterNumber().getText().toString());//电表
-        if (StrUtils.isBlank(room.getCommunityName())) {
-            showMyDialog("社区不能为空");
-            return;
-        }
-        if (StrUtils.isBlank(room.getRoomNumber())) {
-            showMyDialog("房号不能为空");
-            return;
-        }
-        Pair<Boolean, Integer> rm = CastUtils.parseInt(fragment.getRentalMoney().getText().toString());//转换物业费成int
-        if (rm.first) {room.setRentalMoney(rm.second);}
+
         Pair<Boolean, Double> pp = CastUtils.parseDouble(fragment.getPropertyPrice().getText().toString());//转换物业费单价为double
         if (pp.first) {room.setPropertyPrice(pp.second);}
         Pair<Boolean, Double> ra = CastUtils.parseDouble(fragment.getArea().getText().toString());//面积转换
         if (ra.first) {room.setRoomArea(ra.second);}
 
-        room.setManId(pd.getPrimary_id());
+//        room.setManId(pd.getPrimary_id());
         //更改租户信息
         updatePerson(pd);
         //将记录也一起更改
@@ -135,19 +128,33 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         //房号
         rr.setRoomNumber(room.getRoomNumber());
         //房租开始时间
-        rr.setStartDate(string2Date(fragment.getBeginDate().getText().toString()));
+        rr.setStartDate(DateUtils.string2Date(fragment.getBeginDate().getText().toString()));
         //房租时长
         Pair<Boolean, Integer> pm = CastUtils.parseInt(fragment.getRentalMonth().getText().toString());
         if (pm.first)
             rr.setPayMonth(pm.second);
+        //转换物业费成int
+        Pair<Boolean, Double> rm = CastUtils.parseDouble(fragment.getRentalMoney().getText().toString());
+        if (rm.first)
+            rr.setMonthlyRent(rm.second);
         //物业费开始时间
-        rr.setRealtyStartDate(string2Date(fragment.getProBeginDate().getText().toString()));
+        rr.setRealtyStartDate(DateUtils.string2Date(fragment.getProBeginDate().getText().toString()));
+        //合同开始时间
+        rr.setContractSigningDate(DateUtils.string2Date(fragment.getContractBeginDate().getText().toString()));
+        //合同时长
+        pm=CastUtils.parseInt(fragment.getContractMonth().getText().toString());
+        if(pm.first)
+            rr.setContractMonth(pm.second);
         //付款时间
-        rr.setPaymentDate(string2Date(fragment.getPayDate().getText().toString()));
+        rr.setPaymentDate(DateUtils.string2Date(fragment.getPayDate().getText().toString()));
+        //总金额
+        rm = CastUtils.parseDouble(fragment.getTotalMoney().getText().toString());
+        if (rm.first)
+            rr.setTotalMoney(rm.second);
         //物业费时长
         pm = CastUtils.parseInt(fragment.getProMonth().getText().toString());
         if (pm.first)
-            rr.setRealtyMonth(pm.second);
+            rr.setPropertyTime(pm.second);
         rr.setManID(manId);
         //是否包含物业费
         rr.setIsContainRealty(fragment.getIsContainRealty().isChecked());
@@ -193,22 +200,5 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         dialog.setPositiveButton(R.string.ok_cn, (dialogInterface, i) -> {
         }).show();
     }
-
-    private Calendar string2Date(String text) {
-        if (StrUtils.isBlank(text)) return null;
-        String[] ss = text.split("-");
-        if (ss.length >= 3) {
-            Pair<Boolean, Integer> year  = CastUtils.parseInt(ss[0]);
-            Pair<Boolean, Integer> month = CastUtils.parseInt(ss[1]);
-            Pair<Boolean, Integer> day   = CastUtils.parseInt(ss[2]);
-            if (year.first && month.first && day.first) {
-                Calendar c = Calendar.getInstance();
-                c.set(year.second, month.second + 1, day.second);
-                return c;
-            }
-        }
-        return null;
-    }
-
 
 }

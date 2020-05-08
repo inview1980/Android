@@ -11,6 +11,8 @@
     <color name="banana">#E3CF57</color>
     <color name="grayBlue">#B0E0E6</color>
     <color name="red1">#FFC0CB</color>
+
+    <color name="blue">#3396d8</color>
     
     <color name="rentalMainGridViewTitleColor">#000456</color>
 </resources>

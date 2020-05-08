@@ -3,12 +3,17 @@ package my_manage.rent_manage.database;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
+import com.litesuits.orm.db.annotation.NotNull;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.assit.WhereBuilder;
 import com.litesuits.orm.db.model.ColumnsValue;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
+
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,9 +27,9 @@ import my_manage.tool.StrUtils;
  * @author mazhanzhu
  */
 public final class RentDB {
-    public static String DB_NAME;
+    public static  String  DB_NAME;
     private static LiteOrm liteOrm;
-    public static Context mContext;
+    public static  Context mContext;
 
 
     /**
@@ -67,11 +72,18 @@ public final class RentDB {
             }
             DB_NAME = getUserDatabaseName();
             liteOrm = LiteOrm.newSingleInstance(getDBConfig());
-//            liteOrm.setDebugged(LogUtil.isDebuggable());
         }
         return liteOrm;
     }
 
+    public static LiteOrm getLiteOrm(@NonNull Context context, @NonNull String path) {
+        if (liteOrm == null) {
+            mContext = context;
+            DB_NAME = path;
+            liteOrm = LiteOrm.newSingleInstance(getDBConfig());
+        }
+        return liteOrm;
+    }
 
     /**
      * 插入一条记录
@@ -118,7 +130,7 @@ public final class RentDB {
      * @param cla
      * @return
      */
-     static <T> List<T> getQueryAll(Class<T> cla) {
+    static <T> List<T> getQueryAll(Class<T> cla) {
         return getLiteOrm().query(cla);
     }
 
@@ -151,7 +163,7 @@ public final class RentDB {
      * @return
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-     static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
+    static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
         return getLiteOrm().<T>query(new QueryBuilder(cla).where(field + "=?", value));
     }
 
@@ -201,7 +213,7 @@ public final class RentDB {
      * @param field
      * @param value
      */
-     static <T> int deleteWhere(Class<T> cla, String field, Object[] value) {
+    static <T> int deleteWhere(Class<T> cla, String field, Object[] value) {
         return getLiteOrm().delete(cla, WhereBuilder.create(cla, field + "=?", value));
     }
 

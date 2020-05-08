@@ -88,13 +88,13 @@ public final class DbHelper {
                 RentalRecord record = RentDB.getInfoById(roomDetails.getRecordId(), RentalRecord.class);
                 if (null != record) {
                     srfh.setRentalRecord(record);
-                }
-            }
-            //查找租户信息
-            if (roomDetails.getManId() > 0) {
-                PersonDetails person = RentDB.getInfoById(roomDetails.getManId(), PersonDetails.class);
-                if (null != person) {
-                    srfh.setPersonDetails(person);
+                    //查找租户信息
+                    if (record.getManID() > 0) {
+                        PersonDetails person = RentDB.getInfoById(record.getManID(), PersonDetails.class);
+                        if (null != person) {
+                            srfh.setPersonDetails(person);
+                        }
+                    }
                 }
             }
             resultLst.add(srfh);
@@ -121,14 +121,14 @@ public final class DbHelper {
             List<RoomDetails> showRoomDetailsList = roomDetailsList.stream()
                     .filter(rd -> name.equals(rd.getCommunityName()) && !rd.getIsDelete()).collect(Collectors.toList());
             sr.setRoomCount((int) showRoomDetailsList.stream().map(RoomDetails::getCommunityName).count());
-            sr.setCommunityName(name);
+            sr.getRoomDetails().setCommunityName(name);
             sr.setRoomAreas(showRoomDetailsList.stream().flatMapToDouble(roomDes -> DoubleStream.of(roomDes.getRoomArea())).sum());
             tmpLst.add(sr);
         });
 
         //加入全部数据
         ShowRoomDetails sr = new ShowRoomDetails();
-        sr.setCommunityName("全部房间");
+        sr.getRoomDetails().setCommunityName("全部房间");
         sr.setRoomAreas(roomDetailsList.stream().flatMapToDouble(rd -> DoubleStream.of(rd.getRoomArea())).sum());
         sr.setRoomCount((int) roomDetailsList.stream().map(RoomDetails::getCommunityName).count());
         tmpLst.add(sr);
@@ -420,7 +420,7 @@ public final class DbHelper {
      * 将房源归入已删除列表，但在数据库中不删除
      */
     public boolean delRoomDes(ShowRoomDetails showRoomDetails) {
-        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomNumber(), RoomDetails.class);
+        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
         if (rd == null) return false;
         rd.setIsDelete(true);
         return RentDB.update(rd) > 0;
@@ -429,7 +429,7 @@ public final class DbHelper {
     public boolean restoreDelete(ShowRoomDetails showRoomDetails) {
         if (showRoomDetails == null) return false;
 
-        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomNumber(), RoomDetails.class);
+        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
         if (rd == null) return false;
         rd.setIsDelete(false);
         return RentDB.update(rd) > 0;
@@ -465,6 +465,18 @@ public final class DbHelper {
             result.add(roomDet);
         }
         return result;
+    }
+
+    public int delPersonById(int primary_id) {
+        return RentDB.deleteWhere(PersonDetails.class, "primary_id", new Object[]{primary_id});
+    }
+
+    public int insert(RentalRecord rr) {
+        if(RentDB.insert(rr)>0){
+            int max=RentDB.getQueryAll(RentalRecord.class).stream().mapToInt(RentalRecord::getPrimary_id).max().getAsInt();
+            return max;
+        }
+        return -1;
     }
 
     @Data

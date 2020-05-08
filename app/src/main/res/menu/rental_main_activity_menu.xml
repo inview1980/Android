@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/showRoomDetails"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:orderInCategory="1"
+        android:title="显示所有租户信息" />
+    <item
+        android:id="@+id/addRoom"
+        android:icon="@drawable/ic_house_black_24dp"
+        android:orderInCategory="2"
+        android:title="增加房源" />
+
+    <item
+        android:id="@+id/showDeletedRoomDetails"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:orderInCategory="5"
+        android:title="显示已删除房源" />
+    <item
+        android:id="@+id/saveDB"
+        android:icon="@drawable/ic_file_upload_black_24dp"
+        android:orderInCategory="5"
+        android:title="输出数据" />
+    <item
+        android:id="@+id/readDB"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:orderInCategory="5"
+        android:title="读入数据" />
+
+</menu>

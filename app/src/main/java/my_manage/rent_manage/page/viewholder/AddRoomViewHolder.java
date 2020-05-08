@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.orhanobut.dialogplus.ViewHolder;
 
+import java.util.Arrays;
 import java.util.List;
 
 import my_manage.password_box.R;
@@ -18,8 +20,8 @@ import my_manage.tool.PageUtils;
 
 public final class AddRoomViewHolder extends ViewHolder implements View.OnFocusChangeListener {
     private Activity activity;
-    private AutoCompleteTextView communityName;
-    private String communityString;
+    private Spinner  communityName;
+    private String   communityString;
     private EditText meterNumber;
     private EditText propertyPrice;
     private EditText area;
@@ -37,10 +39,10 @@ public final class AddRoomViewHolder extends ViewHolder implements View.OnFocusC
         init(view);
 
         //设置社区名下拉数据
-        List<String> roomDesList = DbHelper.getInstance().getCommunityNames();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, roomDesList);
-        communityName.setAdapter(adapter);
-        communityName.setText(communityString);
+        String[] names    = view.getResources().getStringArray(R.array.communityName);
+        int      position = Arrays.binarySearch(names, communityString);
+        position = (position == -1) ? 0 : position;
+        communityName.setSelection(position);
 
         return view;
     }
@@ -52,16 +54,17 @@ public final class AddRoomViewHolder extends ViewHolder implements View.OnFocusC
         meterNumber = view.findViewById(R.id.rental_addRoom_meterNumber);
         propertyPrice = view.findViewById(R.id.rental_addRoom_propertyPrice);
 
-        communityName.setOnFocusChangeListener(this);
         houseNumber.setOnFocusChangeListener(this);
         area.setOnFocusChangeListener(this);
         meterNumber.setOnFocusChangeListener(this);
         propertyPrice.setOnFocusChangeListener(this);
+
+        PageUtils.setUnderline(this);
     }
 
     @Override
     public void onFocusChange(View view, boolean b) {
-        PageUtils.closeInput(activity,b);
+        PageUtils.closeInput(activity, b);
     }
 
 }

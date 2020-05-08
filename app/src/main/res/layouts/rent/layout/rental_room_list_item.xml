@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rental_house_tableLayoutId"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,20 +12,29 @@
 
     <TableRow>
 
-        <TextView
+        <com.hanks.htextview.rainbow.RainbowTextView
             android:id="@+id/rental_house_communityName_txt"
             style="@style/rental_textView_context"
+            android:textStyle="bold"
             android:layout_marginEnd="@dimen/rental_main_gridview_margin_6"
             android:layout_span="2"
+            app:colorSpace="150dp"
+            app:colorSpeed="4dp"
             android:visibility="gone" />
 
-        <TextView
+        <com.hanks.htextview.rainbow.RainbowTextView
             style="@style/rental_textView_Lable"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:colorSpace="150dp"
+            app:colorSpeed="4dp"
             android:text="@string/rental_houseNumber_cn" />
 
-        <TextView
+        <com.hanks.htextview.rainbow.RainbowTextView
             android:id="@+id/rental_house_houseNumber_txt"
+            android:textStyle="bold"
+            app:colorSpace="150dp"
+            app:colorSpeed="4dp"
             style="@style/rental_textView_context"
             android:layout_marginEnd="@dimen/rental_main_gridview_margin_6" />
     </TableRow>

@@ -80,4 +80,5 @@
         <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
     </style>
 
+    <style name="AppMyTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
 </resources>

@@ -27,11 +27,12 @@ public final class RentalRecord {
      */
     @Getter
     @Setter
-    private int payMonth;
+    private int  payMonth;
     /**
      * 付款日期
      */
     private long paymentDate;
+
     /**
      * 付款金额
      */
@@ -39,7 +40,7 @@ public final class RentalRecord {
     /**
      * 物业费
      */
-    private int realtyMoney;
+    private int propertyCosts;
 
     /**
      * 是否包含物业费
@@ -57,46 +58,74 @@ public final class RentalRecord {
      * 物业费开始时间
      */
     private long realtyStartDate;
+
     /**
      * 物业费时长
      */
     @Getter
     @Setter
-    private int realtyMonth;
+    private int propertyTime;
     @Setter
     @Getter
     private int manID;
     /**
      * 押金
      */
-    @Setter@Getter
+    @Setter
+    @Getter
     private int deposit;
+
+    /**
+     * 月租金
+     */
+    private int monthlyRent;
 
     /**
      * 签合同时间
      */
-private long contractSigningDate;
+    private long contractSigningDate;
 
     /**
      * 合同期限（月）
      */
-@Getter@Setter
-private int contractMonth;
+    @Getter
+    @Setter
+    private int contractMonth;
 
-public Calendar getContractSigningDate(){
-    if (contractSigningDate == 0) return null;
+    /**
+     * 月租金
+     */
+    public double getMonthlyRent() {
+        return (double) monthlyRent / 100;
+    }
 
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTimeInMillis(contractSigningDate);
-    return calendar;
-}
+    /**
+     * 月租金
+     */
+    public void setMonthlyRent(double monthlyRent) {
+        this.monthlyRent = (int) Math.round(monthlyRent * 100);
+    }
 
-public void setContractSigningDate(Calendar date){
-    if (date == null)
-        contractSigningDate = 0;
-    else
-        contractSigningDate = date.getTimeInMillis();
-}
+    /**
+     * 签合同时间
+     */
+    public Calendar getContractSigningDate() {
+        if (contractSigningDate == 0) return null;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(contractSigningDate);
+        return calendar;
+    }
+
+    /**
+     * 签合同时间
+     */
+    public void setContractSigningDate(Calendar date) {
+        if (date == null)
+            contractSigningDate = 0;
+        else
+            contractSigningDate = date.getTimeInMillis();
+    }
 
     public Calendar getStartDate() {
         if (startDate == 0) return null;
@@ -106,6 +135,9 @@ public void setContractSigningDate(Calendar date){
         return calendar;
     }
 
+    /**
+     * 物业费开始时间
+     */
     public Calendar getRealtyStartDate() {
         if (realtyStartDate == 0) return null;
 
@@ -114,6 +146,9 @@ public void setContractSigningDate(Calendar date){
         return calendar;
     }
 
+    /**
+     * 物业费开始时间
+     */
     public void setRealtyStartDate(Calendar date) {
         if (date == null)
             realtyStartDate = 0;
@@ -121,12 +156,12 @@ public void setContractSigningDate(Calendar date){
             realtyStartDate = date.getTimeInMillis();
     }
 
-    public double getRealtyMoney() {
-        return (double) realtyMoney / 100;
+    public double getPropertyCosts() {
+        return (double) propertyCosts / 100;
     }
 
-    public void setRealtyMoney(double realtyMoney) {
-        this.realtyMoney = (int) Math.round(realtyMoney * 100);
+    public void setPropertyCosts(double propertyCosts) {
+        this.propertyCosts = (int) Math.round(propertyCosts * 100);
     }
 
     public void setStartDate(Calendar localDate) {
@@ -136,6 +171,9 @@ public void setContractSigningDate(Calendar date){
             startDate = localDate.getTimeInMillis();
     }
 
+    /**
+     * 付款日期
+     */
     public Calendar getPaymentDate() {
         if (paymentDate == 0) return null;
 
@@ -144,6 +182,9 @@ public void setContractSigningDate(Calendar date){
         return calendar;
     }
 
+    /**
+     * 付款日期
+     */
     public void setPaymentDate(Calendar localDate) {
         if (localDate == null)
             paymentDate = 0;

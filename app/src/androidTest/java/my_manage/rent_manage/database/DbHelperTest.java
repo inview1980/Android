@@ -25,7 +25,7 @@ public class DbHelperTest {
     @Test
     public void getShowRoomDesForPerson() {
         RentDB.createCascadeDB(InstrumentationRegistry.getTargetContext(), "/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
-        List<ShowRoomDetails> lst=DbHelper.getInstance().getShowRoomDesForPerson();
+        List<ShowRoomDetails> lst=DbHelper.getInstance().getShowRoomDesForPerson(3);
 
         Assert.assertTrue(lst.size()>0);
     }

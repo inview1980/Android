@@ -1,9 +1,9 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <style name="rental_expandable_listview_item">
         <item name="android:background">#0000</item>
-        <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/rental_lable_textSize</item>
         <item name="android:layout_columnWeight">@integer/rental_room_details_1width</item>
         <item name="android:layout_gravity">center_vertical</item>
@@ -14,6 +14,12 @@
         <item name="android:layout_marginTop">@dimen/rent_room_details_tableRow_margin</item>
         <item name="android:layout_marginBottom">@dimen/rent_room_details_tableRow_margin</item>
         <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="StateButtonStyle">
+        <item name="android:animationDuration">200</item>
+        <item name="android:radius">3dp</item>
+        <item name="android:layout_width">@dimen/pwdItemWidth</item>
     </style>
 
     <dimen name="rent_room_details_tableRow_margin">1dp</dimen>

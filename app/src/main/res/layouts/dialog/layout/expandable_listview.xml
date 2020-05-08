@@ -7,11 +7,20 @@
     android:background="@color/grayWhite"
     tools:context=".page.PasswordManageActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        app:navigationIcon="@drawable/ic_chevron_left_black_24dp"
+        app:titleTextColor="@android:color/white" />
+
     <ExpandableListView
         android:id="@+id/main_expandable_listview"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layoutDirection="rtl" />
 
     <ImageButton

@@ -1,10 +1,13 @@
 package my_manage.rent_manage.page;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
 
@@ -17,10 +20,12 @@ import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.pojo.PersonDetails;
 
 public class ShowPersonExpandActivity extends AppCompatActivity implements IShowList {
-    private PersonExtendableListViewAdapter adapter;
-
+    @BindView(R.id.toolbar)     Toolbar                         toolbar;
     @BindView(R.id.main_expandable_listview) ExpandableListView listView;
     @BindView(R.id.main_expandable_add_btn)  ImageButton        mainExpandableAddBtn;
+
+    private                     PersonExtendableListViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,10 @@ public class ShowPersonExpandActivity extends AppCompatActivity implements IShow
 
         ButterKnife.bind(this);
 
-//        listView.setOnItemClickListener(this);
+        toolbar.setTitle("所有租户信息");
+        toolbar.setNavigationOnClickListener(v -> finish());
+        mainExpandableAddBtn.setVisibility(View.GONE);
+
         //控制ExpandableListView只能打开一个组
         listView.setOnGroupExpandListener(groupPosition -> {
             int count = adapter.getGroupCount();

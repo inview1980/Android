@@ -4,10 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.reflect.Field;
 
 import my_manage.password_box.R;
 import my_manage.password_box.database.PasswordDB;
@@ -66,8 +72,31 @@ public final class PageUtils {
     public static void closeInput(Activity activity,boolean b){
         if (!b) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm.isActive())//软键盘如果打开就关闭
+            if (imm!=null)//软键盘如果打开就关闭
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    /**
+     * 设置所有EditText、TextView中的文字下划线
+     */
+    public static void setUnderline(Object object) {
+        Field[] fields = object.getClass().getDeclaredFields();
+        try {
+            for (final Field field : fields) {
+                field.setAccessible(true);
+                Object obj = field.get(object);
+                if (field.getType() == EditText.class) {
+                    ((EditText) obj).getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+                    ((EditText) obj).getPaint().setAntiAlias(true);//抗锯齿
+
+                } else if (field.getType() == TextView.class) {
+                    ((TextView) obj).getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+                    ((TextView) obj).getPaint().setAntiAlias(true);//抗锯齿
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

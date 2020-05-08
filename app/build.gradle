@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "my_manage.password_box"
@@ -80,4 +80,17 @@ dependencies {
 
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    //图标引用
+    implementation 'com.github.fengwenyi:AppLib:0.0.11'
+
+    // https://mvnrepository.com/artifact/com.android.support/design  tabLayout插件
+    implementation group: 'com.android.support', name: 'design', version: '28.0.0'
+
+    //第三方TextView
+    // https://mvnrepository.com/artifact/com.hanks/htextview-rainbow
+    implementation group: 'com.hanks', name: 'htextview-rainbow', version: '0.1.6'
+
+    //第三方按键
+    implementation 'com.github.niniloveyou:StateButton:v1.0.0'
 }

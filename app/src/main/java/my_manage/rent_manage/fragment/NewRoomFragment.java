@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,8 +20,12 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,72 +43,76 @@ import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
+import my_manage.tool.enums.ShowRoomType;
 
 /**
  * 房屋出租详情
  */
 @Getter
 public final class NewRoomFragment extends Fragment implements IShowList {
-    @BindView(R.id.rental_editRoom_community)             AutoCompleteTextView community;
-    @BindView(R.id.rental_editRoom_roomNumber)            EditText             roomNumber;
-    @BindView(R.id.rental_editRoom_realtyMoney)           EditText             rentalMoney;//月租金
-    @BindView(R.id.rental_editRoom_meterNumber)           EditText             meterNumber;
-    @BindView(R.id.rental_editRoom_area)                  EditText             area;
-    @BindView(R.id.rental_editRoom_propertyPrice)         EditText             propertyPrice;//物业费单价
-    @BindView(R.id.rental_editRoom_person)                Spinner              person;
-    @BindView(R.id.rental_editRoom_tel)                   EditText             tel;
-    @BindView(R.id.rental_editRoom_manCardNumber)         EditText             manCard;
-    @BindView(R.id.rental_editRoom_isContainRealty)       CheckBox             isContainRealty;
-    @BindView(R.id.rental_editRoom_beginDate)             TextView             beginDate;//房租开始时间
-    @BindView(R.id.rental_editRoom_rentalMonth)           EditText             rentalMonth;//房租结束时间
-    @BindView(R.id.rental_editRoom_propertyBeginDate)     TextView             proBeginDate;//物业费开始时间
-    @BindView(R.id.rental_editRoom_payDate)               TextView             payDate;//交费时间
-    @BindView(R.id.rental_editRoom_rentalEndDate)         TextView             rentalEndDate;
-    @BindView(R.id.rental_editRoom_property_costsEndDate) TextView             proEndDate;
-    @BindView(R.id.rental_editRoom_remark)                EditText             remark;//备注
-    @BindView(R.id.rental_editRoom_propertyMonth)         EditText             proMonth;
-    @BindView(R.id.rental_editRoom_changeBtn)             Button               changeBtn;
-    @BindView(R.id.rental_editRoom_okBtn)                 Button               okBtn;
-    @BindView(R.id.rental_editRoom_add)                   Button               addBtn;
-    @BindView(R.id.rental_editRoom_cancelBtn)             Button               cancelBtn;
-    @BindView(R.id.rental_editRoom_deposit)               EditText             deposit;//押金
-    @BindView(R.id.rental_editRoom_contract_BeginDate)    TextView             contractBeginDate;//合同开始时间
-    @BindView(R.id.rental_editRoom_Contract_EndDate)      TextView             contractEndDate;//合同结束时间
-    @BindView(R.id.rental_editRoom_contract_Month)        EditText             contractMonth;//合同时长，月
-    @BindView(R.id.rental_editRoom_extend_txt1)           TextView             rentalEditRoomExtendTxt1;
-    @BindView(R.id.img_shrink)                            ImageView            imgShrink;
-    @BindView(R.id.rental_editRoom_person_extend)         TableRow             rentalEditRoomPersonExtend;
-    @BindView(R.id.rental_editRoom_person1)               TableRow             rentalEditRoomPerson1;
-    @BindView(R.id.rental_editRoom_person2)               TableRow             rentalEditRoomPerson2;
-    @BindView(R.id.rental_editRoom_person3)               TableRow             rentalEditRoomPerson3;
-    @BindView(R.id.rental_editRoom_extend_txt2)           TextView             rentalEditRoomExtendTxt2;
-    @BindView(R.id.img_shrink2)                           ImageView            imgShrink2;
-    @BindView(R.id.rental_editRoom_other_extend)          TableRow             rentalEditRoomOtherExtend;
-    @BindView(R.id.rental_room_details_other_layout1)     TableRow             rentalRoomDetailsOtherLayout1;
-    @BindView(R.id.rental_room_details_other_layout2)     TableRow             rentalRoomDetailsOtherLayout2;
-    @BindView(R.id.rental_room_details_other_layout3)     TableRow             rentalRoomDetailsOtherLayout3;
-    @BindView(R.id.rental_room_details_other_layout4)     TableRow             rentalRoomDetailsOtherLayout4;
-    @BindView(R.id.rental_room_details_other_layout5)     TableRow             rentalRoomDetailsOtherLayout5;
-    @BindView(R.id.rental_room_details_other_layout6)     TableRow             rentalRoomDetailsOtherLayout6;
-    @BindView(R.id.rental_room_details_other_layout7)     TableRow             rentalRoomDetailsOtherLayout7;
-    @BindView(R.id.rental_room_details_other_layout8)     TableRow             rentalRoomDetailsOtherLayout8;
-    @BindView(R.id.rental_room_details_other_layout9)     TableRow             rentalRoomDetailsOtherLayout9;
-    @BindView(R.id.rental_editRoom_person_remarkTxt)      TextView             rentalEditRoomPersonRemarkTxt;
-    @BindView(R.id.rental_editRoom_person_remark)         EditText             rentalEditRoomPersonRemark;
-    @BindView(R.id.rental_editRoom_waterMeter)            EditText             waterMeter;
+    @BindView(R.id.rental_editRoom_community)             TextView  community;
+    @BindView(R.id.rental_editRoom_roomNumber)            TextView  roomNumber;
+    @BindView(R.id.rental_editRoom_realtyMoney)           EditText  rentalMoney;//月租金
+    @BindView(R.id.rental_editRoom_meterNumber)           EditText  meterNumber;
+    @BindView(R.id.rental_editRoom_area)                  EditText  area;
+    @BindView(R.id.rental_editRoom_propertyPrice)         EditText  propertyPrice;//物业费单价
+    @BindView(R.id.rental_editRoom_person)                Spinner   person;
+    @BindView(R.id.rental_editRoom_tel)                   EditText  tel;
+    @BindView(R.id.rental_editRoom_manCardNumber)         EditText  manCard;
+    @BindView(R.id.rental_editRoom_isContainRealty)       CheckBox  isContainRealty;
+    @BindView(R.id.rental_editRoom_beginDate)             TextView  beginDate;//房租开始时间
+    @BindView(R.id.rental_editRoom_rentalMonth)           EditText  rentalMonth;//房租结束时间
+    @BindView(R.id.rental_editRoom_propertyBeginDate)     TextView  proBeginDate;//物业费开始时间
+    @BindView(R.id.rental_editRoom_payDate)               TextView  payDate;//交费时间
+    @BindView(R.id.rental_editRoom_rentalEndDate)         TextView  rentalEndDate;
+    @BindView(R.id.rental_editRoom_property_costsEndDate) TextView  proEndDate;
+    @BindView(R.id.rental_editRoom_remark)                EditText  remark;//备注
+    @BindView(R.id.rental_editRoom_propertyMonth)         EditText  proMonth;
+    @BindView(R.id.rental_editRoom_changeBtn)             Button    changeBtn;
+    @BindView(R.id.rental_editRoom_okBtn)                 Button    okBtn;
+    @BindView(R.id.rental_editRoom_add)                   Button    addBtn;
+    @BindView(R.id.rental_editRoom_cancelBtn)             Button    cancelBtn;
+    @BindView(R.id.rental_editRoom_deposit)               EditText  deposit;//押金
+    @BindView(R.id.rental_editRoom_contract_BeginDate)    TextView  contractBeginDate;//合同开始时间
+    @BindView(R.id.rental_editRoom_Contract_EndDate)      TextView  contractEndDate;//合同结束时间
+    @BindView(R.id.rental_editRoom_contract_Month)        EditText  contractMonth;//合同时长，月
+    @BindView(R.id.rental_editRoom_extend_txt1)           TextView  rentalEditRoomExtendTxt1;
+    @BindView(R.id.img_shrink)                            ImageView imgShrink;
+    @BindView(R.id.rental_editRoom_person_extend)         TableRow  PersonExtend;
+    @BindView(R.id.rental_editRoom_person1)               TableRow  rentalEditRoomPerson1;
+    @BindView(R.id.rental_editRoom_person2)               TableRow  rentalEditRoomPerson2;
+    @BindView(R.id.rental_editRoom_person3)               TableRow  rentalEditRoomPerson3;
+    @BindView(R.id.rental_editRoom_extend_txt2)           TextView  rentalEditRoomExtendTxt2;
+    @BindView(R.id.img_shrink2)                           ImageView imgShrink2;
+    @BindView(R.id.rental_editRoom_other_extend)          TableRow  rentalEditRoomOtherExtend;
+    @BindView(R.id.rental_room_details_other_layout1)     TableRow  rentalRoomDetailsOtherLayout1;
+    @BindView(R.id.rental_room_details_other_layout2)     TableRow  rentalRoomDetailsOtherLayout2;
+    @BindView(R.id.rental_room_details_other_layout3)     TableRow  rentalRoomDetailsOtherLayout3;
+    @BindView(R.id.rental_room_details_other_layout4)     TableRow  rentalRoomDetailsOtherLayout4;
+    @BindView(R.id.rental_room_details_other_layout5)     TableRow  rentalRoomDetailsOtherLayout5;
+    @BindView(R.id.rental_room_details_other_layout6)     TableRow  rentalRoomDetailsOtherLayout6;
+    @BindView(R.id.rental_room_details_other_layout7)     TableRow  rentalRoomDetailsOtherLayout7;
+    @BindView(R.id.rental_room_details_other_layout8)     TableRow  rentalRoomDetailsOtherLayout8;
+    @BindView(R.id.rental_room_details_other_layout9)     TableRow  rentalRoomDetailsOtherLayout9;
+    @BindView(R.id.rental_editRoom_person4)               TableRow  rentalEditRoomPerson4;
+    @BindView(R.id.rental_editRoom_person_remark)         EditText  rentalEditRoomPersonRemark;
+    @BindView(R.id.rental_editRoom_waterMeter)            EditText  waterMeter;
+    @BindView(R.id.totalMoney)                            EditText  totalMoney;
+    @BindView(R.id.rental_room_details_other_layout0)     TableRow  rentalRoomDetailsOtherLayout0;
 
     private ShowRoomDetails       showRoomDetails;
     private List<PersonDetails>   personDetailsList;
     private Unbinder              bind;
     private NewRoomFragmentLister lister;
+    private boolean               otherVisibility;
+    private boolean               personVisibility;
 
 
-    public NewRoomFragment(ShowRoomDetails showRoomDetails, boolean isHistory, boolean isRentRoom) {
+    public NewRoomFragment(ShowRoomDetails showRoomDetails, ShowRoomType type) {
         if (showRoomDetails != null) {
             Bundle bundle = new Bundle();
             bundle.putString("ShowRoomDetails", JSON.toJSONString(showRoomDetails));
-            bundle.putBoolean("isHistory", isHistory);
-            bundle.putBoolean("isRentRoom", isRentRoom);
+            bundle.putInt("ShowRoomType", type.getIndex());
             setArguments(bundle);
         }
     }
@@ -113,7 +120,7 @@ public final class NewRoomFragment extends Fragment implements IShowList {
     @OnFocusChange({R.id.rental_editRoom_community, R.id.rental_editRoom_roomNumber, R.id.rental_editRoom_rentalMonth,
                            R.id.rental_editRoom_propertyPrice, R.id.rental_editRoom_meterNumber, R.id.rental_editRoom_area,
                            R.id.rental_editRoom_tel, R.id.rental_editRoom_manCardNumber, R.id.rental_editRoom_remark
-    ,R.id.rental_editRoom_waterMeter})
+                           , R.id.rental_editRoom_waterMeter})
     void OnFocusChangeListener(View v, boolean b) {
         PageUtils.closeInput(getActivity(), b);
     }
@@ -122,70 +129,51 @@ public final class NewRoomFragment extends Fragment implements IShowList {
     void OnLayoutExpand(View view) {
         if (view.getId() == R.id.rental_editRoom_person_extend) {
             //是否展开Person
-            extendPerson();
+            extendLayout(imgShrink, rentalEditRoomExtendTxt1, "rentalEditRoomPerson", !personVisibility);
+            personVisibility = !personVisibility;
+//            extendPerson();
         } else if (view.getId() == R.id.rental_editRoom_other_extend) {
             //是否展开Other
-            extendRentalDetails();
+            extendLayout(imgShrink2, rentalEditRoomExtendTxt2, "rentalRoomDetailsOtherLayout", !otherVisibility);
+            otherVisibility = !otherVisibility;
+//            extendRentalDetails();
         }
     }
 
     /**
-     * 展开person layout
+     * 展开，收缩layout
+     *
+     * @param imgId   标题栏中放置向上、下的容器
+     * @param txtId   标题栏中放置文字说明的容器
+     * @param nameKey layout名称中的关键字
+     * @param b       true展开
      */
-    private void extendPerson() {
-        if (rentalEditRoomPerson1.getVisibility() == View.GONE) {
-            //隐藏中，展开
-            rentalEditRoomPerson1.setVisibility(View.VISIBLE);
-            rentalEditRoomPerson2.setVisibility(View.VISIBLE);
-            rentalEditRoomPerson3.setVisibility(View.VISIBLE);
-            rentalEditRoomPersonRemark.setVisibility(View.VISIBLE);
-            rentalEditRoomPersonRemarkTxt.setVisibility(View.VISIBLE);
-            rentalEditRoomExtendTxt1.setText(R.string.click_close);
-            imgShrink.setImageResource(R.drawable.ic_arrow_upward_black_24dp);
+    private void extendLayout(ImageView imgId, TextView txtId, String nameKey, boolean b) {
+        if (b) {
+            txtId.setText(R.string.click_close);
+            imgId.setImageResource(R.drawable.ic_arrow_upward_black_24dp);
         } else {
-            //展开中，隐藏
-            rentalEditRoomPerson1.setVisibility(View.GONE);
-            rentalEditRoomPerson2.setVisibility(View.GONE);
-            rentalEditRoomPerson3.setVisibility(View.GONE);
-            rentalEditRoomPersonRemark.setVisibility(View.GONE);
-            rentalEditRoomPersonRemarkTxt.setVisibility(View.GONE);
-            rentalEditRoomExtendTxt1.setText(R.string.click_extend);
-            imgShrink.setImageResource(R.drawable.ic_arrow_downward_black_24dp);
+            txtId.setText(R.string.click_extend);
+            imgId.setImageResource(R.drawable.ic_arrow_downward_black_24dp);
+        }
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (final Field field : fields) {
+            if (field.getType() == TableRow.class) {
+                try {
+                    if (field.getName().contains(nameKey)) {
+                        if (b) {
+                            ((TableRow) field.get(this)).setVisibility(View.VISIBLE);
+                        } else {
+                            ((TableRow) field.get(this)).setVisibility(View.GONE);
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    /**
-     * 展开付款详情layout
-     */
-    private void extendRentalDetails() {
-        if (rentalRoomDetailsOtherLayout1.getVisibility() == View.GONE) {
-            //隐藏中，展开
-            rentalRoomDetailsOtherLayout1.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout2.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout3.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout4.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout5.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout6.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout7.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout8.setVisibility(View.VISIBLE);
-            rentalRoomDetailsOtherLayout9.setVisibility(View.VISIBLE);
-            rentalEditRoomExtendTxt2.setText(R.string.click_close);
-            imgShrink2.setImageResource(R.drawable.ic_arrow_upward_black_24dp);
-        } else {
-            //展开中，隐藏
-            rentalRoomDetailsOtherLayout1.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout2.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout3.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout4.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout5.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout6.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout7.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout8.setVisibility(View.GONE);
-            rentalRoomDetailsOtherLayout9.setVisibility(View.GONE);
-            rentalEditRoomExtendTxt2.setText(R.string.click_extend);
-            imgShrink2.setImageResource(R.drawable.ic_arrow_downward_black_24dp);
-        }
-    }
 
     /**
      * 设置当失去焦点时，刷新相对应的日期
@@ -203,7 +191,7 @@ public final class NewRoomFragment extends Fragment implements IShowList {
      */
     @OnClick({R.id.rental_editRoom_changeBtn, R.id.rental_editRoom_okBtn, R.id.rental_editRoom_cancelBtn,
                      R.id.rental_editRoom_beginDate, R.id.rental_editRoom_propertyBeginDate, R.id.rental_editRoom_payDate,
-                     R.id.rental_editRoom_add})
+                     R.id.rental_editRoom_add, R.id.rental_editRoom_contract_BeginDate})
     void OnClick(View view) {
         lister.onClick(view);
     }
@@ -211,17 +199,18 @@ public final class NewRoomFragment extends Fragment implements IShowList {
     /**
      * 自动注册EditView中文本变化事件
      */
-    @OnTextChanged({R.id.rental_editRoom_community, R.id.rental_editRoom_rentalMonth, R.id.rental_editRoom_realtyMoney,
+    @OnTextChanged({ R.id.rental_editRoom_rentalMonth, R.id.rental_editRoom_realtyMoney,
                            R.id.rental_editRoom_propertyPrice, R.id.rental_editRoom_meterNumber, R.id.rental_editRoom_area,
                            R.id.rental_editRoom_tel, R.id.rental_editRoom_manCardNumber, R.id.rental_editRoom_propertyMonth,
                            R.id.rental_editRoom_remark, R.id.rental_editRoom_contract_Month, R.id.rental_editRoom_person_remark
-    ,R.id.rental_editRoom_waterMeter})
+                           , R.id.rental_editRoom_waterMeter, R.id.totalMoney})
     void OnTextChanged() {
         lister.afterTextChanged(null);
     }
 
     private void init(View v) {
         showList();
+        PageUtils.setUnderline(this);
 
         isContainRealty.setOnCheckedChangeListener((compoundButton, b) -> lister.afterTextChanged(null));
         person.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -256,29 +245,23 @@ public final class NewRoomFragment extends Fragment implements IShowList {
         }
     }
 
-
+    /**
+     * 通过反射，将本类中控制所有的EditText、CheckBox、TextView、Spinner控件的setEnable方法
+     */
     public void setEnable(boolean b) {
-        community.setEnabled(b);
-        roomNumber.setEnabled(b);
-        rentalMoney.setEnabled(b);
-        propertyPrice.setEnabled(b);
-        meterNumber.setEnabled(b);
-        area.setEnabled(b);
-        person.setEnabled(b);
-        tel.setEnabled(b);
-        manCard.setEnabled(b);
-        isContainRealty.setEnabled(b);
-        beginDate.setEnabled(b);
-        rentalMonth.setEnabled(b);
-        proBeginDate.setEnabled(b);
-        proMonth.setEnabled(b);
-        payDate.setEnabled(b);
-        remark.setEnabled(b);
-        deposit.setEnabled(b);
-        contractMonth.setEnabled(b);
-        contractBeginDate.setEnabled(b);
-        rentalEditRoomPersonRemark.setEnabled(b);
-        waterMeter.setEnabled(b);
+        try {
+            Field[]  fields = this.getClass().getDeclaredFields();
+            Class<?> clazz  = Class.forName("android.view.View");
+            for (final Field field : fields) {
+                if (field.getType() == EditText.class || field.getType() == CheckBox.class
+                        || field.getType() == Spinner.class) {
+                    Method method = clazz.getMethod("setEnabled", boolean.class);
+                    method.invoke(field.get(this), b);
+                }
+            }
+        } catch (InvocationTargetException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     @Nullable
@@ -287,7 +270,6 @@ public final class NewRoomFragment extends Fragment implements IShowList {
         View v = inflater.inflate(R.layout.rental_room_details, container, false);
         bind = ButterKnife.bind(this, v);
 
-        extendRentalDetails();
         //初始化事件监听器
         lister = new NewRoomFragmentLister(this, v);
 
@@ -295,25 +277,37 @@ public final class NewRoomFragment extends Fragment implements IShowList {
         //读取传递的参数
         try {
             if (getArguments() != null) {
-                boolean isHistory  = getArguments().getBoolean("isHistory");
-                boolean isRentRoom = getArguments().getBoolean("isRentRoom");
-                if (isRentRoom) {
+                ShowRoomType type = ShowRoomType.getType(getArguments().getInt("ShowRoomType", 0));
+                if (type == ShowRoomType.Rent) {
                     //新增
+                    //展开Other
+                    extendLayout(imgShrink2, rentalEditRoomExtendTxt2, "rentalRoomDetailsOtherLayout", otherVisibility = true);
+                    extendLayout(imgShrink, rentalEditRoomExtendTxt1, "rentalEditRoomPerson", personVisibility = false);//展开Other
                     setEnable(true);
                     okBtn.setVisibility(View.VISIBLE);
-                } else if (isHistory) {
+                } else if (type == ShowRoomType.History) {
                     //显示历史记录，隐藏修改按钮
                     changeBtn.setVisibility(View.GONE);
                     addBtn.setVisibility(View.GONE);
+                    extendLayout(imgShrink2, rentalEditRoomExtendTxt2, "rentalRoomDetailsOtherLayout", otherVisibility = true);
+                    extendLayout(imgShrink, rentalEditRoomExtendTxt1, "rentalEditRoomPerson", personVisibility = false);
+                } else if (type == ShowRoomType.Person) {
+                    //显示用户记录，隐藏修改按钮
+                    changeBtn.setVisibility(View.GONE);
+                    addBtn.setVisibility(View.GONE);
+                    extendLayout(imgShrink2, rentalEditRoomExtendTxt2, "rentalRoomDetailsOtherLayout", otherVisibility = false);
+                    extendLayout(imgShrink, rentalEditRoomExtendTxt1, "rentalEditRoomPerson", personVisibility = true);
                 } else {
                     changeBtn.setVisibility(View.VISIBLE);
+                    extendLayout(imgShrink2, rentalEditRoomExtendTxt2, "rentalRoomDetailsOtherLayout", otherVisibility = true);
+                    extendLayout(imgShrink, rentalEditRoomExtendTxt1, "rentalEditRoomPerson", personVisibility = false);
                 }
 
                 String extra = getArguments().getString("ShowRoomDetails");
                 if (StrUtils.isNotBlank(extra)) {
                     ShowRoomDetails room = JSON.parseObject(extra, ShowRoomDetails.class);
                     if (room != null) {
-                        setEnable(isRentRoom);
+                        setEnable(type == ShowRoomType.Rent);
                         setValue(room);
                         this.showRoomDetails = room;
                     }
@@ -323,31 +317,34 @@ public final class NewRoomFragment extends Fragment implements IShowList {
                 setEnable(true);
                 okBtn.setVisibility(View.VISIBLE);
             }
-        } catch (JSONException ignored) {
+        } catch (
+                JSONException ignored) {
             //新增
             setEnable(true);
             okBtn.setVisibility(View.VISIBLE);
         }
+
         return v;
     }
 
     private void setValue(ShowRoomDetails room) {
-        community.setText(room.getCommunityName());
-        roomNumber.setText(room.getRoomNumber());
-        rentalMoney.setText("" + room.getRentalMoney());
-        propertyPrice.setText("" + room.getPropertyPrice());
-        meterNumber.setText(room.getElectricMeter());
-        waterMeter.setText(room.getWaterMeter());
-        area.setText("" + room.getRoomArea());
+        community.setText(room.getRoomDetails().getCommunityName());
+        roomNumber.setText(room.getRoomDetails().getRoomNumber());
+        propertyPrice.setText(String.format(Locale.getDefault(), "%.2f", room.getRoomDetails().getPropertyPrice()));
+        meterNumber.setText(room.getRoomDetails().getElectricMeter());
+        waterMeter.setText(room.getRoomDetails().getWaterMeter());
+        area.setText(String.format(Locale.getDefault(), "%.2f", room.getRoomDetails().getRoomArea()));
 
         setValueForPerson(room.getPersonDetails());
 
         if (room.getRentalRecord() != null) {
+            totalMoney.setText(String.format(Locale.getDefault(), "%.2f", room.getRentalRecord().getTotalMoney()));
+            rentalMoney.setText(String.format(Locale.getDefault(), "%.2f", room.getRentalRecord().getMonthlyRent()));
             isContainRealty.setChecked(room.getRentalRecord().getIsContainRealty());
             beginDate.setText(date2String(room.getRentalRecord().getStartDate()));
             rentalMonth.setText(room.getRentalRecord().getPayMonth() + "");
             proBeginDate.setText(date2String(room.getRentalRecord().getRealtyStartDate()));
-            proMonth.setText(room.getRentalRecord().getRealtyMonth() + "");
+            proMonth.setText(room.getRentalRecord().getPropertyTime() + "");
             payDate.setText(date2String(room.getRentalRecord().getPaymentDate()));
             remark.setText(room.getRentalRecord().getRemarks());
             rentalEndDate.setText(date2String(room.getRentalEndDate()));
@@ -394,4 +391,6 @@ public final class NewRoomFragment extends Fragment implements IShowList {
         ManAdapter adapter = new ManAdapter(getActivity(), android.R.layout.simple_list_item_1, this.personDetailsList);
         person.setAdapter(adapter);
     }
+
+
 }

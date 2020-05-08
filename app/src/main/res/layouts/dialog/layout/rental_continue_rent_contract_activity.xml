@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayWhite"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        app:navigationIcon="@drawable/ic_chevron_left_black_24dp"
+        app:titleTextColor="@android:color/white" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:paddingEnd="@dimen/rental_main_gridview_margin_6"
+        android:stretchColumns="1">
+
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:text="@string/rental_area_cn" />
+
+            <TextView
+                android:id="@+id/area"
+                style="@style/rental_add_edit"
+                android:enabled="false" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:text="上次开始日期:" />
+
+            <TextView
+                android:id="@+id/start1Date"
+                style="@style/rental_add_edit"
+                android:enabled="false" />
+        </TableRow>
+
+        <TableRow
+            style="@style/rental_room_details_tableRow"
+            android:layout_marginBottom="@dimen/rental_main_gridview_margin_6">
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:text="@string/rental_endDate_cn" />
+
+            <TextView
+                android:id="@+id/end1Date"
+                style="@style/rental_add_edit"
+                android:enabled="false" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:text="本次续期（月）:" />
+
+            <Spinner
+                android:id="@+id/continueMonth"
+                style="@style/rental_add_edit"
+                android:layout_width="match_parent"
+                android:layout_gravity="right"
+                android:entries="@array/monthNumber"
+                android:minWidth="180dp" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:text="开始日期:" />
+
+            <TextView
+                android:id="@+id/start2Date"
+                style="@style/rental_add_edit" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/rental_textView_Lable"
+                android:text="续期至:" />
+
+            <TextView
+                android:id="@+id/end2Date"
+                style="@style/rental_add_edit"
+                android:enabled="false" />
+        </TableRow>
+
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/remark"
+            style="@style/rental_add_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="@string/remark_cn"
+            android:lines="3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:background="@android:color/white"
+        android:gravity="right">
+
+        <com.deadline.statebutton.StateButton
+            android:id="@+id/ok"
+            style="@style/StateButtonStyle"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+            android:text="@string/ok_cn"
+            app:normalBackgroundColor="@color/banana"
+            app:pressedBackgroundColor="@color/banana"
+            app:round="true"
+            app:unableBackgroundColor="@color/banana" />
+
+        <com.deadline.statebutton.StateButton
+            android:id="@+id/cancel"
+            style="@style/StateButtonStyle"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_cn"
+            app:normalBackgroundColor="@color/blue"
+            app:pressedBackgroundColor="@color/blue"
+            app:round="true"
+            android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+            app:unableBackgroundColor="@color/blue" />
+
+    </LinearLayout>
+</LinearLayout>

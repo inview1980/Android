@@ -15,10 +15,15 @@
     <string name="cancel_cn">取消</string>
     <string name="addUser_cn">新增用户</string>
 
-
-
     <string name="rental_codeNumber_cn">证件号码:</string>
-
     <string name="remark_cn">备注</string>
 
+    <string-array name="communityName">
+        <item>祥和雅居</item>
+        <item>湖口社区</item>
+        <item>青年城</item>
+        <item>佛祖岭</item>
+        <item>巴黎豪庭</item>
+        <item>旭辉御府</item>
+    </string-array>
 </resources>
