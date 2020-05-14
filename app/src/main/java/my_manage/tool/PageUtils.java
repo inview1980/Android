@@ -4,51 +4,40 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import my_manage.password_box.R;
 import my_manage.password_box.database.PasswordDB;
 import my_manage.password_box.page.PasswordManageActivity;
 import my_manage.password_box.page.PasswordManageViewPagerHome;
+import my_manage.rent_manage.fragment.NewRoomFragment;
 
 public final class PageUtils {
     public static String Tag="MyManage";
 
-    public static void resetDatabaseAndPassword(Context context) {
-        String password =context. getString(R.string.defaultPassword);
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setIcon(R.mipmap.ic_launcher_round);
-        dialog.setTitle("重建资料和密码");
-        dialog.setMessage("系统将把现有资料清空并重置密码，默认密码为:" + password);
-        dialog.setCancelable(false);    //设置是否可以通过点击对话框外区域或者返回按键关闭对话框
-        dialog.setPositiveButton(R.string.ok_cn, (dialog1, which) -> {
-            if (PasswordDB.init().clearAndSave(password)) {
-                showMessage( context,"重建资料和密码成功，新密码为：" + password);
-            } else {
-                showMessage(context,"重建资料和密码失败！");
-            }
-        });
-        dialog.setNegativeButton(R.string.cancel_cn, (dialog12, which) -> {
-        });
-        dialog.show();
-    }
-
-    private static void showMessage(Context context, String msg) {
-        showMessage(context,"PageUtils",msg);
-    }
-
-    public static void showMessage(Context context, String tag, String msg) {
-        Log.i( tag,msg);
+    public static void showMessage(Context context,  String msg) {
+        Log.i( Tag,msg);
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -58,12 +47,10 @@ public final class PageUtils {
      */
     public static void callPasswordManageItemDetails(PasswordManageActivity activity, int item) {
         Intent intent = new Intent(activity, PasswordManageViewPagerHome.class);
-//        String parameter = JSON.toJSONString(item);
         Bundle bundle=new Bundle();
         bundle.putInt("currentItem", item);
         intent.putExtras(bundle);
         activity.startActivity(intent);
-        //startActivityForResult(intent, activity.PASSWORD_MANAGE_ITEM_DETAILS_ACTIVITY_CODE);
     }
 
     /**
@@ -98,5 +85,44 @@ public final class PageUtils {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 通过反射，将本类中控制所有的EditText、CheckBox、TextView、Spinner控件的setEnable方法
+     */
+    public static void setEnable(Object obj,boolean b) {
+        try {
+            Field[]  fields = obj.getClass().getDeclaredFields();
+            Class<?> clazz  = Class.forName("android.view.View");
+            for (final Field field : fields) {
+                if (field.getType() == EditText.class || field.getType() == CheckBox.class
+                        || field.getType() == Spinner.class) {
+                    Method method = clazz.getMethod("setEnabled", boolean.class);
+                    field.setAccessible(true);
+                    method.invoke(field.get(obj), b);
+                }
+            }
+        } catch (InvocationTargetException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void getSwipeMenuItem(Context context,SwipeMenu menu, String title, int color, int iconId) {
+        // create  item
+        SwipeMenuItem item = new SwipeMenuItem(context);
+        item.setBackground(new ColorDrawable(color));
+        item.setWidth(dp2px(context,70));
+        item.setTitle(title);
+        item.setTitleSize(18);
+        item.setTitleColor(Color.WHITE);
+        // set a icon
+        item.setIcon(iconId);
+        // add to menu
+        menu.addMenuItem(item);
+    }
+    private static int dp2px(Context context,int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                context.getResources().getDisplayMetrics());
     }
 }

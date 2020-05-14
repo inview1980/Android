@@ -1,10 +1,15 @@
 package my_manage.rent_manage.listener;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import my_manage.password_box.R;
 import my_manage.rent_manage.RentalMainActivity;
+import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.page.RentalForHouseActivity;
 
 public class RentalMainActivityListener {
@@ -21,22 +26,30 @@ public class RentalMainActivityListener {
         activity.startActivity(intent);
     }
 
-    public void loadDB(RentalMainActivity rentalMainActivity) {
-        // TODO: 2020/5/7
+    /**
+     * 删除并重建数据库
+     */
+    public void rebuildingDB(RentalMainActivity rentalMainActivity) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(rentalMainActivity);
+        dialog.setMessage("删除并重建数据库吗？")
+                .setPositiveButton(R.string.ok_cn, (dialogInterface, i) -> {
+                    DbHelper.getInstance().rebuilding(rentalMainActivity.getApplicationContext());
+                    rentalMainActivity.showList();
+                })
+                .show();
     }
 
-    public void saveDB(RentalMainActivity activity) {
-        // TODO: 2020/5/7
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        try {
-            activity.startActivityForResult(Intent.createChooser(intent, "请选择一个要保存的文件夹"),
-                    11);
-        } catch (android.content.ActivityNotFoundException ex) {
-            // Potentially direct the user to the Market with a Dialog
-            Toast.makeText(activity, "请安装文件管理器", Toast.LENGTH_SHORT)
-                    .show();
-        }
+    /**
+     * 将数据库转出为xlsx
+     */
+    public void saveDB(Context context) {
+        String path = context.getApplicationContext().getExternalFilesDir(null).getAbsolutePath()
+                + "/" + context.getResources().getString(R.string.rentalFileNameBackup);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setMessage("文件将保存在："+path )
+                .setPositiveButton(R.string.ok_cn,null)
+                .show();
+        if(DbHelper.getInstance().toExcel(path))
+            Toast.makeText(context,"导出数据库文件成功",Toast.LENGTH_SHORT).show();
     }
 }

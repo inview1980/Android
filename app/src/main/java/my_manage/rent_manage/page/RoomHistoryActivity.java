@@ -24,11 +24,11 @@ import my_manage.password_box.R;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.enums.ShowRoomType;
+import my_manage.widght.ParallaxSwipeBackActivity;
 
-public final class RoomHistoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, IShowList {
+public final class RoomHistoryActivity extends ParallaxSwipeBackActivity implements AdapterView.OnItemClickListener, IShowList {
     @BindView(R.id.toolbar)         Toolbar        toolbar;
     @BindView(R.id.main_ListViewId) ListView       listView;
-    @BindView(R.id.main_add_btn)    ImageButton    mainAddBtn;
     @BindView(R.id.main_viewId)     RelativeLayout mainViewId;
     private                         String         roomNumber;
 
@@ -39,7 +39,6 @@ public final class RoomHistoryActivity extends AppCompatActivity implements Adap
         setContentView(R.layout.main_listview);
         ButterKnife.bind(this);
 
-        mainAddBtn.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         roomNumber = intent.getStringExtra("roomNumber");

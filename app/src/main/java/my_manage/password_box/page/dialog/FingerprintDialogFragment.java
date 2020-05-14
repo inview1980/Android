@@ -91,7 +91,7 @@ public final class FingerprintDialogFragment extends DialogFragment {
 
             @Override
             public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-                PageUtils.showMessage(mActivity, "FingerPrintDialogFragment", "指纹认证成功");
+                PageUtils.showMessage(mActivity,  "指纹认证成功");
                 mActivity.onAuthenticated();
             }
 

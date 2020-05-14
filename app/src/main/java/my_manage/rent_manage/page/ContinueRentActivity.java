@@ -33,8 +33,12 @@ import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.DateUtils;
 import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
+import my_manage.widght.ParallaxSwipeBackActivity;
 
-public class ContinueRentActivity extends AppCompatActivity {
+/**
+ * 续租金
+ */
+public class ContinueRentActivity extends ParallaxSwipeBackActivity {
     @BindView(R.id.deposit) TextView        deposit;
     @BindView(R.id.remark)  EditText        remark;
     @BindView(R.id.toolbar) Toolbar         toolbar;

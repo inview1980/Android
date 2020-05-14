@@ -29,8 +29,12 @@ import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.DateUtils;
 import my_manage.tool.PageUtils;
+import my_manage.widght.ParallaxSwipeBackActivity;
 
-public class ContinuePropertyActivity extends AppCompatActivity {
+/**
+ * 续物业费
+ */
+public class ContinuePropertyActivity extends ParallaxSwipeBackActivity {
 
     @BindView(R.id.toolbar)        Toolbar         toolbar;
     @BindView(R.id.area)           TextView        area;

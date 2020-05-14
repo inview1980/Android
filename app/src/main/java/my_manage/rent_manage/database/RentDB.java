@@ -34,8 +34,6 @@ public final class RentDB {
 
     /**
      * 数据库名称
-     *
-     * @return
      */
     private static String getUserDatabaseName() {
         return "rent_info";
@@ -43,14 +41,13 @@ public final class RentDB {
 
     /**
      * 创建级联数据库
-     *
-     * @param context
      */
     public static boolean createCascadeDB(Context context, String path) {
-        mContext = context.getApplicationContext();
-        DB_NAME = StrUtils.isBlank(path) ? getUserDatabaseName() : path;
-        liteOrm = LiteOrm.newSingleInstance(getDBConfig());
-//        liteOrm.setDebugged(LogUtil.isDebuggable());
+        if(liteOrm==null) {
+            mContext = context.getApplicationContext();
+            DB_NAME = StrUtils.isBlank(path) ? getUserDatabaseName() : path;
+            liteOrm = LiteOrm.newSingleInstance(getDBConfig());
+        }
         return true;
     }
 
@@ -67,9 +64,6 @@ public final class RentDB {
 
     public static LiteOrm getLiteOrm() {
         if (liteOrm == null) {
-            if (mContext == null) {
-                mContext = MainActivity.context;
-            }
             DB_NAME = getUserDatabaseName();
             liteOrm = LiteOrm.newSingleInstance(getDBConfig());
         }
@@ -96,8 +90,6 @@ public final class RentDB {
 
     /**
      * 插入所有记录
-     *
-     * @param list
      */
     public static <T> int insertAll(List<T> list) {
         return getLiteOrm().save(list);
@@ -105,9 +97,6 @@ public final class RentDB {
 
     /**
      * 以某种条件作为插入标准
-     *
-     * @param
-     * @return
      */
     public static <T> long insertAll(Collection<T> t, ConflictAlgorithm config) {
         return getLiteOrm().insert(t, config);
@@ -115,9 +104,6 @@ public final class RentDB {
 
     /**
      * 以某种条件作为插入标准
-     *
-     * @param
-     * @return
      */
     public static <T> long insertAll(List<T> t, ConflictAlgorithm config) {
         return getLiteOrm().insert(t, config);
@@ -127,8 +113,6 @@ public final class RentDB {
     /**
      * 查询所有
      *
-     * @param cla
-     * @return
      */
     static <T> List<T> getQueryAll(Class<T> cla) {
         return getLiteOrm().query(cla);
@@ -137,8 +121,6 @@ public final class RentDB {
     /**
      * 根据ID查询
      *
-     * @param cla
-     * @return
      */
     public static <T> T getInfoById(String id, Class<T> cla) {
         return getLiteOrm().queryById(id, cla);
@@ -147,8 +129,6 @@ public final class RentDB {
     /**
      * 根据ID查询
      *
-     * @param cla
-     * @return
      */
     public static <T> T getInfoById(long id, Class<T> cla) {
         return getLiteOrm().queryById(id, cla);
@@ -157,10 +137,6 @@ public final class RentDB {
     /**
      * 查询 某字段 等于 Value的值
      *
-     * @param cla
-     * @param field
-     * @param value
-     * @return
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
@@ -170,38 +146,16 @@ public final class RentDB {
     /**
      * 模糊查询
      *
-     * @param cla
-     * @param field
-     * @param value
-     * @param <T>
-     * @return
      */
     public static <T> List<T> getQueryByTime(Class<T> cla, String field, Object[] value) {
         return getLiteOrm().<T>query(new QueryBuilder(cla).where(field + " LIKE ?", value));
     }
 
-//    /**
-//     * 查询 某字段 等于 Value的值 可以指定从1-20，就是分页
-//     *
-//     * @param cla
-//     * @param field
-//     * @param value
-//     * @param start
-//     * @param length
-//     * @return
-//     */
-//    public static <T> List<T> getQueryByWhereLength(Class<T> cla, String field, String[] value, int start, int length) {
-//        return getLiteOrm().<T>query(new QueryBuilder(cla).where(field + "=?", value).limit(start, length));
-//    }
 
     /**
      * 删除所有 某字段等于 Vlaue的值
      *
-     * @param cla
-     * @param field
-     * @param value
      */
-    @SuppressWarnings("deprecation")
     public static <T> int deleteWhere(Class<T> cla, String field, String[] value) {
         return getLiteOrm().delete(cla, WhereBuilder.create(cla, field + "=?", value));
     }
@@ -209,9 +163,6 @@ public final class RentDB {
     /**
      * 删除所有 某字段等于 Vlaue的值
      *
-     * @param cla
-     * @param field
-     * @param value
      */
     static <T> int deleteWhere(Class<T> cla, String field, Object[] value) {
         return getLiteOrm().delete(cla, WhereBuilder.create(cla, field + "=?", value));
@@ -229,7 +180,6 @@ public final class RentDB {
     /**
      * 仅在以存在时更新
      *
-     * @param t
      */
     public static <T> int update(T t) {
         return getLiteOrm().update(t, ConflictAlgorithm.Replace);
@@ -238,9 +188,6 @@ public final class RentDB {
     /**
      * 以某种条件来整体更新
      *
-     * @param list
-     * @param config
-     * @return
      */
     public static <T> int updateAll(List<T> list, ConflictAlgorithm config) {
         return getLiteOrm().update(list, config);
@@ -261,7 +208,7 @@ public final class RentDB {
     }
 
     @SuppressLint("NewApi")
-    public void closeDB() {
+    public static void closeDB() {
         if (liteOrm != null) {
             liteOrm.close();
         }

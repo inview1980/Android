@@ -21,10 +21,10 @@ import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
 import my_manage.tool.DateUtils;
-import my_manage.tool.StrUtils;
+import my_manage.tool.PageUtils;
 import my_manage.tool.menuEnum.CastUtils;
 
-public final class NewRoomFragmentLister implements View.OnClickListener, TextWatcher {
+public final class NewRoomFragmentLister implements TextWatcher {
     private NewRoomFragment fragment;
     private View            view;
 
@@ -35,39 +35,47 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         this.view = view;
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.rental_editRoom_cancelBtn) {
-            fragment.getActivity().onBackPressed();
-        }
+    public void onButtonClick(View view) {
         if (view.getId() == R.id.rental_editRoom_changeBtn) {
-            fragment.setEnable(true);
+            PageUtils.setEnable(fragment, true);
             this.view.findViewById(R.id.rental_editRoom_changeBtn).setVisibility(View.GONE);
             fragment.getOkBtn().setVisibility(View.VISIBLE);
             fragment.getOkBtn().setEnabled(false);
+            PageUtils.setEnable(fragment, true);
         } else if (view.getId() == R.id.rental_editRoom_okBtn && isChange) {
             updateRoomDetails();
+        } else if (view.getId() == R.id.rental_editRoom_add) {
+            //增加租户资料
+            PersonListener.addPerson(fragment.getActivity(), fragment);
         }
+    }
+
+    public void onDateTextViewClick(View view) {
         //弹出日期选择框，选择日期
         if (fragment.getOkBtn().getVisibility() == View.VISIBLE && (view.getId() == R.id.rental_editRoom_beginDate
                 || view.getId() == R.id.rental_editRoom_payDate || view.getId() == R.id.rental_editRoom_propertyBeginDate
                 || view.getId() == R.id.rental_editRoom_contract_BeginDate)) {
+            int months = 0;
+            if (view.getId() == R.id.rental_editRoom_beginDate) {
+                months=Integer.parseInt(fragment.getRentalMonth().getSelectedItem().toString());
+            }else if(view.getId()==R.id.rental_editRoom_propertyBeginDate){
+                months = Integer.parseInt(fragment.getPropertyMonth().getSelectedItem().toString());
+            }else if(view.getId()==R.id.rental_editRoom_contract_BeginDate){
+                months = Integer.parseInt(fragment.getContractMonth().getSelectedItem().toString());
+            }
             // 初始化日期
             Calendar myCalendar = Calendar.getInstance();
             int      myYear     = myCalendar.get(Calendar.YEAR);
             int      month      = myCalendar.get(Calendar.MONTH);
             int      day        = myCalendar.get(Calendar.DAY_OF_MONTH);
+            final int finalMonths = months;
             DatePickerDialog dpd = new DatePickerDialog(fragment.getActivity(), DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, monthOfYear, dayOfMonth) -> {
-                ((TextView) this.view.findViewById(view.getId())).setText(year + "-" + (1 + monthOfYear) + "-" + dayOfMonth);
+                ((TextView) this.view.findViewById(view.getId())).setText(DateUtils.string2DateString(year,monthOfYear,dayOfMonth, finalMonths));
                 isChange = true;
                 this.view.findViewById(R.id.rental_editRoom_okBtn).setEnabled(true);
+                fragment.onFocusChange();
             }, myYear, month, day);
             dpd.show();
-        }
-        //增加出租户资料
-        if (view.getId() == R.id.rental_editRoom_add) {
-            //增加租户资料
-            PersonListener.addPerson(fragment.getActivity(), fragment);
         }
     }
 
@@ -105,16 +113,18 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
 
     private void updatePerson(PersonDetails pd) {
         if (pd == null) return;
-        String tel   = fragment.getTel().getText().toString();
-        String cord  = fragment.getManCard().getText().toString();
-        String other = fragment.getRentalEditRoomPersonRemark().getText().toString();
-        if (tel.equals(pd.getTel()) && cord.equals(pd.getCord()) && other.equals(pd.getOther())) {
+        String tel     = fragment.getTel().getText().toString();
+        String cord    = fragment.getManCard().getText().toString();
+        String other   = fragment.getRentalEditRoomPersonRemark().getText().toString();
+        String company = fragment.getRentalEditRoomCompanyName().getText().toString();
+        if (tel.equals(pd.getTel()) && cord.equals(pd.getCord()) && other.equals(pd.getOther()) && company.equals(pd.getCompany())) {
             //没有更改，退出
             return;
         }
         pd.setTel(tel);
         pd.setCord(cord);
         pd.setOther(other);
+        pd.setCompany(company);
         RentDB.update(pd);
     }
 
@@ -130,7 +140,7 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         //房租开始时间
         rr.setStartDate(DateUtils.string2Date(fragment.getBeginDate().getText().toString()));
         //房租时长
-        Pair<Boolean, Integer> pm = CastUtils.parseInt(fragment.getRentalMonth().getText().toString());
+        Pair<Boolean, Integer> pm = CastUtils.parseInt(fragment.getRentalMonth().getSelectedItem().toString());
         if (pm.first)
             rr.setPayMonth(pm.second);
         //转换物业费成int
@@ -138,12 +148,12 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         if (rm.first)
             rr.setMonthlyRent(rm.second);
         //物业费开始时间
-        rr.setRealtyStartDate(DateUtils.string2Date(fragment.getProBeginDate().getText().toString()));
+        rr.setRealtyStartDate(DateUtils.string2Date(fragment.getPropertyDate().getText().toString()));
         //合同开始时间
-        rr.setContractSigningDate(DateUtils.string2Date(fragment.getContractBeginDate().getText().toString()));
+        rr.setContractSigningDate(DateUtils.string2Date(fragment.getContractDate().getText().toString()));
         //合同时长
-        pm=CastUtils.parseInt(fragment.getContractMonth().getText().toString());
-        if(pm.first)
+        pm = CastUtils.parseInt(fragment.getContractMonth().getSelectedItem().toString());
+        if (pm.first)
             rr.setContractMonth(pm.second);
         //付款时间
         rr.setPaymentDate(DateUtils.string2Date(fragment.getPayDate().getText().toString()));
@@ -151,8 +161,12 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
         rm = CastUtils.parseDouble(fragment.getTotalMoney().getText().toString());
         if (rm.first)
             rr.setTotalMoney(rm.second);
+        //押金
+        pm = CastUtils.parseInt(fragment.getDeposit().getText().toString());
+        if (pm.first)
+            rr.setDeposit(pm.second);
         //物业费时长
-        pm = CastUtils.parseInt(fragment.getProMonth().getText().toString());
+        pm = CastUtils.parseInt(fragment.getPropertyMonth().getSelectedItem().toString());
         if (pm.first)
             rr.setPropertyTime(pm.second);
         rr.setManID(manId);
@@ -190,15 +204,6 @@ public final class NewRoomFragmentLister implements View.OnClickListener, TextWa
     public void afterTextChanged(Editable editable) {
         isChange = true;
         fragment.getOkBtn().setEnabled(true);
-    }
-
-
-    private void showMyDialog(String msg) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this.fragment.getContext());
-        dialog.setTitle("错误");
-        dialog.setMessage(msg);
-        dialog.setPositiveButton(R.string.ok_cn, (dialogInterface, i) -> {
-        }).show();
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import lombok.val;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;

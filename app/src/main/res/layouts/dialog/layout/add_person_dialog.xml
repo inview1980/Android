@@ -1,67 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/rental_main_gridview_margin_6"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <TextView
-        style="@style/rental_textView_Lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/name_cn" />
-
-    <EditText
-        android:id="@+id/rental_addPerson_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        style="@style/rental_textView_Lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tel" />
-
-    <EditText
-        android:id="@+id/rental_addPerson_tel"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number" />
+        android:layout_margin="@dimen/rental_main_gridview_margin_6"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
-    <TextView
-        style="@style/rental_textView_Lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rental_codeNumber_cn" />
+        <TextView
+            style="@style/textView_1th"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/company" />
 
-    <EditText
-        android:id="@+id/rental_addPerson_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/rental_addPerson_companyName"
+            android:layout_width="match_parent"
+            android:labelFor="@id/rental_addPerson_companyName"
+            android:autofillHints="@string/company"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
 
-    <TextView
-        style="@style/rental_textView_Lable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/remark_main_cn" />
+        <TextView
+            style="@style/textView_1th"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_cn" />
 
-    <EditText
-        android:id="@+id/rental_addPerson_remark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/rental_addPerson_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/name_cn"
+            android:labelFor="@id/rental_addPerson_name"
+            android:inputType="text" />
 
-    <com.deadline.statebutton.StateButton
-        android:id="@+id/rental_addPerson_ok"
-        style="@style/StateButtonStyle"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
-        android:text="@string/ok_cn"
-        app:normalBackgroundColor="@color/banana"
-        app:pressedBackgroundColor="@color/banana"
-        app:round="true"
-        app:unableBackgroundColor="@color/banana" />
-</LinearLayout>
+        <TextView
+            style="@style/textView_1th"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tel" />
+
+        <EditText
+            android:id="@+id/rental_addPerson_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/tel"
+            android:labelFor="@id/rental_addPerson_tel"
+            android:inputType="number" />
+
+        <TextView
+            style="@style/textView_1th"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rental_codeNumber_cn" />
+
+        <EditText
+            android:id="@+id/rental_addPerson_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/textView_1th"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remark_main_cn" />
+
+        <EditText
+            android:id="@+id/rental_addPerson_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/remark_cn"
+            android:labelFor="@id/rental_addPerson_remark"
+            android:inputType="text" />
+
+        <com.deadline.statebutton.StateButton
+            android:id="@+id/rental_addPerson_ok"
+            style="@style/StateButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ok_cn"
+            app:normalBackgroundColor="@color/blue"
+            app:pressedBackgroundColor="@color/blue"
+            app:round="true"
+            app:unableBackgroundColor="@color/blue" />
+    </LinearLayout>
+</ScrollView>

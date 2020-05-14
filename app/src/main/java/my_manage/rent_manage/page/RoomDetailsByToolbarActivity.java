@@ -18,9 +18,12 @@ import butterknife.ButterKnife;
 import my_manage.adapter_page.NewRoomPageAdapter;
 import my_manage.password_box.R;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
-import my_manage.tool.DateUtils;
 import my_manage.tool.enums.ShowRoomType;
+import my_manage.widght.ParallaxSwipeBackActivity;
 
+/**
+ * 出租
+ */
 public final class RoomDetailsByToolbarActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
     @BindView(R.id.tab_title) TabLayout             tabTitle;
     @BindView(R.id.toolbar)   Toolbar               toolbar;

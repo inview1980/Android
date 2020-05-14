@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayWhite"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:paddingEnd="@dimen/rental_main_gridview_margin_6"
+        android:stretchColumns="1">
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_1th"
+                android:text="@string/company" />
+
+            <EditText android:enabled="false"
+                android:id="@+id/companyName"
+                android:autofillHints="@string/company"
+                android:inputType="text"
+                style="@style/editView_middle_right"
+                android:hint="@string/company" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_1th"
+                android:text="@string/name_cn" />
+
+            <EditText
+                android:id="@+id/name" android:enabled="false"
+                style="@style/editView_middle_right"
+                android:autofillHints="@string/name_cn"
+                android:inputType="text"
+                android:hint="@string/name_cn" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_1th"
+                android:text="@string/rental_codeNumber_cn" />
+
+            <EditText
+                android:autofillHints="@string/rental_codeNumber_cn"
+                android:inputType="numberDecimal"
+                android:id="@+id/codeNumber" android:enabled="false"
+                style="@style/editView_middle_right"
+                android:hint="@string/rental_codeNumber_cn" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_1th"
+                android:text="@string/tel" />
+
+            <EditText
+                android:autofillHints="@string/tel"
+                android:inputType="phone"
+                android:id="@+id/tel"
+                style="@style/editView_middle_right" android:enabled="false"
+                android:hint="@string/tel" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <EditText
+                android:autofillHints="@string/remark_cn"
+                android:inputType="textMultiLine"
+                android:id="@+id/remark"
+                style="@style/editView_middle_right"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:layout_span="2"
+                android:lines="3"
+                android:enabled="false"
+                android:hint="@string/remark_cn" />
+        </TableRow>
+    </TableLayout>
+    <com.deadline.statebutton.StateButton
+    android:id="@+id/modify"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:round="true"
+    app:normalBackgroundColor="@color/red1"
+    app:pressedBackgroundColor="@color/red1"
+    app:unableBackgroundColor="@color/red1"
+    style="@style/StateButtonStyle"
+    android:text="@string/modify_cn" />
+
+    <com.deadline.statebutton.StateButton
+        android:id="@+id/ok"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:round="true"
+        app:normalBackgroundColor="@color/blue"
+        app:pressedBackgroundColor="@color/blue"
+        app:unableBackgroundColor="@color/blue"
+        style="@style/StateButtonStyle"
+        android:visibility="gone"
+        android:text="@string/ok_cn" />
+</LinearLayout>

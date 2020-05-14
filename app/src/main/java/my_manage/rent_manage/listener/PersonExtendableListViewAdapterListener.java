@@ -15,6 +15,7 @@ import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.page.RoomDetailsByToolbarActivity;
+import my_manage.rent_manage.page.ShowPersonDetailsActivity;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.enums.ShowRoomType;
@@ -28,6 +29,7 @@ public final class PersonExtendableListViewAdapterListener {
         } else if (v.getId() == R.id.rental_person_expandable_addperson) {
             PersonListener.addPerson(activity, activity);
         }
+        activity.showList();
     }
 
     private <T extends Activity & IShowList> void delPerson(T activity, int primary_id) {
@@ -47,12 +49,8 @@ public final class PersonExtendableListViewAdapterListener {
      * 弹出租户具体内容的窗口
      */
     public static <T extends Activity & IShowList> void showPersonDetails(T activity, int manId) {
-        Intent                intent  = new Intent(activity, RoomDetailsByToolbarActivity.class);
-        Bundle                bundle  = new Bundle();
-        List<ShowRoomDetails> details = DbHelper.getInstance().getShowRoomDesForPerson(manId);
-        bundle.putString("ShowRoomDetails", JSONArray.toJSONString(details));
-        bundle.putInt("ShowRoomType", ShowRoomType.Person.getIndex());
-        intent.putExtras(bundle);
+        Intent                intent  = new Intent(activity, ShowPersonDetailsActivity.class);
+        intent.putExtra("manId",manId);
         activity.startActivity(intent);
     }
 }

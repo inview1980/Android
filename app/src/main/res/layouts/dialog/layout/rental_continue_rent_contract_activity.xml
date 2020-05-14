@@ -27,24 +27,24 @@
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/rental_textView_Lable"
+                style="@style/textView_1th"
                 android:text="@string/rental_area_cn" />
 
             <TextView
                 android:id="@+id/area"
-                style="@style/rental_add_edit"
+                style="@style/editView_middle_right"
                 android:enabled="false" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/rental_textView_Lable"
-                android:text="上次开始日期:" />
+                style="@style/textView_1th"
+                android:text="@string/lastStartDate" />
 
             <TextView
                 android:id="@+id/start1Date"
-                style="@style/rental_add_edit"
+                style="@style/editView_middle_right"
                 android:enabled="false" />
         </TableRow>
 
@@ -53,26 +53,25 @@
             android:layout_marginBottom="@dimen/rental_main_gridview_margin_6">
 
             <TextView
-                style="@style/rental_textView_Lable"
+                style="@style/textView_1th"
                 android:text="@string/rental_endDate_cn" />
 
             <TextView
                 android:id="@+id/end1Date"
-                style="@style/rental_add_edit"
+                style="@style/editView_middle_right"
                 android:enabled="false" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/rental_textView_Lable"
-                android:text="本次续期（月）:" />
+                style="@style/textView_1th"
+                android:text="@string/continueMonth" />
 
             <Spinner
                 android:id="@+id/continueMonth"
-                style="@style/rental_add_edit"
+                style="@style/editView_middle_right"
                 android:layout_width="match_parent"
-                android:layout_gravity="right"
                 android:entries="@array/monthNumber"
                 android:minWidth="180dp" />
         </TableRow>
@@ -80,23 +79,23 @@
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/rental_textView_Lable"
-                android:text="开始日期:" />
+                style="@style/textView_1th"
+                android:text="@string/startDate" />
 
             <TextView
                 android:id="@+id/start2Date"
-                style="@style/rental_add_edit" />
+                style="@style/editView_middle_right" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/rental_textView_Lable"
-                android:text="续期至:" />
+                style="@style/textView_1th"
+                android:text="@string/endDate" />
 
             <TextView
                 android:id="@+id/end2Date"
-                style="@style/rental_add_edit"
+                style="@style/editView_middle_right"
                 android:enabled="false" />
         </TableRow>
 
@@ -111,11 +110,13 @@
 
         <EditText
             android:id="@+id/remark"
-            style="@style/rental_add_edit"
+            style="@style/editView_middle_right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:gravity="left"
+            android:gravity="start"
+            android:autofillHints="@string/remark_cn"
+            android:inputType="textMultiLine"
             android:hint="@string/remark_cn"
             android:lines="3" />
     </LinearLayout>
@@ -125,21 +126,22 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
         android:background="@android:color/white"
-        android:gravity="right">
+        android:orientation="horizontal">
 
         <com.deadline.statebutton.StateButton
             android:id="@+id/ok"
             style="@style/StateButtonStyle"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+            android:layout_width="match_parent"
             android:text="@string/ok_cn"
-            app:normalBackgroundColor="@color/banana"
-            app:pressedBackgroundColor="@color/banana"
+            app:normalBackgroundColor="@color/blue"
+            app:pressedBackgroundColor="@color/blue"
             app:round="true"
-            app:unableBackgroundColor="@color/banana" />
+            app:unableBackgroundColor="@color/blue" />
 
         <com.deadline.statebutton.StateButton
             android:id="@+id/cancel"
+            android:visibility="gone"
             style="@style/StateButtonStyle"
             android:layout_height="wrap_content"
             android:text="@string/cancel_cn"

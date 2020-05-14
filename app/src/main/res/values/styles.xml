@@ -32,13 +32,6 @@
         <item name="android:ellipsize">marquee</item>
     </style>
 
-    <style name="password_manage_LinearLayout_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:foreground">#11777777</item>
-    </style>
 
     <style name="password_manage_details_edit_style">
         <item name="android:layout_width">match_parent</item>
@@ -58,25 +51,25 @@
 
     <style name="rental_textView_context">
         <item name="android:layout_marginEnd">3dp</item>
-<!--        <item name="android:minWidth">80dp</item>-->
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/rental_lable_textSize</item>
+        <item name="android:textSize">@dimen/rental_label_textSize</item>
     </style>
 
-    <style name="rental_textView_Lable">
-        <item name="android:textSize">@dimen/rental_lable_textSize</item>
+    <style name="textView_1th">
+        <item name="android:paddingStart">@dimen/rental_main_gridview_margin_12</item>
+        <item name="android:textSize">@dimen/rental_label_textSize</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
         <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
     </style>
 
-    <style name="rental_add_edit">
+    <style name="editView_middle_right">
         <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
         <item name="android:background">@null</item>
-        <item name="android:textSize">@dimen/rental_lable_textSize</item>
-        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:textSize">@dimen/rental_label_textSize</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
     </style>
 

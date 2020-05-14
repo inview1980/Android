@@ -1,476 +1,480 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <TableLayout
+    <LinearLayout
+        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/grayWhite"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:shrinkColumns="3"
-        android:stretchColumns="1"
-        tools:ignore="ExtraText">
+        android:orientation="vertical">
 
-        <TableRow style="@style/rental_room_details_tableRow">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:shrinkColumns="3"
+            android:stretchColumns="1">
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_communityName_cn" />
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <com.hanks.htextview.rainbow.RainbowTextView
-                android:id="@+id/rental_editRoom_community"
-                style="@style/rental_textView_Lable"
-                android:layout_span="3" />
-        </TableRow>
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_communityName_cn" />
 
-        <TableRow style="@style/rental_room_details_tableRow">
+                <com.hanks.htextview.rainbow.RainbowTextView
+                    android:id="@+id/rental_editRoom_community"
+                    style="@style/editView_middle_right"
+                    android:layout_span="3" />
+            </TableRow>
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_houseNumber_cn" />
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <com.hanks.htextview.rainbow.RainbowTextView
-                android:id="@+id/rental_editRoom_roomNumber"
-                style="@style/rental_textView_Lable"
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_houseNumber_cn" />
 
-                android:layout_span="3" />
+                <com.hanks.htextview.rainbow.RainbowTextView
+                    android:id="@+id/rental_editRoom_roomNumber"
+                    style="@style/editView_middle_right"
+                    android:layout_span="3" />
 
-        </TableRow>
+            </TableRow>
 
-        <TableRow style="@style/rental_room_details_tableRow">
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_monthlyRent_cn" />
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_monthlyRent_cn" />
 
-            <EditText
-                android:id="@+id/rental_editRoom_realtyMoney"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
-        </TableRow>
+                <EditText
+                    android:autofillHints="@string/rental_monthlyRent_cn"
+                    android:labelFor="@id/rental_editRoom_realtyMoney"
+                    android:id="@+id/rental_editRoom_realtyMoney"
+                    style="@style/editView_middle_right"
+                    android:layout_span="3"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </TableRow>
 
-        <TableRow style="@style/rental_room_details_tableRow">
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_propertyPrice_cn" />
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_propertyPrice_cn" />
 
-            <EditText
-                android:id="@+id/rental_editRoom_propertyPrice"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
-        </TableRow>
+                <EditText
+                    android:id="@+id/rental_editRoom_propertyPrice"
+                    style="@style/editView_middle_right"
+                    android:layout_span="3"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </TableRow>
 
-        <TableRow style="@style/rental_room_details_tableRow">
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_meterNumber_cn" />
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_meterNumber_cn" />
 
-            <EditText
-                android:id="@+id/rental_editRoom_meterNumber"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false" />
-        </TableRow>
+                <EditText
+                    android:id="@+id/rental_editRoom_meterNumber"
+                    style="@style/editView_middle_right"
+                    android:inputType="numberDecimal"
+                    android:layout_span="3"
+                    android:enabled="false" />
+            </TableRow>
 
-        <TableRow style="@style/rental_room_details_tableRow">
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="水表号:" />
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/water_number" />
 
-            <EditText
-                android:id="@+id/rental_editRoom_waterMeter"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false" />
-        </TableRow>
+                <EditText
+                    android:id="@+id/rental_editRoom_waterMeter"
+                    style="@style/editView_middle_right"
+                    android:inputType="numberDecimal"
+                    android:labelFor="@id/rental_editRoom_waterMeter"
+                    android:autofillHints="@string/water_number"
+                    android:layout_span="3"
+                    android:enabled="false" />
+            </TableRow>
 
-        <TableRow style="@style/rental_room_details_tableRow">
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_area_cn" />
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_area_cn" />
 
-            <EditText
-                android:id="@+id/rental_editRoom_area"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
-        </TableRow>
+                <EditText
+                    android:id="@+id/rental_editRoom_area"
+                    style="@style/editView_middle_right"
+                    android:labelFor="@id/rental_editRoom_area"
+                    android:autofillHints="@string/rental_area_cn"
+                    android:layout_span="3"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </TableRow>
+        </TableLayout>
 
-        <TableRow
+        <RelativeLayout
             android:id="@+id/rental_editRoom_person_extend"
             style="@style/rental_room_details_tableRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <TextView
-                style="@style/rental_textView_Lable"
-                android:text="住户资料:" />
+                style="@style/textView_1th"
+                android:text="@string/personDetails" />
 
             <TextView
-                android:id="@+id/rental_editRoom_extend_txt1"
-                android:layout_column="2"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal|center_vertical"
+                android:id="@+id/rentalEditRoomExtendTxt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/img_shrink"
+                android:textSize="@dimen/min_size"
                 android:text="@string/click_extend" />
 
             <ImageView
                 android:id="@+id/img_shrink"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_column="3"
-                android:padding="10dp"
-                android:src="@drawable/ic_arrow_downward_black_24dp" />
-        </TableRow>
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+                android:src="@drawable/ic_arrow_downward_black_24dp"
+                android:contentDescription="@string/click_extend" />
+        </RelativeLayout>
 
-        <TableRow
-            android:id="@+id/rental_editRoom_person1"
+        <TableLayout
+            android:id="@+id/person_expand_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rental_main_gridview_margin_9"
+            android:stretchColumns="1"
+            >
+
+            <TableRow style="@style/rental_room_details_tableRow">
+
+                <TextView
+                    style="@style/textView_1th"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/rental_man_cn" />
+
+
+                <Spinner
+                    android:id="@+id/rental_editRoom_person"
+                    style="@style/editView_middle_right"
+                    android:layout_width="match_parent"
+                    android:enabled="false"
+                    android:layout_gravity="center_vertical"
+                     />
+
+                <Button
+                    android:id="@+id/rental_editRoom_add"
+                    android:layout_width="wrap_content"
+                    android:background="#00000000"
+                    android:text="@string/new_cn" />
+
+            </TableRow>
+
+            <TableRow style="@style/rental_room_details_tableRow">
+
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/company" />
+
+                <EditText
+                    android:labelFor="@id/rental_editRoom_companyName"
+                    android:autofillHints="@string/company"
+                    android:id="@+id/rental_editRoom_companyName"
+                    style="@style/editView_middle_right"
+                    android:layout_span="2"
+                    android:enabled="false"
+                    android:inputType="number" />
+            </TableRow>
+
+            <TableRow style="@style/rental_room_details_tableRow">
+
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/tel" />
+
+                <EditText
+                    android:id="@+id/rental_editRoom_tel"
+                    style="@style/editView_middle_right"
+                    android:layout_span="2"
+                    android:enabled="false"
+                    android:autofillHints="@string/tel"
+                    android:labelFor="@id/rental_editRoom_tel"
+                    android:inputType="number" />
+            </TableRow>
+
+            <TableRow style="@style/rental_room_details_tableRow">
+
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_manCardNumber_cn" />
+
+                <EditText
+                    android:id="@+id/rental_editRoom_manCardNumber"
+                    style="@style/editView_middle_right"
+                    android:labelFor="@id/rental_editRoom_manCardNumber"
+                    android:autofillHints="@string/rental_codeNumber_cn"
+                    android:layout_span="2"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </TableRow>
+
+            <TableRow style="@style/rental_room_details_tableRow">
+
+                <EditText
+                    android:id="@+id/rental_editRoom_person_remark"
+                    android:background="@android:color/white"
+                    android:enabled="false"
+                    android:layout_span="3"
+                    android:gravity="start"
+                    android:hint="@string/remark_cn"
+                    android:minLines="3"
+                    android:inputType="textMultiLine"
+                    android:paddingStart="@dimen/rental_main_gridview_margin_12"
+                    android:autofillHints="@string/remark_cn" />
+
+            </TableRow>
+        </TableLayout>
+
+        <RelativeLayout
+            android:id="@+id/rental_editRoom_roomDetails_extend"
             style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:layout_gravity="center_vertical"
-                android:text="@string/rental_man_cn" />
-
-
-            <Spinner
-                android:id="@+id/rental_editRoom_person"
-                style="@style/rental_textView_Lable"
-                android:layout_width="100dp"
-                android:layout_gravity="center_vertical"
-                android:layout_span="2"
-                android:clickable="false" />
-
-            <Button
-                android:id="@+id/rental_editRoom_add"
-                android:layout_width="60dp"
-                android:background="#00000000"
-                android:text="@string/new_cn" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/rental_editRoom_person2"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/tel" />
-
-            <EditText
-                android:id="@+id/rental_editRoom_tel"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false"
-                android:inputType="number" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/rental_editRoom_person3"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_manCardNumber_cn" />
-
-            <EditText
-                android:id="@+id/rental_editRoom_manCardNumber"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false" />
-        </TableRow>
-
-
-        <TableRow android:id="@+id/rental_editRoom_person4">
-
-            <EditText
-                android:id="@+id/rental_editRoom_person_remark"
-                android:layout_span="4"
-                android:background="@android:color/white"
-                android:enabled="false"
-                android:gravity="left"
-                android:hint="@string/remark_cn"
-                android:minLines="3" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/rental_editRoom_other_extend"
-            style="@style/rental_room_details_tableRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <TextView
-                style="@style/rental_textView_Lable"
-                android:text="房租信息:" />
+                style="@style/textView_1th"
+                android:text="@string/roomRentalDetails" />
 
             <TextView
-                android:id="@+id/rental_editRoom_extend_txt2"
-                android:layout_column="2"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal|center_vertical"
+                android:id="@+id/rentalEditRoomExtendTxt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/img_shrink2"
+                android:enabled="false"
+                android:textSize="@dimen/min_size"
                 android:text="@string/click_extend" />
 
             <ImageView
+                android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
                 android:id="@+id/img_shrink2"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_column="3"
-                android:padding="10dp"
-                android:src="@drawable/ic_arrow_downward_black_24dp" />
-        </TableRow>
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_arrow_downward_black_24dp"
+                android:contentDescription="@string/click_extend" />
+        </RelativeLayout>
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout0"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
+        <TableLayout
+            android:id="@+id/roomDetailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rental_main_gridview_margin_9"
+            android:stretchColumns="1">
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:layout_gravity="center_vertical"
-                android:text="缴费总金额:" />
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <EditText
-                android:id="@+id/totalMoney"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false"
-                android:inputType="numberDecimal" />
-        </TableRow>
+                <TextView
+                    style="@style/textView_1th"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/payTotalMoney" />
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout1"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
+                <EditText
+                    android:autofillHints="@string/payTotalMoney"
+                    android:id="@+id/totalMoney"
+                    android:labelFor="@id/totalMoney"
+                    style="@style/editView_middle_right"
+                    android:layout_span="3"
+                    android:enabled="false"
+                    android:inputType="numberDecimal" />
+            </TableRow>
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:layout_gravity="center_vertical"
-                android:text="@string/rental_isContainRealty_cn" />
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <CheckBox
-                android:id="@+id/rental_editRoom_isContainRealty"
-                style="@style/rental_add_edit"
-                android:enabled="false" />
-        </TableRow>
+                <TextView
+                    style="@style/textView_1th"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/rental_isContainRealty_cn" />
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout2"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
+                <CheckBox
+                    android:id="@+id/rental_editRoom_isContainRealty"
+                    style="@style/editView_middle_right"
+                    android:enabled="false" />
+            </TableRow>
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="交费时间:" />
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <TextView
-                android:id="@+id/rental_editRoom_payDate"
-                style="@style/rental_textView_Lable"
-                android:layout_span="3" />
-        </TableRow>
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/payDate" />
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout3"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
+                <TextView
+                    android:id="@+id/rental_editRoom_payDate"
+                    style="@style/editView_middle_right"
+                    android:layout_span="3" />
+            </TableRow>
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="押金:" />
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <EditText
-                android:id="@+id/rental_editRoom_deposit"
-                style="@style/rental_add_edit"
-                android:layout_span="3"
-                android:enabled="false"
-                android:inputType="number" />
-        </TableRow>
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/desposit" />
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout4"
-            style="@style/rental_room_details_tableRow"
-            android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
-            android:visibility="gone">
+                <EditText
+                    android:id="@+id/rental_editRoom_deposit"
+                    style="@style/editView_middle_right"
+                    android:layout_span="3"
+                    android:enabled="false"
+                    android:labelFor="@id/rental_editRoom_deposit"
+                    android:autofillHints="@string/desposit"
+                    android:inputType="number" />
+            </TableRow>
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_editRoom_rentalBeginDate_cn" />
+            <TableRow
+                style="@style/rental_room_details_tableRow"
+                android:layout_marginTop="@dimen/rental_main_gridview_margin_6">
 
-            <TextView
-                android:id="@+id/rental_editRoom_beginDate"
-                style="@style/rental_textView_Lable" />
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_editRoom_rentalDate_cn" />
 
+                <TextView
+                    android:id="@+id/rental_editRoom_beginDate"
+                    style="@style/editView_middle_right" />
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="租期（月）:" />
+            </TableRow>
 
-            <EditText
-                android:id="@+id/rental_editRoom_rentalMonth"
-                style="@style/rental_add_edit"
-                android:enabled="false"
-                android:inputType="number" />
-        </TableRow>
+            <TableRow style="@style/rental_room_details_tableRow">
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout5"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_month" />
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="房租结束时间:" />
-
-            <TextView
-                android:id="@+id/rental_editRoom_rentalEndDate"
-                style="@style/rental_textView_Lable"
-                android:layout_span="3" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout6"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="@string/rental_propertyBeginDate" />
-
-            <TextView
-                android:id="@+id/rental_editRoom_propertyBeginDate"
-                style="@style/rental_textView_Lable" />
+                <Spinner
+                    android:id="@+id/rental_editRoom_rentalMonth"
+                    style="@style/editView_middle_right"
+                    android:enabled="false"
+                    android:entries="@array/monthNumber" />
+            </TableRow>
 
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="时长（月）:" />
+            <TableRow
+                style="@style/rental_room_details_tableRow"
+                android:layout_marginTop="@dimen/rental_main_gridview_margin_6">
 
-            <EditText
-                android:id="@+id/rental_editRoom_propertyMonth"
-                style="@style/rental_add_edit"
-                android:enabled="false"
-                android:inputType="number" />
-        </TableRow>
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_realtyMoney_cn" />
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout7"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
+                <TextView
+                    android:id="@+id/rental_editRoom_propertyBeginDate"
+                    style="@style/editView_middle_right" />
+            </TableRow>
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="物业费结束时间:" />
+            <TableRow style="@style/rental_room_details_tableRow">
 
-            <TextView
-                android:id="@+id/rental_editRoom_property_costsEndDate"
-                style="@style/rental_textView_Lable"
-                android:layout_span="3" />
-        </TableRow>
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/property_costs_month" />
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout8"
-            style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="合同开始时间:" />
-
-            <TextView
-                android:id="@+id/rental_editRoom_contract_BeginDate"
-                style="@style/rental_textView_Lable" />
+                <Spinner
+                    android:id="@+id/rental_editRoom_propertyMonth"
+                    style="@style/editView_middle_right"
+                    android:enabled="false"
+                    android:entries="@array/monthNumber" />
+            </TableRow>
 
 
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="时长（月）:" />
+            <TableRow
+                style="@style/rental_room_details_tableRow"
+                android:layout_marginTop="@dimen/rental_main_gridview_margin_6">
+
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/contract" />
+
+                <TextView
+                    android:id="@+id/rental_editRoom_contract_BeginDate"
+                    style="@style/editView_middle_right" />
+            </TableRow>
+
+            <TableRow style="@style/rental_room_details_tableRow">
+
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/contract_month" />
+
+                <Spinner
+                    android:id="@+id/rental_editRoom_contract_Month"
+                    style="@style/editView_middle_right"
+                    android:enabled="false"
+                    android:entries="@array/monthNumber" />
+            </TableRow>
 
             <EditText
-                android:id="@+id/rental_editRoom_contract_Month"
-                style="@style/rental_add_edit"
+                android:id="@+id/rental_editRoom_remark"
+                android:background="@android:color/white"
                 android:enabled="false"
-                android:inputType="number" />
-        </TableRow>
+                android:autofillHints="@string/remark_cn"
+                android:inputType="textMultiLine"
+                android:paddingStart="@dimen/rental_main_gridview_margin_12"
+                android:gravity="start|top"
+                android:hint="@string/remark_cn"
+                android:minLines="3" />
+        </TableLayout>
 
-        <TableRow
-            android:id="@+id/rental_room_details_other_layout9"
+
+        <LinearLayout
             style="@style/rental_room_details_tableRow"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/rental_textView_Lable"
-                android:text="合同结束时间:" />
-
-            <TextView
-                android:id="@+id/rental_editRoom_Contract_EndDate"
-                style="@style/rental_textView_Lable"
-                android:layout_span="3" />
-        </TableRow>
-
-
-        <EditText
-            android:id="@+id/rental_editRoom_remark"
-            android:background="@android:color/white"
-            android:enabled="false"
-            android:gravity="left|top"
-            android:hint="@string/remark_cn"
-            android:minLines="3" />
-
-
-        <TableRow
-            style="@style/rental_room_details_tableRow"
-            android:layout_marginTop="@dimen/rental_main_gridview_margin_3"
-            android:gravity="right">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rental_main_gridview_margin_9"
+            android:orientation="horizontal">
 
             <com.deadline.statebutton.StateButton
                 android:id="@+id/rental_editRoom_changeBtn"
+                style="@style/StateButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/modify_cn"
+                android:visibility="gone"
+                app:normalBackgroundColor="@color/red"
+                app:pressedBackgroundColor="@color/red"
                 app:round="true"
-                style="@style/StateButtonStyle"
-                app:normalBackgroundColor="@color/banana"
-                app:pressedBackgroundColor="@color/banana"
-                app:unableBackgroundColor="@color/banana"
-                android:visibility="gone" />
+                app:unableBackgroundColor="@color/red" />
 
             <com.deadline.statebutton.StateButton
-                style="@style/StateButtonStyle"
                 android:id="@+id/rental_editRoom_okBtn"
-                android:enabled="false"
-                app:round="true"
-                app:normalBackgroundColor="@android:color/holo_green_dark"
-                app:pressedBackgroundColor="@android:color/holo_green_dark"
-                app:unableBackgroundColor="@android:color/holo_green_dark"
-                android:text="@string/ok_cn"
-                android:visibility="gone" />
-
-            <com.deadline.statebutton.StateButton
                 style="@style/StateButtonStyle"
-                android:layout_marginStart="@dimen/rental_main_gridview_margin_9"
-                android:id="@+id/rental_editRoom_cancelBtn"
-                android:paddingRight="@dimen/rental_main_gridview_margin_6"
-                app:round="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="@string/ok_cn"
+                android:visibility="gone"
                 app:normalBackgroundColor="@color/blue"
                 app:pressedBackgroundColor="@color/blue"
-                app:unableBackgroundColor="@color/blue"
-                android:text="@string/cancel_cn" />
+                app:round="true"
+                app:unableBackgroundColor="@color/blue" />
 
-
-        </TableRow>
-
-
-    </TableLayout>
+        </LinearLayout>
+    </LinearLayout>
 </ScrollView>

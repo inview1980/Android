@@ -20,6 +20,10 @@ public final class PersonDetails {
      */
     private String cord;
     private String other;
+    /**
+     * 公司
+     */
+    private String company;
 
     public PersonDetails(String name) {
         this.name = name;

@@ -1,5 +1,11 @@
 package my_manage.rent_manage.database;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
+
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.WorkbookUtil;
@@ -26,7 +32,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
+import lombok.Cleanup;
 import lombok.Data;
+import my_manage.password_box.R;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
@@ -102,7 +110,13 @@ public final class DbHelper {
     }
 
     public List<RoomDetails> getRoomDetailsToList() {
-        return RentDB.getQueryAll(RoomDetails.class).stream().filter(rd -> !rd.getIsDelete()).collect(Collectors.toList());
+        List<RoomDetails> result;
+        try {
+            result = RentDB.getQueryAll(RoomDetails.class);
+            return result.stream().filter(rd -> !rd.getIsDelete()).collect(Collectors.toList());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<RoomDetails> getRoomDetailsByDelete() {
@@ -409,9 +423,11 @@ public final class DbHelper {
             tmpLst.add(new PersonDetails());
         return tmpLst;
     }
+
     public List<PersonDetails> getPersonList() {
         return getPersonList(true);
     }
+
     public List<RentalRecord> getRecords() {
         return RentDB.getQueryAll(RentalRecord.class);
     }
@@ -472,8 +488,8 @@ public final class DbHelper {
     }
 
     public int insert(RentalRecord rr) {
-        if(RentDB.insert(rr)>0){
-            int max=RentDB.getQueryAll(RentalRecord.class).stream().mapToInt(RentalRecord::getPrimary_id).max().getAsInt();
+        if (RentDB.insert(rr) > 0) {
+            int max = RentDB.getQueryAll(RentalRecord.class).stream().mapToInt(RentalRecord::getPrimary_id).max().getAsInt();
             return max;
         }
         return -1;
@@ -486,4 +502,39 @@ public final class DbHelper {
         List<RentalRecord>  rentalRecordList;
     }
 
+    /**
+     * 删除并重建数据库
+     */
+    public void rebuilding(Context context) {
+        String path = RentDB.DB_NAME;
+        //删除数据库文件
+        List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsToList();
+        RentDB.getLiteOrm().deleteDatabase();
+        RentDB.getLiteOrm().openOrCreateDatabase();
+
+        //重新初始化数据库
+        dbInit(context, path);
+    }
+
+    /**
+     * 初始化数据库，如数据库无数据，读取xlsx文件并填入数据
+     */
+    public void dbInit(Context context, String DBFilePath) {
+        //初始化数据库
+        RentDB.createCascadeDB(context, DBFilePath);
+
+        List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsToList();
+        if (rd != null && rd.size() != 0) return;
+        //当数据库空时，填充数据库内容
+        try {
+           @Cleanup InputStream  is = context.getResources().openRawResource(R.raw.db);
+            DbHelper.ExcelData   ed = DbHelper.getInstance().readExcel(is);
+            is.close();
+            RentDB.insertAll(ed.getPersonDetailsList());
+            RentDB.insertAll(ed.getRentalRecordList());
+            RentDB.insertAll(ed.getRoomDetailsList());
+        } catch (Resources.NotFoundException |IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

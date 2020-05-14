@@ -1,0 +1,116 @@
+@startuml
+class MainActivity<<主页面类>> #red{}
+
+class RentalMainActivity{
+    + void showList()
+}
+class MyService<后台定时启动的服务>{}
+class RentalMainAdapter{
+    ..layout..
+    -视图rental_room_total_item
+}
+class RentalForHouseActivity<显示指定小区的所有房源列表>{
+    + void showList()
+}
+package  房源的相关操作 #LightGray{
+    class RoomDetailsExtendableListViewAdapter{
+        ..layout..
+        -主:rental_room_list_item
+        -子:simple_expandable_list_item_1
+        -子:rent_room_expandable_listview_borrowed_view
+        -子:rent_room_expandable_listview_null_view
+    }
+    class RentRoomExpandableListViewListener{}
+    class RoomHistoryActivity<出租记录>{}
+    class ContinueContractActivity<续合同>{}
+    class ContinuePropertyActivity<续物业费>{}
+    class ContinueRentActivity<续租金>{}
+
+    RoomDetailsExtendableListViewAdapter->RentRoomExpandableListViewListener
+
+    RentRoomExpandableListViewListener-->RoomHistoryActivity
+    RentRoomExpandableListViewListener-->ContinueContractActivity
+    RentRoomExpandableListViewListener-->ContinuePropertyActivity
+    RentRoomExpandableListViewListener-->ContinueRentActivity
+}
+
+package  租户相关 #LightGray{
+    class PersonListener<租户的新增、显示>{
+        +{static} void showPersonDetail()
+        +{static} void addPerson()
+    }
+    class ShowPersonExpandActivity<显示租户列表>{
+    ..layout..
+        -expandable_listview
+    }
+    class PersonExtendableListViewAdapter{
+        ..layout..
+        -主:android.R.layout.simple_expandable_list_item_1
+        -子:rental_person_expandable_listview_item
+    }
+    class PersonExtendableListViewAdapterListener{}
+    class ShowPersonDetailsActivity<租户的详细内容>{
+        ..layout..
+        -simple_toolbar_tablayout_viewpage
+    }
+    class PersonDetailsFramgent{
+         ..layout..
+        -activity_show_person_details
+    }
+
+    PersonListener->ShowPersonExpandActivity
+    ShowPersonExpandActivity-->PersonExtendableListViewAdapter
+    PersonExtendableListViewAdapter->PersonExtendableListViewAdapterListener
+    PersonExtendableListViewAdapterListener-->ShowPersonDetailsActivity
+    ShowPersonDetailsActivity->PersonDetailsFramgent
+}
+
+class RoomListener<房源的新增、修改>{
+    +{static} void changedCommunity()
+    +{static} void recoverDel()
+    +{static} void addRoomDetails()
+}
+
+
+package  房源详情 #f9f2c3{
+    class RoomDetailsByToolbarActivity<房源详情>{}
+    class NewRoomPageAdapter{}
+    class NewRoomFragment{
+        ..layout..
+        -layout:rental_room_details
+    }
+    RoomDetailsByToolbarActivity->NewRoomPageAdapter
+    NewRoomPageAdapter->NewRoomFragment
+}
+
+
+
+note "toolbar中的menu" as menu1
+note "toolbar中的menu" as menu2
+note "toolbar中的menu" as menu3
+
+MainActivity ..>MyService
+
+MainActivity-->RentalMainActivity
+RentalMainActivity..>RentalMainAdapter
+
+RentalMainActivity-->menu2
+menu2-->PersonListener
+menu2-->RoomListener
+
+MainActivity-->menu1
+menu1-->PersonListener
+menu1-->RoomListener
+
+RentalMainActivity-->RentalForHouseActivity
+RentalForHouseActivity-->RoomDetailsExtendableListViewAdapter
+
+RentalForHouseActivity-->menu3
+menu3-->PersonListener
+menu3-->RoomListener
+
+RentRoomExpandableListViewListener-->RoomDetailsByToolbarActivity
+
+RoomHistoryActivity-->RoomDetailsByToolbarActivity
+
+@enduml

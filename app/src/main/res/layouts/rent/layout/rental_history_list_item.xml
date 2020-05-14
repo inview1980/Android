@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/rental_main_gridview_margin_6"
-    android:background="@android:color/white"
-    >
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner"
+    android:columnCount="2">
 
-    <TableRow>
+    <LinearLayout
+        android:layout_width="@dimen/pwdItemWidth"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
+            style="@style/textView_1th"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
+            android:gravity="center"
             android:text="@string/rental_man_cn"
-            android:textSize="@dimen/rental_lable_textSize" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/rental_history_item_man"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/rental_lable_textSize" />
-    </TableRow>
+            style="@style/textView_1th"
+            android:layout_width="match_parent"
+            android:layout_marginTop="-10dp"
+            android:gravity="center"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
-    <TableRow>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_columnWeight="3"
+        android:background="@android:color/white"
+        >
 
-        <TextView
-            android:text="@string/rental_editRoom_rentalBeginDate_cn"
-            android:textSize="@dimen/rental_lable_textSize" />
+        <TextView android:layout_height="wrap_content"
+            style="@style/textView_1th"
+            android:text="@string/rental_editRoom_rentalDate_cn" />
 
-        <TextView
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:id="@+id/rental_history_item_startDate"
-            android:layout_height="wrap_content"
-            android:minWidth="@dimen/pwdItemWidth"
-            android:textSize="@dimen/rental_lable_textSize" />
+            style="@style/rental_textView_context" />
+    </LinearLayout>
 
-        <TextView
-            android:text="@string/endDate"
-            android:textSize="@dimen/rental_lable_textSize" />
-
-        <TextView
-            android:id="@+id/rental_history_item_endDate"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/rental_lable_textSize" />
-    </TableRow>
-</TableLayout>
+</LinearLayout>

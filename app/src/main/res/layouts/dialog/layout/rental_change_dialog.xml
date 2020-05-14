@@ -13,7 +13,6 @@
         android:id="@+id/rental_change_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnSpan="2"
         android:text="@string/rental_change_rentmoney_cn"
         android:textSize="@dimen/rental_main_gridview_title_fontsize" />
 
@@ -22,14 +21,14 @@
 
         <TextView
             android:id="@+id/rental_change_dialog_lable1"
-            style="@style/rental_textView_Lable"
+            style="@style/textView_1th"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rental_change_now_rentmoney_cn" />
 
         <TextView
             android:id="@+id/rental_changeRent_oldNum"
-            style="@style/rental_textView_Lable"
+            style="@style/textView_1th"
             android:layout_columnWeight="@integer/rental_room_details_1width" />
     </TableRow>
 
@@ -38,14 +37,16 @@
 
         <TextView
             android:id="@+id/rental_change_dialog_lable2"
-            style="@style/rental_textView_Lable"
+            style="@style/textView_1th"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rental_change_rentmoney_det_cn" />
 
         <EditText
+            android:autofillHints="@string/rental_change_rentmoney_cn"
+            android:labelFor="@id/rental_changeRent_newNum"
             android:id="@+id/rental_changeRent_newNum"
-            style="@style/rental_add_edit"
+            style="@style/editView_middle_right"
             android:layout_columnWeight="@integer/rental_room_details_1width"
             android:inputType="number" />
     </TableRow>
@@ -53,18 +54,19 @@
 
     <TableRow
         style="@style/rental_room_details_tableRow"
-        android:gravity="right">
+        >
 
         <com.deadline.statebutton.StateButton
             android:id="@+id/rental_changeRent_okBtn"
             style="@style/StateButtonStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
-            app:normalBackgroundColor="@color/banana"
-            app:pressedBackgroundColor="@color/banana"
+            android:layout_span="2"
+            android:text="@string/ok_cn"
+            app:normalBackgroundColor="@color/blue"
+            app:pressedBackgroundColor="@color/blue"
             app:round="true"
-            app:unableBackgroundColor="@color/banana"
-            android:text="@string/ok_cn" />
+            app:unableBackgroundColor="@color/blue" />
 
     </TableRow>
 

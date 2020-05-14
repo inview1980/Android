@@ -2,6 +2,7 @@ package my_manage.rent_manage.page;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.LinearGradient;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,8 +30,12 @@ import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.DateUtils;
 import my_manage.tool.PageUtils;
+import my_manage.widght.ParallaxSwipeBackActivity;
 
-public class ContinueContractActivity extends AppCompatActivity {
+/**
+ * 续合同
+ */
+public class ContinueContractActivity extends ParallaxSwipeBackActivity {
 
     @BindView(R.id.toolbar)       Toolbar  toolbar;
     @BindView(R.id.area)          TextView area;

@@ -18,11 +18,14 @@ import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.pojo.PersonDetails;
+import my_manage.widght.ParallaxSwipeBackActivity;
 
-public class ShowPersonExpandActivity extends AppCompatActivity implements IShowList {
+/**
+ * 显示租户
+ */
+public class ShowPersonExpandActivity extends ParallaxSwipeBackActivity implements IShowList {
     @BindView(R.id.toolbar)     Toolbar                         toolbar;
     @BindView(R.id.main_expandable_listview) ExpandableListView listView;
-    @BindView(R.id.main_expandable_add_btn)  ImageButton        mainExpandableAddBtn;
 
     private                     PersonExtendableListViewAdapter adapter;
 
@@ -36,7 +39,6 @@ public class ShowPersonExpandActivity extends AppCompatActivity implements IShow
 
         toolbar.setTitle("所有租户信息");
         toolbar.setNavigationOnClickListener(v -> finish());
-        mainExpandableAddBtn.setVisibility(View.GONE);
 
         //控制ExpandableListView只能打开一个组
         listView.setOnGroupExpandListener(groupPosition -> {

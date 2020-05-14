@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/rental_main_gridview_margin_6"
-    android:background="@android:color/white">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner"
+    android:columnCount="2">
 
     <com.hanks.htextview.rainbow.RainbowTextView
         android:id="@+id/rental_main_CommunityName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_width="@dimen/pwdItemWidth"
+        android:layout_height="match_parent"
+        android:layout_rowSpan="2"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="jjjkdj"
         android:textColor="@color/rentalMainGridViewTitleColor"
-        app:colorSpace="150dp"
-        app:colorSpeed="4dp"
         android:textSize="@dimen/rental_main_gridview_title_fontsize"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:colorSpace="150dp"
+        app:colorSpeed="4dp" />
 
-    <TableRow>
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_columnWeight="3"
+        android:background="@android:color/white"
+        android:paddingStart="@dimen/rental_main_gridview_margin_6">
+
+            <TableRow>
+
+                <TextView
+                    style="@style/textView_1th"
+                    android:text="@string/rental_roomCount_cn" android:gravity="center"
+                     />
+                <TextView
+                    android:id="@+id/rental_main_item_roomTotal"
+                    android:text="@string/rental_roomCount_cn"
+                    style="@style/rental_textView_context"/>
+            </TableRow>
+
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rental_roomCount_cn"
-                android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
+                style="@style/textView_1th"
+                android:text="@string/rental_areaTotal_cn"
+                />
+
+            <TextView
+                android:id="@+id/rental_main_item_areaTotal"
+                style="@style/rental_textView_context"/>
         </TableRow>
-
-        <TextView
-            android:id="@+id/rental_main_item_roomTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_roomCount_cn"
-            android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_areaTotal_cn"
-            android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
-
-        <TextView
-            android:id="@+id/rental_main_item_areaTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rental_areaTotal_cn"
-            android:textSize="@dimen/rental_main_gridview_nomal_fontsize" />
-    </TableRow>
-
-</TableLayout>
+    </TableLayout>
+</GridLayout>

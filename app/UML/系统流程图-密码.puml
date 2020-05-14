@@ -1,0 +1,64 @@
+@startuml
+skinparam packageStyle rect/' 加入这行代码，样式纯矩形'/
+'定义类
+package  pojo类 #LightGray{
+  class UserItem<<存储帐号、密码>> {
+    - String itemName
+    - String address
+    - String userName
+    - String password
+    - String remark
+    +boolean equals()
+    +int hashCode()
+  }
+
+    class User<<存储用于加密的密码>> {
+        - String salt
+        - String userName
+        - String password
+        +void User()
+    }
+    class MyTime<<存储时间的任务详情>> {
+        -String itemName
+        -boolean[] dayForWeeks
+        -boolean isFinish
+        -String remark
+        -Date alarmTime
+    }
+}
+class SecretUtil<<对字符串加、解密>> {
+    +{static} User user
+    +{static}String getEncryptString()
+    +{static}String getDecryptSting()
+    }
+'    note top:对字符串加、解密
+
+class FileUtils<<读写并加解密数据>> #DeepSkyBlue{
+        +{static}User readUserInfo()
+        +{static}boolean writeUserInfo()
+        ..读写加密的密码..
+        +{static}Set<UserItem> readDatabase()
+        +{static}boolean writeDatabase()
+        ..读写加密后的用户资料库..
+        -{static}String getRandomString()
+}
+class UserManage<<登录验证、创建管理员>>{
++{static}boolean checkPassword()
++{static}boolean createUserAndSave()
+}
+
+class MainActivity<<主页面类>> #red{
+
+}
+
+
+'建立关联
+MainActivity--->FileUtils
+MainActivity-->UserManage
+
+UserManage->FileUtils
+FileUtils<..>SecretUtil
+pojo类->FileUtils
+'pojo类.UserItem-->FileUtils
+'pojo类.MyTime-->FileUtils
+@enduml

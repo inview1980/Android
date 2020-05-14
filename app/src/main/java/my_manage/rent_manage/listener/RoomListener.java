@@ -1,6 +1,7 @@
 package my_manage.rent_manage.listener;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -9,12 +10,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.graphics.PathUtils;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import org.apache.poi.ss.formula.functions.T;
 
+import java.util.List;
 import java.util.Optional;
 
 import my_manage.iface.IShowList;
@@ -24,6 +27,7 @@ import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.page.viewholder.AddRoomViewHolder;
 import my_manage.rent_manage.pojo.RoomDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
+import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
 
 public final class RoomListener {
@@ -117,5 +121,23 @@ public final class RoomListener {
     private static void showMessage(Activity activity, String msg) {
         Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public static <T extends Activity & IShowList> void delCommunity(T activity, ShowRoomDetails showRoomDetails) {
+        if (showRoomDetails==null) return;
+
+        Log.i(PageUtils.Tag, "删除小区");
+        androidx.appcompat.app.AlertDialog.Builder d2 = new androidx.appcompat.app.AlertDialog.Builder(activity);
+        d2.setTitle("警告:");
+        d2.setMessage("确定要删除此小区所有房源吗?");
+        d2.setCancelable(true);
+        d2.setPositiveButton(R.string.ok_cn, (d, w) -> {
+            boolean isOK = DbHelper.getInstance().delRoomDes(showRoomDetails.getRoomDetails().getCommunityName());
+            if (isOK) {
+                showMessage(activity, "删除此小区成功");
+                activity.showList();
+            } else showMessage(activity, "删除此小区失败");
+        });
+        d2.show();
     }
 }

@@ -14,7 +14,7 @@
 
         <com.hanks.htextview.rainbow.RainbowTextView
             android:id="@+id/rental_house_communityName_txt"
-            style="@style/rental_textView_context"
+            style="@style/textView_1th"
             android:textStyle="bold"
             android:layout_marginEnd="@dimen/rental_main_gridview_margin_6"
             android:layout_span="2"
@@ -23,7 +23,7 @@
             android:visibility="gone" />
 
         <com.hanks.htextview.rainbow.RainbowTextView
-            style="@style/rental_textView_Lable"
+            style="@style/textView_1th"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             app:colorSpace="150dp"
@@ -42,7 +42,7 @@
     <TableRow>
 
         <TextView
-            style="@style/rental_textView_Lable"
+            style="@style/textView_1th"
             android:layout_height="wrap_content"
             android:text="@string/rental_man_cn" />
 
@@ -51,7 +51,7 @@
             style="@style/rental_textView_context" />
 
         <TextView
-            style="@style/rental_textView_Lable"
+            style="@style/textView_1th"
             android:layout_height="wrap_content"
             android:text="@string/rental_area_cn" />
 
@@ -63,7 +63,7 @@
 <TableRow>
 
     <TextView
-        style="@style/rental_textView_Lable"
+        style="@style/textView_1th"
         android:layout_height="wrap_content"
         android:text="@string/rental_endDate_cn" />
 
@@ -73,7 +73,7 @@
         android:layout_columnWeight="@integer/rental_room_details_1width" />
 
     <TextView
-        style="@style/rental_textView_Lable"
+        style="@style/textView_1th"
         android:layout_height="wrap_content"
         android:text="@string/rental_monthlyRent_cn" />
 

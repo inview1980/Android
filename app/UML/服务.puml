@@ -1,0 +1,12 @@
+@startuml
+class MyService<定时执行的任务，并发送消息给Receiver>{
++void onHandleIntent
+}
+
+class AlarmReceiver<接收到消息后，直接调用MyService>{
++void onReceive
+}
+
+MyService-->AlarmReceiver
+AlarmReceiver-->MyService
+@enduml

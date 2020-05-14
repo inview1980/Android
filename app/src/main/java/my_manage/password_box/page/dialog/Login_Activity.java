@@ -21,13 +21,15 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.password_box.database.PasswordDB;
+import my_manage.password_box.listener.PasswordManageActivityListener;
 import my_manage.password_box.page.PasswordManageActivity;
 import my_manage.tool.PageUtils;
 
 @SuppressLint("Registered")
-public final class Login_Activity extends AppCompatActivity {
+public final class Login_Activity extends AppCompatActivity implements IShowList {
     private static final String DEFAULT_KEY_NAME = "default_key";
 
     @Override
@@ -147,7 +149,11 @@ public final class Login_Activity extends AppCompatActivity {
 ////            sendBroadcast(intent);
 //        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 //        Log.i(this.getLocalClassName(), "发送广播");
-        PageUtils.resetDatabaseAndPassword(this);
+        PasswordManageActivityListener.resetDatabaseAndPassword(this);
     }
 
+    @Override
+    public void showList() {
+
+    }
 }

@@ -20,7 +20,6 @@ import my_manage.rent_manage.database.RentDB;
 import my_manage.rent_manage.pojo.RoomDetails;
 
 public class MainActivity extends AppCompatActivity {
-    public static Context context;
     public static String DBFilePath;
 
     @Override
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         //初始化数据库
         dbInit();
 
-        context = this;
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra("path", DBFilePath);
         startService(intent);
@@ -58,16 +56,6 @@ public class MainActivity extends AppCompatActivity {
     private void dbInit() {
         //初始化数据库
         DBFilePath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath() + "/" + getString(R.string.rentalFileName);
-        RentDB.createCascadeDB(this, DBFilePath);
-        Log.i(this.getLocalClassName(), "路径：" + DBFilePath);
-
-        List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsToList();
-        if (rd != null && rd.size() != 0) return;
-        //当数据库空时，填充数据库内容
-        InputStream        is = getResources().openRawResource(R.raw.db);
-        DbHelper.ExcelData ed = DbHelper.getInstance().readExcel(is);
-        RentDB.insertAll(ed.getPersonDetailsList());
-        RentDB.insertAll(ed.getRentalRecordList());
-        RentDB.insertAll(ed.getRoomDetailsList());
+        DbHelper.getInstance().dbInit(this,DBFilePath);
     }
 }

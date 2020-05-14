@@ -102,6 +102,8 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
                 if (date.before(Calendar.getInstance())) {
                     //租期已超过,改背景颜色
                     vh.tableLayout.setBackgroundColor(activity.getColor(R.color.red1));
+                }else {
+                    vh.tableLayout.setBackgroundColor(activity.getColor(android.R.color.white));
                 }
             }else {
                 //未填写房租的开始时间

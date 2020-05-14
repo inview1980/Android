@@ -35,28 +35,25 @@ public final class changePasswordDialog extends AppCompatActivity {
         String newStr=newPWD.getText().toString().trim();
         String new2Str=new2PWD.getText().toString().trim();
         if (StrUtils.isAnyBlank(oldStr, newStr, new2Str)) {
-            showMessage("输入的内容不能有空");
+            PageUtils.showMessage(getBaseContext(),"输入的内容不能有空");
             return;
         }
         if(oldStr.equals(newStr)){
-            showMessage("新密码和旧密码一样，没有更改！");
+            PageUtils.showMessage(getBaseContext(),"新密码和旧密码一样，没有更改！");
             return;
         }
         if (!newStr.equalsIgnoreCase(new2Str)) {
-            showMessage("新密码不致！");
+            PageUtils.showMessage(getBaseContext(),"新密码不致！");
             return;
         }
 
 
         if (PasswordDB.init().changePassword(oldStr,new2Str)) {
-            showMessage("更改密码成功！");
+            PageUtils.showMessage(getBaseContext(),"更改密码成功！");
         }else {
-            showMessage("更改密码失败！");
+            PageUtils.showMessage(getBaseContext(),"更改密码失败！");
         }
         finish();
     }
 
-    private void showMessage(String msg) {
-        PageUtils.showMessage(getBaseContext(),"ChangePwdDialog",msg);
-    }
 }

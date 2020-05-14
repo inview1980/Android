@@ -22,16 +22,18 @@ import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.listener.PersonListener;
-import my_manage.rent_manage.listener.RentalForHouseActivityListener;
 import my_manage.rent_manage.listener.RentalMainActivityListener;
 import my_manage.rent_manage.listener.RoomListener;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.MenuUtils;
+import my_manage.widght.ParallaxSwipeBackActivity;
 
-public final class RentalForHouseActivity extends AppCompatActivity implements IShowList {
+/**
+ * 显示指定小区的所有房源列表
+ */
+public final class RentalForHouseActivity extends ParallaxSwipeBackActivity implements IShowList {
     @BindView(R.id.toolbar)                  Toolbar                              toolbar;
     @BindView(R.id.main_expandable_listview) ExpandableListView                   listView;
-    @BindView(R.id.main_expandable_add_btn)  ImageButton                          mainExpandableAddBtn;
     @BindView(R.id.main_viewId)              RelativeLayout                       mainViewId;
     private                                  List<ShowRoomDetails>                sr;
     private                                  String                               title;
@@ -67,8 +69,6 @@ public final class RentalForHouseActivity extends AppCompatActivity implements I
                 }
             }
         });
-        //浮动按键的弹出菜单
-        mainExpandableAddBtn.setVisibility(View.GONE);
     }
 
     @Override
