@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <files-path name="files" path="files/"/>
+<!--    <cache-path-->
+<!--        name="cache"-->
+<!--        path="MyManageCache/"/>-->
+<!--    <external-cache-path-->
+<!--        name="externalPath"-->
+<!--        path="MyManageExternalPath"/>-->
+    <external-files-path
+        name="myFiles"
+        path="/"/>
+<!--    <external-path-->
+<!--        name="rootPath"-->
+<!--        path="MyManageRoot/"/>-->
+</paths>

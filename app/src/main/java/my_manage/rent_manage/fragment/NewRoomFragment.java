@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
+import com.classic.adapter.BaseAdapterHelper;
+import com.classic.adapter.CommonAdapter;
 
 import java.util.Calendar;
 import java.util.List;
@@ -34,7 +36,6 @@ import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import lombok.Getter;
 import lombok.val;
-import my_manage.adapter.ManAdapter;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.database.DbHelper;
@@ -345,8 +346,16 @@ public final class NewRoomFragment extends Fragment implements IShowList {
     @Override
     public void showList() {
         this.personDetailsList = DbHelper.getInstance().getPersonList();
-        ManAdapter adapter = new ManAdapter(getActivity(), android.R.layout.simple_list_item_1, this.personDetailsList);
-        person.setAdapter(adapter);
+//        ManAdapter adapter = new ManAdapter(getActivity(), android.R.layout.simple_list_item_1, this.personDetailsList);
+//        person.setAdapter(adapter);
+        person.setAdapter(new CommonAdapter<PersonDetails>(NewRoomFragment.this.getContext(),
+                android.R.layout.simple_list_item_1,
+                this.personDetailsList) {
+            @Override
+            public void onUpdate(BaseAdapterHelper helper, PersonDetails item, int position) {
+                helper.setText(android.R.id.text1,item.getName());
+            }
+        });
     }
 
 }

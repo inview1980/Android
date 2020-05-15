@@ -3,12 +3,11 @@ class MainActivity<<主页面类>> #red{}
 
 class RentalMainActivity{
     + void showList()
+    ..layout..
+        -视图rental_room_total_item
 }
 class MyService<后台定时启动的服务>{}
-class RentalMainAdapter{
-    ..layout..
-    -视图rental_room_total_item
-}
+
 class RentalForHouseActivity<显示指定小区的所有房源列表>{
     + void showList()
 }
@@ -21,12 +20,24 @@ package  房源的相关操作 #LightGray{
         -子:rent_room_expandable_listview_null_view
     }
     class RentRoomExpandableListViewListener{}
-    class RoomHistoryActivity<出租记录>{}
-    class ContinueContractActivity<续合同>{}
-    class ContinuePropertyActivity<续物业费>{}
-    class ContinueRentActivity<续租金>{}
+    class RoomHistoryActivity<出租记录>{
+        ..layout..
+        -子:rental_history_list_item
+    }
+    class ContinueContractActivity<续合同>{
+        ..layout..
+        -子:rental_continue_rent_contract_activity
+    }
+    class ContinuePropertyActivity<续物业费>{
+        ..layout..
+        -子:rental_continue_rent_property_activity
+    }
+    class ContinueRentActivity<续租金>{
+            ..layout..
+            -子:rental_continue_rent_activity
+    }
 
-    RoomDetailsExtendableListViewAdapter->RentRoomExpandableListViewListener
+    RoomDetailsExtendableListViewAdapter-->RentRoomExpandableListViewListener
 
     RentRoomExpandableListViewListener-->RoomHistoryActivity
     RentRoomExpandableListViewListener-->ContinueContractActivity
@@ -92,7 +103,6 @@ note "toolbar中的menu" as menu3
 MainActivity ..>MyService
 
 MainActivity-->RentalMainActivity
-RentalMainActivity..>RentalMainAdapter
 
 RentalMainActivity-->menu2
 menu2-->PersonListener

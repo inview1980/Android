@@ -40,7 +40,6 @@ public final class RoomDetailsByToolbarActivity extends AppCompatActivity implem
         toolbar.setNavigationOnClickListener(v -> finish());
 
         initPage();
-
     }
 
     private void initTabLayout(ShowRoomType type) {

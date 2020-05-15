@@ -11,12 +11,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.classic.adapter.BaseAdapterHelper;
+import com.classic.adapter.CommonAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import my_manage.adapter.RentalMainAdapter;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.database.DbHelper;
@@ -121,8 +122,17 @@ public final class RentalMainActivity extends ParallaxSwipeBackActivity implemen
 
     public void showList() {
         showRoomForMainList = DbHelper.getInstance().getShowRoomDesList();
-        RentalMainAdapter adapter = new RentalMainAdapter(this, showRoomForMainList);
-        listView.setAdapter(adapter);
+        listView.setAdapter(new CommonAdapter<ShowRoomDetails>(this,
+                //视图
+                R.layout.rental_room_total_item,
+                showRoomForMainList) {
+            @Override
+            public void onUpdate(BaseAdapterHelper helper, ShowRoomDetails item, int position) {
+                helper.setText(R.id.rental_main_CommunityName,item.getRoomDetails().getCommunityName())
+                      .setText(R.id.rental_main_item_areaTotal,String.valueOf(item.getRoomAreas()))
+                        .setText(R.id.rental_main_item_roomTotal,String.valueOf(item.getRoomCount()));
+            }
+        });
     }
 
 }

@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--android:installLocation:安装在SD卡上-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="preferExternal"
-    package="my_manage.password_box">
-    <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
+    package="my_manage.password_box"
+    android:installLocation="preferExternal">
+
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/home"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/home_round"
         android:supportsRtl="true"
         android:theme="@style/AppMyTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name="my_manage.rent_manage.page.ShowPersonDetailsActivity"/>
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name="my_manage.rent_manage.page.ShowPersonDetailsActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/mypath" />
+        </provider>
 
         <receiver
             android:name="my_manage.receiver.AlarmReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false"/>
 
         <service
             android:name="my_manage.rent_manage.MyService"

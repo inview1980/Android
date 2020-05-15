@@ -38,13 +38,14 @@ public class MyService extends IntentService {
         String path = intent.getStringExtra("path");
 
         new Thread(() -> checkAndSendNotification(path)).start();
-        AlarmManager manager       = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int          anHour        = 8 * 60 * 60 * 1000; // 这是8小时的毫秒数
-        long         triggerAtTime = SystemClock.elapsedRealtime() + anHour;
-        Intent       i             = new Intent(this, AlarmReceiver.class);
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Intent i = new Intent(this, AlarmReceiver.class);
         i.putExtra("path", path);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
+        // 这是8小时的毫秒数
+        final int anHour =  8 * 60 * 60 *1000;//
+        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + anHour, pi);
     }
 
 
@@ -97,7 +98,7 @@ public class MyService extends IntentService {
         long count2 = lst.stream().map(ShowRoomDetails::getRentalEndDate).filter(sr ->
                 sr != null && sr.after(Calendar.getInstance()) && sr.before(now3)).count();
         if (count2 > 0) {
-            if(sendMsg.length()>1)
+            if (sendMsg.length() > 1)
                 sendMsg.append("，");
             sendMsg.append("房租即将到期数量：").append(count2);
         }

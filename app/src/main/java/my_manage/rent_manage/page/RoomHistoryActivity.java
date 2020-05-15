@@ -4,25 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.fastjson.JSONArray;
+import com.classic.adapter.BaseAdapterHelper;
+import com.classic.adapter.CommonAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import my_manage.adapter.RentalHistoryAdapter;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.database.DbHelper;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
+import my_manage.tool.DateUtils;
 import my_manage.tool.enums.ShowRoomType;
 import my_manage.widght.ParallaxSwipeBackActivity;
 
@@ -66,8 +66,17 @@ public final class RoomHistoryActivity extends ParallaxSwipeBackActivity impleme
 
     @Override
     public void showList() {
-        RentalHistoryAdapter adapter = new RentalHistoryAdapter(this
-                , DbHelper.getInstance().getHistoryByRoomNumber(roomNumber));
-        listView.setAdapter(adapter);
+        listView.setAdapter(new CommonAdapter<ShowRoomDetails>(this,
+                //布局文件
+                R.layout.rental_history_list_item,
+                //指定房号的历史记录
+                DbHelper.getInstance().getHistoryByRoomNumber(roomNumber)) {
+            @Override
+            public void onUpdate(BaseAdapterHelper helper, ShowRoomDetails item, int position) {
+                helper.setText(R.id.rental_history_item_man, item.getPersonDetails().getName())
+                        .setText(R.id.rental_history_item_startDate, DateUtils.date2String(item.getRentalRecord().getStartDate(),
+                                item.getRentalRecord().getPayMonth()));
+            }
+        });
     }
 }

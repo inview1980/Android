@@ -1,6 +1,5 @@
 package my_manage;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,16 +7,12 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.InputStream;
-import java.util.List;
-
 import my_manage.password_box.R;
 import my_manage.password_box.page.dialog.Login_Activity;
 import my_manage.rent_manage.MyService;
 import my_manage.rent_manage.RentalMainActivity;
 import my_manage.rent_manage.database.DbHelper;
-import my_manage.rent_manage.database.RentDB;
-import my_manage.rent_manage.pojo.RoomDetails;
+import my_manage.tool.PageUtils;
 
 public class MainActivity extends AppCompatActivity {
     public static String DBFilePath;
@@ -33,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra("path", DBFilePath);
         startService(intent);
-//        PwdDBChangeReceiver pwdDBChangeReceiver=new PwdDBChangeReceiver();
-//        IntentFilter filter = new IntentFilter(".receiver.PwdDBChangeReceiver");
-//        LocalBroadcastManager.getInstance(this).registerReceiver(pwdDBChangeReceiver,filter);
+    }
+
+
+    private void showLog(String s) {
+        Log.i(PageUtils.Tag,s);
     }
 
 
@@ -46,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
             intent.setClass(MainActivity.this, Login_Activity.class);
             startActivity(intent);
         }
+
+//        ShareUtils.shareWechatFriend(this,new File(getExternalFilesDir(Environment.DIRECTORY_DCIM)+"/Camera/1581580850281.jpg"));
         if (btn == R.id.main_timeBtn) {
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, RentalMainActivity.class);
