@@ -23,10 +23,8 @@ import javax.crypto.SecretKey;
 
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.password_box.database.PasswordDB;
-import my_manage.password_box.listener.PasswordManageActivityListener;
 import my_manage.password_box.page.PasswordManageActivity;
-import my_manage.tool.PageUtils;
+import my_manage.tool.database.DbHelper;
 
 @SuppressLint("Registered")
 public final class Login_Activity extends AppCompatActivity implements IShowList {
@@ -53,7 +51,7 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
             Toast.makeText(this, "您的系统版本过低，不支持指纹功能", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            KeyguardManager keyguardManager = getSystemService(KeyguardManager.class);
+            KeyguardManager    keyguardManager    = getSystemService(KeyguardManager.class);
             FingerprintManager fingerprintManager = getSystemService(FingerprintManager.class);
             if (!fingerprintManager.isHardwareDetected()) {
                 Toast.makeText(this, "您的手机不支持指纹功能", Toast.LENGTH_SHORT).show();
@@ -111,8 +109,6 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
      * 调用PasswordManageActivity密码显示窗口
      */
     public void onAuthenticated() {
-        initDatabase();
-
         Intent intent = new Intent(this, PasswordManageActivity.class);
         startActivity(intent);
         finish();
@@ -123,10 +119,8 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
     }
 
     public void okBtn_onClick(View view) {
-        initDatabase();
-
         EditText editText = findViewById(R.id.dialog_loginPwd);
-        if (!PasswordDB.init().checkPassword(editText.getText().toString())) {
+        if (!DbHelper.getInstance().loadIn(this, editText.getText().toString())) {
             Toast.makeText(this, "密码不正确", Toast.LENGTH_SHORT).show();
             finish();//密码不正确，退出
         } else {
@@ -134,22 +128,10 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
         }
     }
 
-    private void initDatabase() {
-        //初始化数据库
-        String DBFilename = getString(R.string.passwordDBFileName);
-        String password = getString(R.string.defaultPassword);
-        PasswordDB.init(getApplicationContext().getExternalFilesDir(null).getAbsolutePath(),
-                DBFilename, password);
-    }
 
     public void resetPasswordBtn_onClick(View view) {
-//        Intent intent = new Intent(".receiver.PwdDBChangeReceiver");
-//        intent.setComponent(new ComponentName("com.example.passwordsavingcabinet",
-//                "com.example.passwordsavingcabinet.receiver.PwdDBChangeReceiver"));
-////            sendBroadcast(intent);
-//        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-//        Log.i(this.getLocalClassName(), "发送广播");
-        PasswordManageActivityListener.resetDatabaseAndPassword(this);
+        DbHelper.getInstance().resetPassword(this,null);
+//        PasswordManageActivityListener.resetDatabaseAndPassword(this);
     }
 
     @Override

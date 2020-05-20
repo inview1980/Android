@@ -10,10 +10,9 @@ import com.orhanobut.dialogplus.ViewHolder;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.RentalMainActivity;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbBase;
 import my_manage.rent_manage.page.ShowPersonExpandActivity;
 import my_manage.rent_manage.pojo.PersonDetails;
-import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
 
 /**
@@ -46,7 +45,7 @@ public final class PersonListener {
                                 personDetails.setOther(other.getText().toString());
                                 personDetails.setCompany(companyName.getText().toString());
 
-                                if (RentDB.insert(personDetails) > 0) {
+                                if (DbBase.insert(personDetails) > 0) {
                                     //成功，刷新
                                     flushList.showList();
                                     dialog1.dismiss();

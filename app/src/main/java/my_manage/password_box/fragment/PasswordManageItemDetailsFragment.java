@@ -1,8 +1,6 @@
 package my_manage.password_box.fragment;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,28 +11,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
-import my_manage.password_box.R;
-import my_manage.password_box.database.PasswordDB;
-import my_manage.password_box.page.PasswordManageActivity;
-import my_manage.password_box.pojo.UserItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
+import butterknife.Unbinder;
 import lombok.NoArgsConstructor;
+import my_manage.password_box.R;
+import my_manage.password_box.pojo.UserItem;
+import my_manage.tool.PageUtils;
+import my_manage.tool.StrUtils;
+import my_manage.tool.database.DbHelper;
 
 @NoArgsConstructor
 public final class PasswordManageItemDetailsFragment extends Fragment implements View.OnClickListener {
-    private UserItem userItem;
-    private EditText itemEdit;
-    private EditText addressEdit;
-    private EditText userNameEdit;
-    private EditText passwordEdit;
-    private EditText remarkEdit;
-    private Button okBtn;
-    private int currentItem;
+    @BindView(R.id.pwd_ItemDetailsId)      EditText itemEdit;
+    @BindView(R.id.pwd_AddressDetailsId)   EditText addressEdit;
+    @BindView(R.id.pwd_UserNameDetailsId)  EditText userNameEdit;
+    @BindView(R.id.pwd_PasswordDetailsId)  EditText passwordEdit;
+    @BindView(R.id.pwd_RemarkDetailsId)    EditText remarkEdit;
+    @BindView(R.id.pwd_ManageDet_Ok_BtnId) Button   okBtn;
+    private                                UserItem userItem = new UserItem();
+    private                                Unbinder bind;
+    private                                boolean  isInited = false;
 
-    public PasswordManageItemDetailsFragment(int currentItem) {
+    public PasswordManageItemDetailsFragment(UserItem userItem) {
         Bundle bundle = new Bundle();
-        bundle.putInt("currentItem", currentItem);
+        if (userItem != null)
+            bundle.putString("UserItem", JSON.toJSONString(userItem));
         setArguments(bundle);
     }
 
@@ -42,29 +49,23 @@ public final class PasswordManageItemDetailsFragment extends Fragment implements
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.password_manage_item_details, container, false);
-        init(v);
+        bind = ButterKnife.bind(this, v);
+        loadParameters();
         return v;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //解除绑定
+        bind.unbind();
+    }
 
-    private void init(View v) {
-        itemEdit = v.findViewById(R.id.pwd_ItemDetailsId);
-        addressEdit = v.findViewById(R.id.pwd_AddressDetailsId);
-        userNameEdit = v.findViewById(R.id.pwd_UserNameDetailsId);
-        passwordEdit = v.findViewById(R.id.pwd_PasswordDetailsId);
-        remarkEdit = v.findViewById(R.id.pwd_RemarkDetailsId);
-        okBtn=v.findViewById(R.id.pwd_ManageDet_Ok_BtnId);
-        okBtn.setOnClickListener(this);
-        v.findViewById(R.id.pwd_ManageDet_Cancel_BtnId).setOnClickListener(this);
-
-        loadParameters();
-        //增加编辑事件
-        itemEdit.addTextChangedListener(new myTextWatch());
-        addressEdit.addTextChangedListener(new myTextWatch());
-        userNameEdit.addTextChangedListener(new myTextWatch());
-        passwordEdit.addTextChangedListener(new myTextWatch());
-        remarkEdit.addTextChangedListener(new myTextWatch());
-
+    @OnTextChanged({R.id.pwd_ItemDetailsId, R.id.pwd_AddressDetailsId, R.id.pwd_UserNameDetailsId
+                           , R.id.pwd_PasswordDetailsId, R.id.pwd_RemarkDetailsId})
+    void onTextChanged() {
+        if (isInited)
+            okBtn.setEnabled(true);
     }
 
 
@@ -73,69 +74,34 @@ public final class PasswordManageItemDetailsFragment extends Fragment implements
      */
     private void loadParameters() {
         try {
-            if (getArguments() != null) {
-                currentItem = getArguments().getInt("currentItem");
-                userItem = (currentItem == -1) ? new UserItem() : PasswordDB.init().getItems().get(currentItem);
+            if (getArguments() != null && getArguments().getString("UserItem") != null) {
+                userItem = JSON.parseObject(getArguments().getString("UserItem"), UserItem.class);
             }
+            if (userItem == null) userItem = new UserItem();
             itemEdit.setText(userItem.getItemName());
             addressEdit.setText(userItem.getAddress());
             userNameEdit.setText(userItem.getUserName());
             passwordEdit.setText(userItem.getPassword());
             remarkEdit.setText(userItem.getRemark());
+            isInited = true;
         } catch (JSONException ignored) {
             userItem = new UserItem();
         }
     }
 
-    @Override
+    @OnClick(R.id.pwd_ManageDet_Ok_BtnId)
     public void onClick(View view) {
-        if (view.getId() == R.id.pwd_ManageDet_Ok_BtnId) {//确定按键
-            String ie = itemEdit.getText().toString();
-            String ae = addressEdit.getText().toString();
-            String ue = userNameEdit.getText().toString();
-            String pe = passwordEdit.getText().toString();
-            String re = remarkEdit.getText().toString();
-            if (ie.equals(userItem.getItemName()) && ae.equals(userItem.getAddress()) && ue.equals(userItem.getUserName())
-                    && pe.equals(userItem.getPassword()) && re.equals(userItem.getRemark())) {
-                System.out.println("未修改");
-                //无修改，按取消处理
-            } else {
-                userItem.setItemName(itemEdit.getText().toString());
-                userItem.setAddress(addressEdit.getText().toString());
-                userItem.setUserName(userNameEdit.getText().toString());
-                userItem.setPassword(passwordEdit.getText().toString());
-                userItem.setRemark(remarkEdit.getText().toString());
-
-
-
-                if (currentItem == -1) {
-                    PasswordDB.init().getItems().add(userItem);
-                } else if (PasswordDB.init().getItems().size() >= currentItem) {
-                    PasswordDB.init().getItems().set(currentItem, userItem);
-                }
-                PasswordManageActivity.isDBChanged=true;
-            }
+        userItem.setItemName(itemEdit.getText().toString());
+        userItem.setAddress(addressEdit.getText().toString());
+        userItem.setUserName(userNameEdit.getText().toString());
+        userItem.setPassword(passwordEdit.getText().toString());
+        userItem.setRemark(remarkEdit.getText().toString());
+        userItem.setSalt(StrUtils.getRandomString(getResources().getInteger(R.integer.defaultSaltLength)));
+        if (DbHelper.getInstance().saveUserItem(userItem)) {
+            PageUtils.showMessage(getContext(), "修改成功！");
         }
+
         getActivity().onBackPressed();
     }
 
-
-    class myTextWatch implements TextWatcher {
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            okBtn.setEnabled(true);
-//            System.out.println("修改后事件:");
-        }
-    }
 }

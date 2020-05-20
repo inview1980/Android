@@ -1,6 +1,5 @@
 package my_manage.rent_manage.listener;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,8 +13,8 @@ import java.util.Calendar;
 import java.util.stream.IntStream;
 
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.DbHelper;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbBase;
+import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.fragment.NewRoomFragment;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
@@ -107,7 +106,7 @@ public final class NewRoomFragmentLister implements TextWatcher {
         //将记录也一起更改
         updateRecord(room, pd.getPrimary_id());
 
-        RentDB.update(room);
+        DbBase.update(room);
         fragment.getActivity().onBackPressed();
     }
 
@@ -125,7 +124,7 @@ public final class NewRoomFragmentLister implements TextWatcher {
         pd.setCord(cord);
         pd.setOther(other);
         pd.setCompany(company);
-        RentDB.update(pd);
+        DbBase.update(pd);
     }
 
     private void updateRecord(RoomDetails room, int manId) {
@@ -177,14 +176,14 @@ public final class NewRoomFragmentLister implements TextWatcher {
         if (!compareStr.equalsIgnoreCase(c2)) {
             if (rr.getPrimary_id() == 0) {
                 //新建记录
-                RentDB.insert(rr);
+                DbBase.insert(rr);
                 //获取插入数据的主键
                 int max = DbHelper.getInstance().getRecords().stream()
                         .flatMapToInt(rentalRecord -> IntStream.of(rentalRecord.getPrimary_id())).max().getAsInt();
                 room.setRecordId(max);
             } else {
                 //内容已更改，需要更新数据库
-                RentDB.update(rr);
+                DbBase.update(rr);
             }
         }
     }

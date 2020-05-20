@@ -18,11 +18,11 @@ public final class PwdPageAdapter extends FragmentStatePagerAdapter {
         super(fm);
         if(vList==null){
             //新增
-            this.vList.add(new PasswordManageItemDetailsFragment(-1));
+            this.vList.add(new PasswordManageItemDetailsFragment(null));
         }else {
             //修改
             for (int i = 0; i < vList.size(); i++) {
-                this.vList.add(new PasswordManageItemDetailsFragment(i));
+                this.vList.add(new PasswordManageItemDetailsFragment(vList.get(i)));
             }
         }
     }
@@ -39,8 +39,4 @@ public final class PwdPageAdapter extends FragmentStatePagerAdapter {
         return vList.size();
     }
 
-//    @Override
-//    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-//        return view==object;
-//    }
 }

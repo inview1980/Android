@@ -3,28 +3,21 @@ package my_manage.password_box.page;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import my_manage.adapter_page.PwdPageAdapter;
 import my_manage.password_box.R;
-import my_manage.password_box.database.PasswordDB;
 import my_manage.password_box.pojo.UserItem;
-import my_manage.rent_manage.pojo.show.ShowRoomDetails;
-import my_manage.tool.enums.ShowRoomType;
-import my_manage.widght.ParallaxSwipeBackActivity;
+import my_manage.tool.database.DbHelper;
 
 
 public final class PasswordManageViewPagerHome extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
@@ -56,7 +49,7 @@ public final class PasswordManageViewPagerHome extends AppCompatActivity impleme
             viewPage.setCurrentItem(0);
             tabTitle.addTab(tabTitle.newTab().setText(R.string.new_cn));
         } else {
-            userLst = PasswordDB.init().getItems();
+            userLst = DbHelper.getInstance().getItemsByAfter(this);
             viewPage.setAdapter(new PwdPageAdapter(getSupportFragmentManager(), userLst));
             viewPage.setCurrentItem(currentItem);
             initTabLayout();

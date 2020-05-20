@@ -1,4 +1,4 @@
-package my_manage.rent_manage.database;
+package my_manage.tool.database;
 
 
 
@@ -12,14 +12,14 @@ import java.util.List;
 import my_manage.rent_manage.pojo.RoomDetails;
 
 
-public class RentDBTest {
+public class DbBaseTest {
 @Test
 public void showDB(){
-    RentDB.createCascadeDB( InstrumentationRegistry.getTargetContext(),"/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
+    DbBase.createCascadeDB( InstrumentationRegistry.getTargetContext(),"/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
 
     List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsByDelete();
-//    List<RentalRecord> rList = RentDB.getQueryByWhere(RentalRecord.class, "roomDesID", new Object[]{new Random().nextInt(10)});
-//    List<RentalRecord> r2=RentDB.getRentalRecordAll(rList);
+//    List<RentalRecord> rList = DbBase.getQueryByWhere(RentalRecord.class, "roomDesID", new Object[]{new Random().nextInt(10)});
+//    List<RentalRecord> r2=DbBase.getRentalRecordAll(rList);
 //    List<ShowRoomForMain> rList=DbHelper.getInstance().getShowRoomDesList();
 //    boolean t1 = DbHelper.getInstance().toExcel("/storage/emulated/0/Android/data/my_manage.password_box/files/db.xlsx");
     System.out.println(rd);//F:\program\android\Password saving cabinet\app\db.xlsx
@@ -31,16 +31,16 @@ public void showDB(){
 //        file.createNewFile();
 //        assertTrue(file.exists());
         int roomCount=10;
-//        RentDB.createCascadeDB( InstrumentationRegistry.getTargetContext(),null);
+//        DbBase.createCascadeDB( InstrumentationRegistry.getTargetContext(),null);
 
-//        RentDB.insertAll(getRoomDes(roomCount));
-//        RentDB.insertAll(getRentalRecord(100, roomCount));
+//        DbBase.insertAll(getRoomDes(roomCount));
+//        DbBase.insertAll(getRentalRecord(100, roomCount));
 //
-//        List<RentalRecord> rList = RentDB.getQueryByWhere(RentalRecord.class, "roomDesID", new Object[]{new Random().nextInt(10)});
+//        List<RentalRecord> rList = DbBase.getQueryByWhere(RentalRecord.class, "roomDesID", new Object[]{new Random().nextInt(10)});
 //        assertTrue(rList.size() > 0);
 //        System.out.println(rList);
 
-//        List<RentalRecord> rList2 = RentDB.getQueryAll(RentalRecord.class);
+//        List<RentalRecord> rList2 = DbBase.getQueryAll(RentalRecord.class);
 //        System.out.println(rList2);
     }
 

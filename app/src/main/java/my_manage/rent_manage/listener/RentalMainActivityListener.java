@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import my_manage.password_box.R;
 import my_manage.rent_manage.RentalMainActivity;
-import my_manage.rent_manage.database.DbHelper;
+import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.page.RentalForHouseActivity;
 
 public class RentalMainActivityListener {

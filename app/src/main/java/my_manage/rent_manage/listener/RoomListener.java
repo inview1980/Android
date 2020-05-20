@@ -3,27 +3,20 @@ package my_manage.rent_manage.listener;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.graphics.PathUtils;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
-import org.apache.poi.ss.formula.functions.T;
-
-import java.util.List;
 import java.util.Optional;
 
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.rent_manage.RentalMainActivity;
-import my_manage.rent_manage.database.DbHelper;
+import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.page.viewholder.AddRoomViewHolder;
 import my_manage.rent_manage.pojo.RoomDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;

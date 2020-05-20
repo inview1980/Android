@@ -1,6 +1,5 @@
 package my_manage.rent_manage.page;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.fastjson.JSON;
@@ -26,8 +24,8 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnItemSelected;
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.DbHelper;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbHelper;
+import my_manage.tool.database.DbBase;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.DateUtils;
@@ -160,7 +158,7 @@ public class ContinueRentActivity extends ParallaxSwipeBackActivity {
                 if ((newId = DbHelper.getInstance().insert(rr)) > 0) {
                     showRoomDetails.getRoomDetails().setRecordId(newId);
                     if (StrUtils.isNotBlank(showRoomDetails.getRoomDetails().getRoomNumber()) &&
-                            RentDB.update(showRoomDetails.getRoomDetails()) > 0) {
+                            DbBase.update(showRoomDetails.getRoomDetails()) > 0) {
                         Toast.makeText(this, "续租成功", Toast.LENGTH_SHORT).show();
                     }
                 }

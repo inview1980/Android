@@ -1,4 +1,4 @@
-package my_manage.rent_manage.database;
+package my_manage.tool.database;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,18 +7,14 @@ import androidx.annotation.NonNull;
 
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.DataBaseConfig;
-import com.litesuits.orm.db.annotation.NotNull;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.assit.WhereBuilder;
 import com.litesuits.orm.db.model.ColumnsValue;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
 
-import org.apache.poi.ss.formula.functions.T;
-
 import java.util.Collection;
 import java.util.List;
 
-import my_manage.MainActivity;
 import my_manage.tool.StrUtils;
 
 /**
@@ -26,7 +22,7 @@ import my_manage.tool.StrUtils;
  *
  * @author mazhanzhu
  */
-public final class RentDB {
+public final class DbBase {
     public static  String  DB_NAME;
     private static LiteOrm liteOrm;
     public static  Context mContext;

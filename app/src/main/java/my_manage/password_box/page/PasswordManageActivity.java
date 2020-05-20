@@ -4,33 +4,32 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.classic.adapter.BaseAdapterHelper;
+import com.classic.adapter.CommonAdapter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.password_box.database.PasswordDB;
 import my_manage.password_box.listener.PasswordManageActivityListener;
+import my_manage.password_box.pojo.UserItem;
 import my_manage.tool.MenuUtils;
 import my_manage.tool.PageUtils;
+import my_manage.tool.database.DbHelper;
 import my_manage.widght.ParallaxSwipeBackActivity;
 
 
@@ -38,13 +37,11 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
     @BindView(R.id.toolbar)         Toolbar           toolbar;
     @BindView(R.id.main_ListViewId) SwipeMenuListView listView;
     @BindView(R.id.main_viewId)     RelativeLayout    mainViewId;
-    @SuppressLint("StaticFieldLeak")
-    public static                   boolean           isDBChanged = false;
+    private List<UserItem> itemList;
 
     @Override
     protected void onStart() {
         super.onStart();
-        isNeedSaveDB();
     }
 
     @Override
@@ -64,16 +61,17 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
     private void initListView() {
         SwipeMenuCreator creator = menu -> {
             // create "删除项目" item
-            PageUtils.getSwipeMenuItem(this,menu, "删除", Color.rgb(0xF9, 0x3F, 0x25), R.drawable.ic_delete_black_24dp);
+            PageUtils.getSwipeMenuItem(this, menu, "删除", Color.rgb(0xF9, 0x3F, 0x25), R.drawable.ic_delete_black_24dp);
         };
         listView.setMenuCreator(creator);
         listView.setOnMenuItemClickListener((position, menu, index) -> {
             if (index == 0) {// delete
-                PasswordManageActivityListener.deleteItem(PasswordManageActivity.this,position);
+                PasswordManageActivityListener.deleteItem(PasswordManageActivity.this,itemList.get( position));
             }
             return false;
         });
     }
+
     /**
      * listView单击事件
      */
@@ -92,6 +90,7 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
         MenuUtils.setIconVisibe(featureId, menu);
         return super.onMenuOpened(featureId, menu);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.pwd_manage_activity_menu, menu);
@@ -103,11 +102,11 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
         int id = item.getItemId();
         if (id == R.id.add) {
             //增加信息
-            PasswordManageActivityListener.callPasswordManageItemDetails(this,-1);
+            PasswordManageActivityListener.callPasswordManageItemDetails(this, -1);
         } else if (id == R.id.modify) {
             //调用更改密码窗口
-            startActivity( new Intent(this, my_manage.password_box.page.dialog.changePasswordDialog.class));
-        } else if (id ==  R.id.rebuildingDB) {
+            startActivity(new Intent(this, my_manage.password_box.page.dialog.changePasswordDialog.class));
+        } else if (id == R.id.rebuildingDB) {
             //重建资料和密码成功
             PasswordManageActivityListener.resetDatabaseAndPassword(this);
         }
@@ -122,74 +121,20 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
     }
 
 
-    @Override
-    protected void onDestroy() {
-        isNeedSaveDB();
-        super.onDestroy();
-    }
-
-    private void isNeedSaveDB() {
-        //保存数据库文件
-        if (isDBChanged) {
-            if (PasswordDB.init().save()) {
-                isDBChanged = false;
-                showMessage("保存数据库成功");
-            } else {
-                showMessage("保存数据库失败");
-            }
-        }
-    }
-
-
-    public void showMessage(String msg) {
-        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
-        Log.i(this.getLocalClassName(), msg);
-    }
-
     /**
      * 重新载入列表
      */
     @Override
     public void showList() {
-        BaseAdapter adapter = new BaseAdapter() {
-            TextView item;
-            TextView address;
-            TextView username;
-            TextView password;
-
+        itemList=DbHelper.getInstance().getItemsByAfter(this);
+        listView.setAdapter(new CommonAdapter<UserItem>(this, R.layout.password_manage_list_item, itemList) {
             @Override
-            public int getCount() {
-                return PasswordDB.init().getItems().size();
+            public void onUpdate(BaseAdapterHelper helper, UserItem item, int position) {
+                helper.setText(R.id.pwd_ItemId, item.getItemName())
+                        .setText(R.id.pwd_AddressId, item.getAddress())
+                        .setText(R.id.pwd_UserNameId, item.getUserName())
+                        .setText(R.id.pwd_PasswordId, item.getPassword());
             }
-
-            @Override
-            public Object getItem(int i) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return i;
-            }
-
-            @Override
-            public View getView(int position, View view, ViewGroup viewGroup) {
-                if (view == null) {
-                    view = LayoutInflater.from(getBaseContext()).inflate(R.layout.password_manage_list_item, viewGroup, false);
-                    item = view.findViewById(R.id.pwd_ItemId);
-                    address = view.findViewById(R.id.pwd_AddressId);
-                    username = view.findViewById(R.id.pwd_UserNameId);
-                    password = view.findViewById(R.id.pwd_PasswordId);
-                }
-                item.setText(PasswordDB.init().getItems().get(position).getItemName());
-                address.setText(PasswordDB.init().getItems().get(position).getAddress());
-                username.setText(PasswordDB.init().getItems().get(position).getUserName());
-                password.setText(PasswordDB.init().getItems().get(position).getPassword());
-                return view;
-            }
-        };
-        listView.setAdapter(adapter);
-
-        isNeedSaveDB();
+        });
     }
 }

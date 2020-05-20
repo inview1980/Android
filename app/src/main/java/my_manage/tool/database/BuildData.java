@@ -1,11 +1,10 @@
-package my_manage.rent_manage.database;
+package my_manage.tool.database;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import lombok.val;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;

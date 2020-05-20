@@ -1,12 +1,8 @@
 package my_manage.rent_manage.page;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
@@ -16,7 +12,7 @@ import butterknife.ButterKnife;
 import my_manage.adapter_expandable_List.PersonExtendableListViewAdapter;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.DbHelper;
+import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.widght.ParallaxSwipeBackActivity;
 

@@ -24,7 +24,6 @@
     <string name="new_cn">新增</string>
     <string name="tel">电话</string>
     <string name="rental_manCardNumber_cn">联系人证件</string>
-    <string name="rental_propertyBeginDate">物业费开始时间</string>
     <string name="endDate">到期时间</string>
     <string name="rental_editRoom_rentalDate_cn">房租</string>
     <string name="modify_cn">修改</string>
@@ -38,7 +37,7 @@
     <string name="showDeletedRooms">显示已删除房源</string>
     <string name="addRoom">增加房源</string>
     <string name="showAllPersonDetails">显示所有租户信息</string>
-    <string name="personDetails">住户资料:</string>
+    <string name="personDetails">住户资料</string>
     <string name="roomRentalDetails">房租信息</string>
     <string name="payTotalMoney">缴费总金额</string>
     <string name="payDate">交费时间</string>
@@ -52,6 +51,8 @@
     <string name="rental_month">房租(月)</string>
     <string name="property_costs_month">物业费(月)</string>
     <string name="contract_month">合同(月)</string>
+    <string name="restore_password_cn">还原密码</string>
+    <string name="change_password_cn">修改数据库密码</string>
 
     <string-array name="monthNumber">
         <item>1</item>

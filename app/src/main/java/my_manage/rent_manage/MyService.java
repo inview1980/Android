@@ -5,25 +5,24 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.BindInt;
 import my_manage.password_box.R;
 import my_manage.receiver.AlarmReceiver;
-import my_manage.rent_manage.database.DbHelper;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbHelper;
+import my_manage.tool.database.DbBase;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.NotificationChannels;
+import my_manage.tool.PageUtils;
 
 public class MyService extends IntentService {
     public MyService() {
@@ -43,8 +42,9 @@ public class MyService extends IntentService {
         Intent i = new Intent(this, AlarmReceiver.class);
         i.putExtra("path", path);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
-        // 这是8小时的毫秒数
-        final int anHour =  8 * 60 * 60 *1000;//
+        // 间隔时间的毫秒数
+        final int anHour =this.getResources().getInteger(R.integer.Message_Interval_byHour)  * 60 * 60 *1000;//
+        Log.i(PageUtils.Tag, "毫秒数：" + anHour);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + anHour, pi);
     }
 
@@ -85,7 +85,7 @@ public class MyService extends IntentService {
 
     private void checkAndSendNotification(String path) {
         StringBuilder sendMsg = new StringBuilder();
-        RentDB.getLiteOrm(MyService.this, path);
+        DbBase.getLiteOrm(MyService.this, path);
         //获取已超时但未交租的房子的数量
         List<ShowRoomDetails> lst   = DbHelper.getInstance().getRoomForHouse(null);
         long                  count = lst.stream().map(ShowRoomDetails::getRentalEndDate).filter(sr -> sr != null && sr.before(Calendar.getInstance())).count();

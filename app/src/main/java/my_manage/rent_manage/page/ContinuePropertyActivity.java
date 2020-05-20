@@ -11,7 +11,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.fastjson.JSON;
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbBase;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.DateUtils;
@@ -140,7 +139,7 @@ public class ContinuePropertyActivity extends ParallaxSwipeBackActivity {
                 //备注
                 rr.setRemarks(remark.getText().toString());
                 //更新RentalRecord对象
-                if ((RentDB.update(rr)) > 0) {
+                if ((DbBase.update(rr)) > 0) {
                     Toast.makeText(this, "物业费续费成功", Toast.LENGTH_SHORT).show();
                 }
             }

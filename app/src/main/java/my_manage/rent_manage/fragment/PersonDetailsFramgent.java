@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbBase;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.PageUtils;
@@ -90,7 +90,7 @@ public final class PersonDetailsFramgent extends Fragment {
             //判断有没有更改
             if (tmpStr.equalsIgnoreCase(JSON.toJSONString(pd)))
                 return;
-            if (RentDB.update(pd) > 0) {
+            if (DbBase.update(pd) > 0) {
                 Toast.makeText(this.getContext(), "租户信息更改成功！", Toast.LENGTH_SHORT).show();
                 getActivity().onBackPressed();
             }

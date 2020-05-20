@@ -4,18 +4,14 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.Arrays;
-import java.util.List;
 
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.DbHelper;
 import my_manage.tool.PageUtils;
 
 public final class AddRoomViewHolder extends ViewHolder implements View.OnFocusChangeListener {

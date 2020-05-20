@@ -1,5 +1,7 @@
 package my_manage.password_box.secret;
 
+import com.litesuits.orm.db.assit.Encrypt;
+
 import org.jasypt.util.text.BasicTextEncryptor;
 
 /**

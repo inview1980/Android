@@ -24,8 +24,8 @@ import java.util.Optional;
 
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.DbHelper;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbBase;
+import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.page.ContinueContractActivity;
 import my_manage.rent_manage.page.ContinuePropertyActivity;
 import my_manage.rent_manage.page.ContinueRentActivity;
@@ -110,11 +110,11 @@ public class RentRoomExpandableListViewListener {
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         dialog.setTitle("退租").setMessage("请确定租金已付完、押金已退、水电费交清");
         dialog.setPositiveButton(R.string.ok_cn, (dialog1, which) -> {
-            RoomDetails room = RentDB.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
+            RoomDetails room = DbBase.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
             if (room != null) {
                 room.setRecordId(0);
 //                        room.setManId(0);
-                if (RentDB.update(room) > 0) {
+                if (DbBase.update(room) > 0) {
                     Toast.makeText(activity, "退租成功！", Toast.LENGTH_SHORT).show();
                     activity.showList();
                 }
@@ -153,11 +153,11 @@ public class RentRoomExpandableListViewListener {
                 .max((t1, t2) -> Integer.compare(t1.getPrimary_id(), t2.getPrimary_id()));
 
         if (rentalRecord.isPresent()) {
-            RoomDetails room = RentDB.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
+            RoomDetails room = DbBase.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
             if (room != null) {
                 room.setRecordId(rentalRecord.get().getPrimary_id());
 //                room.setManId(rentalRecord.get().getManID());
-                if (RentDB.update(room) > 0) {
+                if (DbBase.update(room) > 0) {
                     Toast.makeText(activity, "撤销退租成功！", Toast.LENGTH_SHORT).show();
                     activity.showList();
                 }
@@ -190,7 +190,7 @@ public class RentRoomExpandableListViewListener {
                     EditText text = db.getHolder().getInflatedView().findViewById(R.id.rental_changeRent_newNum);
                     if (StrUtils.isNotBlank(text.getText().toString())) {
                         sr.getRentalRecord().setDeposit(Integer.parseInt(text.getText().toString()));
-                        if (RentDB.update(sr.getRentalRecord()) > 0) {
+                        if (DbBase.update(sr.getRentalRecord()) > 0) {
                             //成功，刷新
                             activity.showList();
                             Toast.makeText(activity, "调整押金成功", Toast.LENGTH_SHORT).show();
@@ -247,7 +247,7 @@ public class RentRoomExpandableListViewListener {
                     EditText text = db.getHolder().getInflatedView().findViewById(R.id.rental_changeRent_newNum);
                     if (StrUtils.isNotBlank(text.getText().toString())) {
                         sr.getRentalRecord().setMonthlyRent(Double.parseDouble(text.getText().toString()));
-                        if (sr.getRentalRecord().getPrimary_id() != 0 && RentDB.update(sr.getRentalRecord()) > 0) {
+                        if (sr.getRentalRecord().getPrimary_id() != 0 && DbBase.update(sr.getRentalRecord()) > 0) {
                             //成功，刷新
                             activity.showList();
                             Toast.makeText(activity, "调整租金成功", Toast.LENGTH_SHORT).show();

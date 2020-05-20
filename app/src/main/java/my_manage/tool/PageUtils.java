@@ -1,13 +1,10 @@
 package my_manage.tool;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +23,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import my_manage.password_box.R;
-import my_manage.password_box.database.PasswordDB;
 import my_manage.password_box.page.PasswordManageActivity;
 import my_manage.password_box.page.PasswordManageViewPagerHome;
-import my_manage.rent_manage.fragment.NewRoomFragment;
 
 public final class PageUtils {
     public static String Tag="MyManage";

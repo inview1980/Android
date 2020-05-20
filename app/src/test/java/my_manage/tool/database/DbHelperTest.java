@@ -1,4 +1,4 @@
-package my_manage.rent_manage.database;
+package my_manage.tool.database;
 
 import org.junit.Test;
 

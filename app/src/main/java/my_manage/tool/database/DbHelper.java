@@ -1,11 +1,10 @@
-package my_manage.rent_manage.database;
+package my_manage.tool.database;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 
-import org.apache.poi.ss.formula.functions.T;
+import com.litesuits.orm.db.assit.Encrypt;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.WorkbookUtil;
@@ -35,6 +34,8 @@ import java.util.stream.DoubleStream;
 import lombok.Cleanup;
 import lombok.Data;
 import my_manage.password_box.R;
+import my_manage.password_box.pojo.UserItem;
+import my_manage.password_box.secret.SecretUtil;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
@@ -76,9 +77,9 @@ public final class DbHelper {
         List<ShowRoomDetails> resultLst = new ArrayList<>();
         List<RoomDetails>     roomDetailsList;
         if (StrUtils.isNotBlank(compoundName))
-            roomDetailsList = RentDB.getQueryByWhere(RoomDetails.class, "communityName", new Object[]{compoundName});
+            roomDetailsList = DbBase.getQueryByWhere(RoomDetails.class, "communityName", new Object[]{compoundName});
         else
-            roomDetailsList = RentDB.getQueryAll(RoomDetails.class);
+            roomDetailsList = DbBase.getQueryAll(RoomDetails.class);
         //去掉已删除的房源
         roomDetailsList = roomDetailsList.stream().filter(rd -> !rd.getIsDelete()).collect(Collectors.toList());
         room2ShowRoomDetails(resultLst, roomDetailsList);
@@ -93,12 +94,12 @@ public final class DbHelper {
             ShowRoomDetails srfh = new ShowRoomDetails(roomDetails);
             //查找此户是否已出租,recordId默认0
             if (roomDetails.getRecordId() > 0) {
-                RentalRecord record = RentDB.getInfoById(roomDetails.getRecordId(), RentalRecord.class);
+                RentalRecord record = DbBase.getInfoById(roomDetails.getRecordId(), RentalRecord.class);
                 if (null != record) {
                     srfh.setRentalRecord(record);
                     //查找租户信息
                     if (record.getManID() > 0) {
-                        PersonDetails person = RentDB.getInfoById(record.getManID(), PersonDetails.class);
+                        PersonDetails person = DbBase.getInfoById(record.getManID(), PersonDetails.class);
                         if (null != person) {
                             srfh.setPersonDetails(person);
                         }
@@ -112,7 +113,7 @@ public final class DbHelper {
     public List<RoomDetails> getRoomDetailsToList() {
         List<RoomDetails> result;
         try {
-            result = RentDB.getQueryAll(RoomDetails.class);
+            result = DbBase.getQueryAll(RoomDetails.class);
             return result.stream().filter(rd -> !rd.getIsDelete()).collect(Collectors.toList());
         } catch (Exception e) {
             return null;
@@ -121,7 +122,7 @@ public final class DbHelper {
 
     public List<RoomDetails> getRoomDetailsByDelete() {
         //查询删除的房屋信息，因为数据库中的true存为int=1
-        return RentDB.getQueryByWhere(RoomDetails.class, "isDelete", new Object[]{1});
+        return DbBase.getQueryByWhere(RoomDetails.class, "isDelete", new Object[]{1});
     }
 
     public List<ShowRoomDetails> getShowRoomDesList() {
@@ -194,9 +195,9 @@ public final class DbHelper {
 
     public boolean toExcel(String filename, List<RoomDetails> rd, List<RentalRecord> rr, List<PersonDetails> ct) {
         if (StrUtils.isBlank(filename)) return false;
-        rd = rd == null ? RentDB.getQueryAll(RoomDetails.class) : rd;
-        rr = rr == null ? RentDB.getQueryAll(RentalRecord.class) : rr;
-        ct = ct == null ? RentDB.getQueryAll(PersonDetails.class) : ct;
+        rd = rd == null ? DbBase.getQueryAll(RoomDetails.class) : rd;
+        rr = rr == null ? DbBase.getQueryAll(RentalRecord.class) : rr;
+        ct = ct == null ? DbBase.getQueryAll(PersonDetails.class) : ct;
         XSSFWorkbook workbook         = new XSSFWorkbook();
         boolean      isRentalRecordOk = createSheet(rr, workbook, RentalRecord.class.getSimpleName());
         boolean      isRoomDesOk      = createSheet(rd, workbook, RoomDetails.class.getSimpleName());
@@ -400,22 +401,22 @@ public final class DbHelper {
     }
 
     public boolean saveRoomDes(RoomDetails roomDetails) {
-        RoomDetails tmp = RentDB.getInfoById(roomDetails.getRoomNumber(), RoomDetails.class);
+        RoomDetails tmp = DbBase.getInfoById(roomDetails.getRoomNumber(), RoomDetails.class);
         if (tmp != null) {
-            return RentDB.update(roomDetails) > 0;
+            return DbBase.update(roomDetails) > 0;
         } else {
-            return RentDB.insert(roomDetails) > 0;
+            return DbBase.insert(roomDetails) > 0;
         }
     }
 
     public boolean delRoomDes(String communityName) {
-        if (RentDB.deleteWhere(RoomDetails.class, "communityName", new Object[]{communityName}) > 0)
+        if (DbBase.deleteWhere(RoomDetails.class, "communityName", new Object[]{communityName}) > 0)
             return true;
         return false;
     }
 
     public List<PersonDetails> getPersonList(boolean addBlankItem) {
-        List<PersonDetails> tmpLst = RentDB.getQueryAll(PersonDetails.class);
+        List<PersonDetails> tmpLst = DbBase.getQueryAll(PersonDetails.class);
         if (tmpLst == null) return new ArrayList<>();
         tmpLst.sort((n1, n2) -> Integer.compare(n2.getPrimary_id(), n1.getPrimary_id()));
         //不添加空白的租户
@@ -429,26 +430,26 @@ public final class DbHelper {
     }
 
     public List<RentalRecord> getRecords() {
-        return RentDB.getQueryAll(RentalRecord.class);
+        return DbBase.getQueryAll(RentalRecord.class);
     }
 
     /**
      * 将房源归入已删除列表，但在数据库中不删除
      */
     public boolean delRoomDes(ShowRoomDetails showRoomDetails) {
-        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
+        RoomDetails rd = DbBase.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
         if (rd == null) return false;
         rd.setIsDelete(true);
-        return RentDB.update(rd) > 0;
+        return DbBase.update(rd) > 0;
     }
 
     public boolean restoreDelete(ShowRoomDetails showRoomDetails) {
         if (showRoomDetails == null) return false;
 
-        RoomDetails rd = RentDB.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
+        RoomDetails rd = DbBase.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
         if (rd == null) return false;
         rd.setIsDelete(false);
-        return RentDB.update(rd) > 0;
+        return DbBase.update(rd) > 0;
     }
 
     /**
@@ -456,13 +457,13 @@ public final class DbHelper {
      */
     public List<ShowRoomDetails> getHistoryByRoomNumber(String roomNumber) {
         List<ShowRoomDetails> resultLst  = new ArrayList<>();
-        List<RentalRecord>    recordList = RentDB.getQueryByWhere(RentalRecord.class, "roomNumber", new Object[]{roomNumber});
-        RoomDetails           rd         = RentDB.getInfoById(roomNumber, RoomDetails.class);
+        List<RentalRecord>    recordList = DbBase.getQueryByWhere(RentalRecord.class, "roomNumber", new Object[]{roomNumber});
+        RoomDetails           rd         = DbBase.getInfoById(roomNumber, RoomDetails.class);
         ShowRoomDetails       show;
         for (final RentalRecord record : recordList) {
             show = new ShowRoomDetails(rd);
             show.setRentalRecord(record);
-            PersonDetails pd = RentDB.getInfoById(record.getManID(), PersonDetails.class);
+            PersonDetails pd = DbBase.getInfoById(record.getManID(), PersonDetails.class);
             show.setPersonDetails(pd);
             resultLst.add(show);
         }
@@ -471,11 +472,11 @@ public final class DbHelper {
 
     public List<ShowRoomDetails> getShowRoomDesForPerson(int personId) {
         List<ShowRoomDetails> result     = new ArrayList<>();
-        PersonDetails         person     = RentDB.getInfoById(personId, PersonDetails.class);
+        PersonDetails         person     = DbBase.getInfoById(personId, PersonDetails.class);
         ShowRoomDetails       roomDet;
-        List<RentalRecord>    historyLst = RentDB.getQueryByWhere(RentalRecord.class, "manID", new Object[]{personId});
+        List<RentalRecord>    historyLst = DbBase.getQueryByWhere(RentalRecord.class, "manID", new Object[]{personId});
         for (final RentalRecord record : historyLst) {
-            roomDet = new ShowRoomDetails(RentDB.getInfoById(record.getRoomNumber(), RoomDetails.class));
+            roomDet = new ShowRoomDetails(DbBase.getInfoById(record.getRoomNumber(), RoomDetails.class));
             roomDet.setRentalRecord(record);
             roomDet.setPersonDetails(person);
             result.add(roomDet);
@@ -484,12 +485,12 @@ public final class DbHelper {
     }
 
     public int delPersonById(int primary_id) {
-        return RentDB.deleteWhere(PersonDetails.class, "primary_id", new Object[]{primary_id});
+        return DbBase.deleteWhere(PersonDetails.class, "primary_id", new Object[]{primary_id});
     }
 
     public int insert(RentalRecord rr) {
-        if (RentDB.insert(rr) > 0) {
-            int max = RentDB.getQueryAll(RentalRecord.class).stream().mapToInt(RentalRecord::getPrimary_id).max().getAsInt();
+        if (DbBase.insert(rr) > 0) {
+            int max = DbBase.getQueryAll(RentalRecord.class).stream().mapToInt(RentalRecord::getPrimary_id).max().getAsInt();
             return max;
         }
         return -1;
@@ -506,11 +507,11 @@ public final class DbHelper {
      * 删除并重建数据库
      */
     public void rebuilding(Context context) {
-        String path = RentDB.DB_NAME;
+        String path = DbBase.DB_NAME;
         //删除数据库文件
         List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsToList();
-        RentDB.getLiteOrm().deleteDatabase();
-        RentDB.getLiteOrm().openOrCreateDatabase();
+        DbBase.getLiteOrm().deleteDatabase();
+        DbBase.getLiteOrm().openOrCreateDatabase();
 
         //重新初始化数据库
         dbInit(context, path);
@@ -521,20 +522,127 @@ public final class DbHelper {
      */
     public void dbInit(Context context, String DBFilePath) {
         //初始化数据库
-        RentDB.createCascadeDB(context, DBFilePath);
+        DbBase.createCascadeDB(context, DBFilePath);
 
         List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsToList();
         if (rd != null && rd.size() != 0) return;
         //当数据库空时，填充数据库内容
         try {
-           @Cleanup InputStream  is = context.getResources().openRawResource(R.raw.db);
+            @Cleanup InputStream is = context.getResources().openRawResource(R.raw.db);
             DbHelper.ExcelData   ed = DbHelper.getInstance().readExcel(is);
             is.close();
-            RentDB.insertAll(ed.getPersonDetailsList());
-            RentDB.insertAll(ed.getRentalRecordList());
-            RentDB.insertAll(ed.getRoomDetailsList());
-        } catch (Resources.NotFoundException |IOException e) {
+            DbBase.insertAll(ed.getPersonDetailsList());
+            DbBase.insertAll(ed.getRentalRecordList());
+            DbBase.insertAll(ed.getRoomDetailsList());
+        } catch (Resources.NotFoundException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean saveUserItem(UserItem userItem) {
+        if (userItem == null || StrUtils.isBlank(userItem.getSalt())) return false;
+        //加密密码
+        userItem.setPassword(SecretUtil.getEncryptString(userItem.getSalt(), userItem.getPassword()));
+        if (userItem.getId() == 0) {
+            return DbBase.insert(userItem) > 0;
+        }
+        long resultNo;
+        if (DbBase.getInfoById(userItem.getId(), UserItem.class) != null) {
+            resultNo = DbBase.update(userItem);
+        } else {
+            resultNo = DbBase.insert(userItem);
+        }
+        return resultNo > 0;
+    }
+
+    public boolean loadIn(Context context, String pwd) {
+        if (pwd == null) {
+            //默认为指纹通过后，直接通过
+            return true;
+        }
+        UserItem item = DbBase.getInfoById(1, UserItem.class);
+        if (item == null) {
+            //新增默认用户和密码
+            addDefaultItem(context);
+            return pwd.equals(context.getString(R.string.defaultPassword));
+        } else {
+            String pa = Encrypt.getMD5EncString(new StringBuilder(item.getSalt())
+                    .insert(context.getResources().getInteger(R.integer.defaultSaltLength) / 2, pwd).toString());
+            if (pa.equals(item.getPassword())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    private void addDefaultItem(Context context) {
+        UserItem item = new UserItem();
+        item.setSalt(StrUtils.getRandomString(context.getResources().getInteger(R.integer.defaultSaltLength)));
+        String doc = context.getString(R.string.defaultPassword);
+        String tmp = Encrypt.getMD5EncString(new StringBuilder(item.getSalt())
+                .insert(context.getResources().getInteger(R.integer.defaultSaltLength) / 2, doc).toString());
+        item.setPassword(tmp);
+        item.setId(1);
+        DbBase.insert(item);
+    }
+
+    public boolean resetPassword(Context context, String pwd) {
+        UserItem item = new UserItem();
+        item.setSalt(StrUtils.getRandomString(context.getResources().getInteger(R.integer.defaultSaltLength)));
+        String str = pwd == null ? context.getString(R.string.defaultPassword) : pwd;
+        String tmp = Encrypt.getMD5EncString(new StringBuilder(item.getSalt())
+                .insert(context.getResources().getInteger(R.integer.defaultSaltLength) / 2, str).toString());
+        item.setPassword(tmp);
+        item.setId(1);
+        if (DbBase.getInfoById(1, UserItem.class) == null) {
+            DbBase.insert(item);
+        } else {
+            DbBase.update(item);
+        }
+        return true;
+    }
+
+    public List<UserItem> getItemsByAfter(Context context) {
+        List<UserItem> itemList = DbBase.getLiteOrm().query(UserItem.class);
+        if (itemList == null || itemList.size() == 0) {
+            //数据库无数据时
+            addDefaultItem(context);
+            return new ArrayList<>();
+        }
+        //解密
+        try {
+            List<UserItem> result = new ArrayList<>();
+            for (int i = 1; i < itemList.size(); i++) {
+                UserItem im   = itemList.get(i);
+                UserItem item = new UserItem();
+                item.setId(im.getId());
+                item.setSalt(im.getSalt());
+                item.setAddress(im.getAddress());
+                item.setItemName(im.getItemName());
+                item.setRemark(im.getRemark());
+                item.setUserName(im.getUserName());
+                item.setPassword(SecretUtil.getDecryptSting(im.getSalt(), im.getPassword()));
+                result.add(item);
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public boolean delUserItem(UserItem userItem) {
+        if (userItem == null || userItem.getId() == 0) return false;
+        return delUserItem(userItem.getId());
+    }
+
+    public boolean delUserItem(int id) {
+        return DbBase.deleteWhere(UserItem.class, "id", new Object[]{id}) > 0;
+    }
+
+    public boolean changePassword(Context context, String old, String newStr) {
+        if (!loadIn(context, old)) return false;
+        return resetPassword(context, newStr);
     }
 }

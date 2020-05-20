@@ -2,9 +2,6 @@ package my_manage.rent_manage.page;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,31 +11,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.deadline.statebutton.StateButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import my_manage.adapter_page.NewRoomPageAdapter;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.DbHelper;
-import my_manage.rent_manage.database.RentDB;
+import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.fragment.PersonDetailsFramgent;
-import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
-import my_manage.tool.PageUtils;
-import my_manage.tool.StrUtils;
-import my_manage.tool.enums.ShowRoomType;
-import my_manage.widght.ParallaxSwipeBackActivity;
 
 public class ShowPersonDetailsActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener, IShowList {
     @BindView(R.id.tab_title) TabLayout             tabTitle;

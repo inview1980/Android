@@ -8,9 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import my_manage.password_box.R;
-import my_manage.password_box.database.PasswordDB;
 import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
+import my_manage.tool.database.DbHelper;
 
 public final class changePasswordDialog extends AppCompatActivity {
     @Override
@@ -18,13 +18,8 @@ public final class changePasswordDialog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.change_password_dialog);
-
     }
 
-    public void cancel_OnClick(View view) {
-//        setResult(RESULT_CANCELED);
-        finish();
-    }
 
     public void okBtn_onClick(View view) {
         EditText oldPWD = findViewById(R.id.dialog_changePWDold);
@@ -48,7 +43,7 @@ public final class changePasswordDialog extends AppCompatActivity {
         }
 
 
-        if (PasswordDB.init().changePassword(oldStr,new2Str)) {
+        if (DbHelper.getInstance().changePassword(this,oldStr,new2Str)) {
             PageUtils.showMessage(getBaseContext(),"更改密码成功！");
         }else {
             PageUtils.showMessage(getBaseContext(),"更改密码失败！");

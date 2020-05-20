@@ -3,22 +3,16 @@ package my_manage.rent_manage.listener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
-import com.alibaba.fastjson.JSONArray;
 
 import java.util.List;
 
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
-import my_manage.rent_manage.database.DbHelper;
-import my_manage.rent_manage.page.RoomDetailsByToolbarActivity;
+import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.page.ShowPersonDetailsActivity;
 import my_manage.rent_manage.pojo.PersonDetails;
-import my_manage.rent_manage.pojo.show.ShowRoomDetails;
-import my_manage.tool.enums.ShowRoomType;
 
 public final class PersonExtendableListViewAdapterListener {
     public <T extends Activity & IShowList> void onClick(T activity, List<PersonDetails> data, int position, View v) {

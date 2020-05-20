@@ -3,4 +3,7 @@
 
     <integer name="rental_room_details_1width">5</integer>
     <integer name="rental_room_details_2width">4</integer>
+
+    <integer name="Message_Interval_byHour">1</integer>
+    <integer name="defaultSaltLength">18</integer>
 </resources>
