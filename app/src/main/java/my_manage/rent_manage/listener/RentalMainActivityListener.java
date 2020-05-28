@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import my_manage.password_box.R;
 import my_manage.rent_manage.RentalMainActivity;
+import my_manage.tool.ExcelUtils;
 import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.page.RentalForHouseActivity;
 
@@ -39,17 +40,4 @@ public class RentalMainActivityListener {
                 .show();
     }
 
-    /**
-     * 将数据库转出为xlsx
-     */
-    public void saveDB(Context context) {
-        String path = context.getApplicationContext().getExternalFilesDir(null).getAbsolutePath()
-                + "/" + context.getResources().getString(R.string.rentalFileNameBackup);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setMessage("文件将保存在："+path )
-                .setPositiveButton(R.string.ok_cn,null)
-                .show();
-        if(DbHelper.getInstance().toExcel(path))
-            Toast.makeText(context,"导出数据库文件成功",Toast.LENGTH_SHORT).show();
-    }
 }

@@ -11,8 +11,8 @@ import my_manage.password_box.R;
 import my_manage.password_box.page.dialog.Login_Activity;
 import my_manage.rent_manage.MyService;
 import my_manage.rent_manage.RentalMainActivity;
-import my_manage.tool.database.DbHelper;
 import my_manage.tool.PageUtils;
+import my_manage.tool.database.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
     public static String DBFilePath;
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-//        ShareUtils.shareWechatFriend(this,new File(getExternalFilesDir(Environment.DIRECTORY_DCIM)+"/Camera/1581580850281.jpg"));
         if (btn == R.id.main_timeBtn) {
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, RentalMainActivity.class);

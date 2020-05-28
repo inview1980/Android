@@ -3,16 +3,21 @@
     <item
         android:id="@+id/add"
         android:icon="@drawable/ic_playlist_add_black_24dp"
-        android:orderInCategory="5"
+        android:orderInCategory="1"
         android:title="@string/new_cn" />
     <item
         android:id="@+id/modify"
         android:icon="@drawable/ic_mode_edit_black_24dp"
-        android:orderInCategory="5"
+        android:orderInCategory="2"
         android:title="@string/change_password_cn" />
     <item
         android:id="@+id/rebuildingDB"
         android:icon="@drawable/ic_file_download_black_24dp"
-        android:orderInCategory="5"
+        android:orderInCategory="3"
         android:title="@string/restore_password_cn" />
+    <item
+        android:id="@+id/saveDB"
+        android:icon="@drawable/ic_file_upload_black_24dp"
+        android:orderInCategory="5"
+        android:title="@string/out2xlsx" />
 </menu>

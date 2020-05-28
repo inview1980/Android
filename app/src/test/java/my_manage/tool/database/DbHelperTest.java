@@ -1,14 +1,19 @@
 package my_manage.tool.database;
 
+import com.alibaba.fastjson.JSONObject;
+
+import org.json.JSONArray;
 import org.junit.Test;
 
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
-import my_manage.rent_manage.pojo.PersonDetails;
-import my_manage.rent_manage.pojo.RentalRecord;
-import my_manage.rent_manage.pojo.RoomDetails;
+import my_manage.password_box.pojo.UserItem;
+import my_manage.rent_manage.pojo.show.ExcelData;
+import my_manage.tool.ExcelUtils;
+import my_manage.tool.StrUtils;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -16,41 +21,51 @@ public class DbHelperTest {
 
     @Test
     public void readExcel() {
-        Random random=new Random();
-        DbHelper.ExcelData excelData = DbHelper.getInstance().readExcel("F:\\program\\android\\Password saving cabinet\\app\\src\\main\\res\\raw\\db.xlsx");
-//        assertNotNull(excelData.getRentalRecordList());
-        assertNotNull(excelData.getRoomDetailsList());
-//        assertNotNull(excelData.getPersonDetailsList());
-
-//        System.out.println(excelData.getRoomDetailsList().get(random.nextInt(excelData.getRoomDetailsList().size())));
-//        System.out.println(excelData.getRoomDetailsList().get(random.nextInt(excelData.getRoomDetailsList().size())));
-//        System.out.println(excelData.getRentalRecordList().get(11));
-//        System.out.println(excelData.getRentalRecordList().get(15));
-//        System.out.println(excelData.getRentalRecordList().get(18));
-
-        System.out.println(excelData.getPersonDetailsList().get(random.nextInt(excelData.getPersonDetailsList().size())));
-        System.out.println(excelData.getPersonDetailsList().get(random.nextInt(excelData.getPersonDetailsList().size())));
+//        Random             random    = new Random();
+        ExcelData excelData = ExcelUtils.getInstance().readExcel("F:\\db.xls");
+        assertNotNull(excelData.getRentalRecordList());
+//        assertNotNull(excelData.getRoomDetailsList());
+////        assertNotNull(excelData.getPersonDetailsList());
+//
+////        System.out.println(excelData.getRoomDetailsList().get(random.nextInt(excelData.getRoomDetailsList().size())));
+////        System.out.println(excelData.getRoomDetailsList().get(random.nextInt(excelData.getRoomDetailsList().size())));
+////        System.out.println(excelData.getRentalRecordList().get(11));
+////        System.out.println(excelData.getRentalRecordList().get(15));
+////        System.out.println(excelData.getRentalRecordList().get(18));
+//
+//        System.out.println(excelData.getPersonDetailsList().get(random.nextInt(excelData.getPersonDetailsList().size())));
+//        System.out.println(excelData.getPersonDetailsList().get(random.nextInt(excelData.getPersonDetailsList().size())));
     }
 
     @Test
     public void dbInit() {
         //初始化数据库
-
-        List<RoomDetails> rd =BuildData. getRoomDes(200);
-        List<RentalRecord> rr =BuildData. getRentalRecord(rd,500);
-        List<PersonDetails> cc=BuildData.getContact();
-        DbHelper.getInstance().toExcel("f:/db.xlsx",rd,rr,cc);
+//        DbHelper.ExcelData excelData = new DbHelper.ExcelData();
+//        excelData.setRoomDetailsList(BuildData.getRoomDes(200));
+//        excelData.setRentalRecordList(BuildData.getRentalRecord(excelData.getRoomDetailsList(), 500));
+//        excelData.setPersonDetailsList(BuildData.getContact());
+//        excelData.setUserItemList(BuildData.getUserItem());
+//        ExcelUtils.getInstance().toExcel("f:/db.xls", excelData);
 
     }
-@Test
-    public void date(){
-        String str;
-    Calendar calendar=Calendar.getInstance();
-    str=calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
-    System.out.println(str);
-    calendar.add(Calendar.MONTH, 3);
-    str=calendar.get(Calendar.YEAR)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
-    System.out.println(str);
 
-}
+    @Test
+    public void date() {
+//        val lst=ExcelUtils.getAnnotation(PersonDetails.class);
+//        System.out.println(lst);
+    }
+
+    @Test
+    public void readJson(){
+        List<UserItem> lst = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            UserItem item = new UserItem();
+            item.setUserName("userName:"+i);
+            item.setItemName("itemName:"+i);
+            item.setPassword(StrUtils.getRandomString(8));
+            lst.add(item);
+
+        }
+//        System.out.println(json.toString());
+    }
 }

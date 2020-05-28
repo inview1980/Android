@@ -21,9 +21,14 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import lombok.val;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
+import my_manage.password_box.listener.PasswordManageActivityListener;
 import my_manage.password_box.page.PasswordManageActivity;
+import my_manage.password_box.page.PasswordManageTotalActivity;
+import my_manage.password_box.pojo.UserItem;
+import my_manage.tool.database.DbBase;
 import my_manage.tool.database.DbHelper;
 
 @SuppressLint("Registered")
@@ -38,9 +43,17 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
         setTitle("登录");
 //        onAuthenticated();
         //指纹识别
-        if (supportFingerprint()) {
+        if (isNotLoginFirst() && supportFingerprint()) {
+//             TODO: 2020/5/25 debug模式
             initKey();
         }
+    }
+
+    private boolean isNotLoginFirst() {
+        val item = DbBase.getInfoById(1, UserItem.class);
+        if (item != null && item.getItemName() != null && "logged in".equals(item.getItemName()))
+            return true;
+        return false;
     }
 
     /**
@@ -109,7 +122,7 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
      * 调用PasswordManageActivity密码显示窗口
      */
     public void onAuthenticated() {
-        Intent intent = new Intent(this, PasswordManageActivity.class);
+        Intent intent = new Intent(this, PasswordManageTotalActivity.class);
         startActivity(intent);
         finish();
     }
@@ -122,7 +135,7 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
         EditText editText = findViewById(R.id.dialog_loginPwd);
         if (!DbHelper.getInstance().loadIn(this, editText.getText().toString())) {
             Toast.makeText(this, "密码不正确", Toast.LENGTH_SHORT).show();
-            finish();//密码不正确，退出
+//            finish();//密码不正确，退出
         } else {
             onAuthenticated();
         }
@@ -130,8 +143,7 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
 
 
     public void resetPasswordBtn_onClick(View view) {
-        DbHelper.getInstance().resetPassword(this,null);
-//        PasswordManageActivityListener.resetDatabaseAndPassword(this);
+        PasswordManageActivityListener.resetDatabaseAndPassword(this);
     }
 
     @Override

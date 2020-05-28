@@ -20,12 +20,13 @@ import my_manage.password_box.pojo.UserItem;
 import my_manage.tool.database.DbHelper;
 
 
-public final class PasswordManageViewPagerHome extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
+public final class PasswordManageViewPagerHome extends AppCompatActivity  {
     @BindView(R.id.tab_title) TabLayout tabTitle;
     @BindView(R.id.toolbar)   Toolbar   toolbar;
     @BindView(R.id.viewPage)  ViewPager viewPage;
 
     private List<UserItem> userLst;
+    private int passwordTypeId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,15 +43,17 @@ public final class PasswordManageViewPagerHome extends AppCompatActivity impleme
     private void initPage() {
         Bundle bundle      = getIntent().getExtras();
         int    currentItem = bundle.getInt("currentItem", 0);
+        passwordTypeId=bundle.getInt("PasswordTypeId",0);
+        String title=bundle.getString("title");
         Log.i(this.getLocalClassName(), "currentItem:" + currentItem);
         if (-1 == currentItem) {
             //==-1时，为新增
-            viewPage.setAdapter(new PwdPageAdapter(getSupportFragmentManager(), null));
+            viewPage.setAdapter(new PwdPageAdapter(getSupportFragmentManager(), null,title));
             viewPage.setCurrentItem(0);
             tabTitle.addTab(tabTitle.newTab().setText(R.string.new_cn));
         } else {
-            userLst = DbHelper.getInstance().getItemsByAfter(this);
-            viewPage.setAdapter(new PwdPageAdapter(getSupportFragmentManager(), userLst));
+            userLst = DbHelper.getInstance().getItemsByAfter(this,passwordTypeId);
+            viewPage.setAdapter(new PwdPageAdapter(getSupportFragmentManager(), userLst,title));
             viewPage.setCurrentItem(currentItem);
             initTabLayout();
             tabTitle.getTabAt(currentItem).select();
@@ -67,21 +70,12 @@ public final class PasswordManageViewPagerHome extends AppCompatActivity impleme
         for (final UserItem item : userLst) {
             tabTitle.addTab(tabTitle.newTab().setText(item.getItemName()));
         }
-        tabTitle.setOnTabSelectedListener(this);
-    }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        viewPage.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
+        tabTitle.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPage){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                viewPage.setCurrentItem(tab.getPosition());
+            }
+        });
     }
 }

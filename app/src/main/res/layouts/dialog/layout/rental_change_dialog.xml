@@ -48,7 +48,7 @@
             android:id="@+id/rental_changeRent_newNum"
             style="@style/editView_middle_right"
             android:layout_columnWeight="@integer/rental_room_details_1width"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
     </TableRow>
 
 

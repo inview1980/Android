@@ -3,7 +3,7 @@
     <dimen name="pwdHeight">100dp</dimen>
     <dimen name="pwdItemWidth">100dp</dimen>
     <dimen name="pwdItemHeight">40dp</dimen>
-    
+
     <dimen name="rental_main_gridview_title_fontsize">21sp</dimen>
     <dimen name="rental_main_gridview_nomal_fontsize">16sp</dimen>
     <dimen name="rental_main_gridview_margin_6">6dp</dimen>
@@ -13,5 +13,12 @@
 
     <dimen name="rental_label_textSize">16dp</dimen>
     <dimen name="rent_room_expandable_listview_item_height">40dp</dimen>
-<dimen name="rent_room_details_endPadding">10dp</dimen>
+    <dimen name="rent_room_details_endPadding">10dp</dimen>
+    <dimen name="radiusMiddle">10dp</dimen>
+    <dimen name="radiusSmall">5dp</dimen>
+    <dimen name="radiusLittle">3dp</dimen>
+    <dimen name="radiusBig">15dp</dimen>
+
+    <dimen name="min_size">14sp</dimen>
+    <dimen name="fontSize">40sp</dimen>
 </resources>

@@ -20,6 +20,7 @@ import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import my_manage.iface.IShowList;
@@ -39,69 +40,68 @@ import my_manage.tool.StrUtils;
 import my_manage.tool.enums.ShowRoomType;
 
 public class RentRoomExpandableListViewListener {
+    @FunctionalInterface
+    public interface myOnClick {
+        <T extends Activity & IShowList> void onClick(T activity, List<ShowRoomDetails> data, int position, View v);
+    }
 
+    @FunctionalInterface
+    interface ISetValue {
+        void setValue(double value);
+    }
 
     public static <T extends Activity & IShowList> void onBorrowedClick(T activity, List<ShowRoomDetails> data, int position, View v) {
+        ShowRoomDetails sr=data.get(position);
         switch (v.getId()) {
-            case R.id.rent_room_expandable_listview_borrowed_details:
+            case R.id.details:
                 //查看详情
                 showDetails(activity, data, position);
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_changed_rent:
+            case R.id.changed_rent:
                 //调整租金
-                changedRent(activity, data.get(position));
+                showDialog(activity, sr.getRentalRecord()::setMonthlyRent, sr,
+                        String.format(Locale.getDefault(), "%.2f",sr.getRentalRecord().getMonthlyRent()), "租金");
                 break;
-            case R.id.rent_room_expandable_listview_continue_rent:
-                continueRent(activity, data.get(position));
+            case R.id.continue_rent:
+                continueOperation(activity, sr, ContinueRentActivity.class);
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_leaseback:
+            case R.id.leaseback:
                 //退租
-                notRent(activity, data.get(position));
+                notRent(activity, sr);
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_changed_deposit:
+            case R.id.changed_deposit:
                 //调整押金
-                changeDeposit(activity, data.get(position));
+                showDialog(activity, sr.getRentalRecord()::setDeposit, sr,
+                        String.format(Locale.getDefault(), "%.2f",sr.getRentalRecord().getDeposit()), "押金");
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_history:
+            case R.id.history:
                 //查看出租记录
-                rentalHistory(activity, data.get(position));
+                rentalHistory(activity, sr);
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_pay_propertycosts:
-                continueProperty(activity, data.get(position));
+            case R.id.pay_propertycosts:
+                continueOperation(activity, sr, ContinuePropertyActivity.class);
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_renew_contract:
-                continueContract(activity, data.get(position));
+            case R.id.renew_contract:
+                continueOperation(activity, sr, ContinueContractActivity.class);
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_man_info:
+            case R.id.man_info:
                 //显示租户的详情
-                PersonExtendableListViewAdapterListener.showPersonDetails(activity, data.get(position).getRentalRecord().getManID());
+                PersonExtendableListViewAdapterListener.showPersonDetails(activity, sr.getRentalRecord().getManID());
                 break;
-            case R.id.rent_room_expandable_listview_borrowed_del_room:
+            case R.id.del_room:
                 //删除房源
-                delRoom(activity, data.get(position));
+                delRoom(activity, sr);
                 break;
             default:
                 break;
         }
     }
 
-    private static <T extends Activity & IShowList> void continueContract(T activity, ShowRoomDetails showRoomDetails) {
-        Intent intent = new Intent(activity, ContinueContractActivity.class);
-        intent.putExtra(showRoomDetails.getClass().getSimpleName(), JSON.toJSONString(showRoomDetails));
-        activity.startActivity(intent);
-    }
-
-    private static <T extends Activity & IShowList> void continueProperty(T activity, ShowRoomDetails showRoomDetails) {
-        Intent intent = new Intent(activity, ContinuePropertyActivity.class);
-        intent.putExtra(showRoomDetails.getClass().getSimpleName(), JSON.toJSONString(showRoomDetails));
-        activity.startActivity(intent);
-    }
-
     /**
-     * 续租
+     * 续租、续签合同、续物业费
      */
-    private static <T extends Activity & IShowList> void continueRent(T activity, ShowRoomDetails showRoomDetails) {
-        Intent intent = new Intent(activity, ContinueRentActivity.class);
+    private static <T extends Activity & IShowList> void continueOperation(T activity, ShowRoomDetails showRoomDetails, Class tClass) {
+        Intent intent = new Intent(activity, tClass);
         intent.putExtra(showRoomDetails.getClass().getSimpleName(), JSON.toJSONString(showRoomDetails));
         activity.startActivity(intent);
     }
@@ -113,7 +113,6 @@ public class RentRoomExpandableListViewListener {
             RoomDetails room = DbBase.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
             if (room != null) {
                 room.setRecordId(0);
-//                        room.setManId(0);
                 if (DbBase.update(room) > 0) {
                     Toast.makeText(activity, "退租成功！", Toast.LENGTH_SHORT).show();
                     activity.showList();
@@ -137,7 +136,7 @@ public class RentRoomExpandableListViewListener {
                 leaseBack(activity, data.get(position));
                 break;
             case R.id.rent_room_expandable_listview_null_del_room:
-                delRoom(activity,data.get(position));
+                delRoom(activity, data.get(position));
                 break;
             default:
                 break;
@@ -156,7 +155,6 @@ public class RentRoomExpandableListViewListener {
             RoomDetails room = DbBase.getInfoById(showRoomDetails.getRoomDetails().getRoomNumber(), RoomDetails.class);
             if (room != null) {
                 room.setRecordId(rentalRecord.get().getPrimary_id());
-//                room.setManId(rentalRecord.get().getManID());
                 if (DbBase.update(room) > 0) {
                     Toast.makeText(activity, "撤销退租成功！", Toast.LENGTH_SHORT).show();
                     activity.showList();
@@ -173,35 +171,9 @@ public class RentRoomExpandableListViewListener {
         Bundle                bundle  = new Bundle();
         List<ShowRoomDetails> details = new ArrayList<ShowRoomDetails>() {{add(room);}};
         bundle.putString("ShowRoomDetails", JSONArray.toJSONString(details));
-        bundle.putInt("ShowRoomType",ShowRoomType.Rent.getIndex());
+        bundle.putInt("ShowRoomType", ShowRoomType.Rent.getIndex());
         intent.putExtras(bundle);
         activity.startActivity(intent);
-    }
-
-    /**
-     * 调整押金
-     */
-    private static <T extends Activity & IShowList> void changeDeposit(T activity, ShowRoomDetails sr) {
-        if (sr == null) return;
-        DialogPlusBuilder db = showDialog(activity, sr.getRentalRecord().getDeposit() + "", "押金");
-        db.setOnClickListener((dialog1, view) -> {
-            try {
-                if (view.getId() == R.id.rental_changeRent_okBtn) {
-                    EditText text = db.getHolder().getInflatedView().findViewById(R.id.rental_changeRent_newNum);
-                    if (StrUtils.isNotBlank(text.getText().toString())) {
-                        sr.getRentalRecord().setDeposit(Integer.parseInt(text.getText().toString()));
-                        if (DbBase.update(sr.getRentalRecord()) > 0) {
-                            //成功，刷新
-                            activity.showList();
-                            Toast.makeText(activity, "调整押金成功", Toast.LENGTH_SHORT).show();
-                            dialog1.dismiss();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-
-            }
-        }).create().show();
     }
 
     /**
@@ -236,32 +208,14 @@ public class RentRoomExpandableListViewListener {
     }
 
     /**
-     * 调整租金
+     * 调出调整押金、月租金的对话框，
+     * @param setValueFunc 自定义接口函数式接口ISetValue
+     * @param showTxt 原押金、月租金的金额
+     * @param title 只为：押金、月租金
      */
-    private static <T extends Activity & IShowList> void changedRent(T activity, ShowRoomDetails sr) {
+    private static <T extends Activity & IShowList> void showDialog(T activity, ISetValue setValueFunc,
+                                                                    ShowRoomDetails sr, String showTxt, String title) {
         if (sr == null) return;
-        DialogPlusBuilder db = showDialog(activity, sr.getRentalRecord().getMonthlyRent() + "", "租金");
-        db.setOnClickListener((dialog1, view) -> {
-            try {
-                if (view.getId() == R.id.rental_changeRent_okBtn) {
-                    EditText text = db.getHolder().getInflatedView().findViewById(R.id.rental_changeRent_newNum);
-                    if (StrUtils.isNotBlank(text.getText().toString())) {
-                        sr.getRentalRecord().setMonthlyRent(Double.parseDouble(text.getText().toString()));
-                        if (sr.getRentalRecord().getPrimary_id() != 0 && DbBase.update(sr.getRentalRecord()) > 0) {
-                            //成功，刷新
-                            activity.showList();
-                            Toast.makeText(activity, "调整租金成功", Toast.LENGTH_SHORT).show();
-                            dialog1.dismiss();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-e.printStackTrace();
-            }
-        }).create().show();
-    }
-
-    private static <T extends Activity & IShowList> DialogPlusBuilder showDialog(T activity, String showTxt, String title) {
         ViewHolder viewHolder = new ViewHolder(R.layout.rental_change_dialog) {
             @Override
             public View getView(LayoutInflater inflater, ViewGroup parent) {
@@ -273,15 +227,28 @@ e.printStackTrace();
                 ((TextView) view.findViewById(R.id.rental_change_dialog_lable2)).setText("调整" + title + "为:");
                 oldNum.setText(showTxt);
                 newNum.setText(showTxt);
-                //输入框失去焦点则关闭
-                newNum.setOnFocusChangeListener((v, b) -> PageUtils.closeInput(activity, b));
                 return view;
             }
         };
-        DialogPlusBuilder dialog = DialogPlus.newDialog(activity)
-                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                .setContentHolder(viewHolder);
-        return dialog;
+        DialogPlusBuilder db = DialogPlus.newDialog(activity).setExpanded(true).setContentHolder(viewHolder);
+        db.setOnClickListener((dialog1, view) -> {
+            try {
+                if (view.getId() == R.id.rental_changeRent_okBtn) {
+                    EditText text = db.getHolder().getInflatedView().findViewById(R.id.rental_changeRent_newNum);
+                    if (StrUtils.isNotBlank(text.getText().toString())) {
+                        setValueFunc.setValue(Double.parseDouble(text.getText().toString()));
+                        if (sr.getRentalRecord().getPrimary_id() != 0 && DbBase.update(sr.getRentalRecord()) > 0) {
+                            //成功，刷新
+                            activity.showList();
+                            Toast.makeText(activity, "调整" + title + "成功", Toast.LENGTH_SHORT).show();
+                            dialog1.dismiss();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).create().show();
     }
 
     /**
@@ -295,7 +262,7 @@ e.printStackTrace();
             bundle.putString("ShowRoomDetails", JSONArray.toJSONString(data));
         }
         bundle.putInt("currentItem", position);
-        bundle.putInt("ShowRoomType",ShowRoomType.Details.getIndex());
+        bundle.putInt("ShowRoomType", ShowRoomType.Details.getIndex());
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }

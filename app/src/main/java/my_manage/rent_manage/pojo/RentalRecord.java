@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import my_manage.iface.ColumnName;
 
 /**
  * 租房记录
@@ -19,78 +20,99 @@ public final class RentalRecord {
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     @Setter
     @Getter
-    private int primary_id;
-
-    private long startDate;
+    private                       int  primary_id;
+    @ColumnName("房租开始时间") private long startDate;
     /**
      * 房租时长
      */
     @Getter
     @Setter
-    private int  payMonth;
+    @ColumnName("房租时长（月）")
+    private                       int  payMonth;
     /**
      * 付款日期
      */
-    private long paymentDate;
+    @ColumnName("付款日期") private   long paymentDate;
 
     /**
      * 付款金额
      */
-    private int totalMoney;
+    @ColumnName("付款金额") private int totalMoney;
     /**
      * 物业费
      */
-    private int propertyCosts;
+    @ColumnName("物业费") private  int propertyCosts;
 
     /**
      * 是否包含物业费
      */
-    private int isContainRealty;
+    @ColumnName("房租包含物业费") private int isContainRealty;
 
     /**
      * 房间号
      */
     @Setter
     @Getter
+    @ColumnName("房间号")
     private String roomNumber;
 
     /**
      * 物业费开始时间
      */
-    private long realtyStartDate;
+    @ColumnName("物业费开始时间") private long realtyStartDate;
 
     /**
      * 物业费时长
      */
     @Getter
     @Setter
-    private int propertyTime;
+    @ColumnName("物业费时长（月）")
+    private                   int propertyTime;
     @Setter
     @Getter
-    private int manID;
+    @ColumnName("用户id")
+    private                   int manID;
     /**
      * 押金
      */
-    @Setter
-    @Getter
-    private int deposit;
+    @ColumnName("押金") private int deposit;
 
     /**
      * 月租金
      */
-    private int monthlyRent;
+    @ColumnName("月租金") private int monthlyRent;
 
     /**
      * 签合同时间
      */
-    private long contractSigningDate;
+    @ColumnName("签合同时间") private long contractSigningDate;
 
     /**
      * 合同期限（月）
      */
     @Getter
     @Setter
+    @ColumnName("合同期限（月）")
     private int contractMonth;
+
+    @Setter
+    @Getter
+    @ColumnName("备注")
+    private String remarks;
+
+    /**
+     * 押金
+     */
+    public double getDeposit() {
+        return (double) deposit / 100;
+    }
+
+    /**
+     * 押金
+     */
+    public void setDeposit(double deposit) {
+        this.deposit = (int) Math.round(deposit * 100);
+    }
 
     /**
      * 月租金
@@ -209,8 +231,5 @@ public final class RentalRecord {
         this.isContainRealty = isContainRealty ? 1 : 0;
     }
 
-    @Setter
-    @Getter
-    private String remarks;
 
 }

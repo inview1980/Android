@@ -85,7 +85,7 @@
                 <EditText
                     android:id="@+id/rental_editRoom_meterNumber"
                     style="@style/editView_middle_right"
-                    android:inputType="numberDecimal"
+                    android:inputType="phone"
                     android:layout_span="3"
                     android:enabled="false" />
             </TableRow>
@@ -99,7 +99,7 @@
                 <EditText
                     android:id="@+id/rental_editRoom_waterMeter"
                     style="@style/editView_middle_right"
-                    android:inputType="numberDecimal"
+                    android:inputType="phone"
                     android:labelFor="@id/rental_editRoom_waterMeter"
                     android:autofillHints="@string/water_number"
                     android:layout_span="3"
@@ -200,7 +200,7 @@
                     style="@style/editView_middle_right"
                     android:layout_span="2"
                     android:enabled="false"
-                    android:inputType="number" />
+                    android:inputType="textPersonName" />
             </TableRow>
 
             <TableRow style="@style/rental_room_details_tableRow">
@@ -216,7 +216,7 @@
                     android:enabled="false"
                     android:autofillHints="@string/tel"
                     android:labelFor="@id/rental_editRoom_tel"
-                    android:inputType="number" />
+                    android:inputType="phone" />
             </TableRow>
 
             <TableRow style="@style/rental_room_details_tableRow">
@@ -232,7 +232,7 @@
                     android:autofillHints="@string/rental_codeNumber_cn"
                     android:layout_span="2"
                     android:enabled="false"
-                    android:inputType="numberDecimal" />
+                    android:inputType="phone" />
             </TableRow>
 
             <TableRow style="@style/rental_room_details_tableRow">
@@ -346,7 +346,7 @@
                     android:enabled="false"
                     android:labelFor="@id/rental_editRoom_deposit"
                     android:autofillHints="@string/desposit"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
             </TableRow>
 
             <TableRow

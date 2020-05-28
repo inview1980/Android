@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
+import my_manage.tool.ExcelUtils;
 import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.listener.PersonListener;
 import my_manage.rent_manage.listener.RentalMainActivityListener;
@@ -112,7 +113,7 @@ public final class RentalMainActivity extends ParallaxSwipeBackActivity implemen
             listener.showDeletedRoom(this);
         } else if (id == R.id.saveDB) {
             //将数据库转出为xlsx
-            listener.saveDB(this);
+            ExcelUtils.getInstance().saveDB(this);
         } else if (id == R.id.rebuildingDB) {
             //删除并重建数据库
             listener.rebuildingDB(this);

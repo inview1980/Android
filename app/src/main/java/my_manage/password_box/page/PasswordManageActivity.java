@@ -26,9 +26,11 @@ import butterknife.OnItemClick;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.password_box.listener.PasswordManageActivityListener;
+import my_manage.password_box.pojo.PasswordType;
 import my_manage.password_box.pojo.UserItem;
 import my_manage.tool.MenuUtils;
 import my_manage.tool.PageUtils;
+import my_manage.tool.database.DbBase;
 import my_manage.tool.database.DbHelper;
 import my_manage.widght.ParallaxSwipeBackActivity;
 
@@ -37,7 +39,8 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
     @BindView(R.id.toolbar)         Toolbar           toolbar;
     @BindView(R.id.main_ListViewId) SwipeMenuListView listView;
     @BindView(R.id.main_viewId)     RelativeLayout    mainViewId;
-    private List<UserItem> itemList;
+    private                         List<UserItem>    itemList;
+    private                         int               passwordTypeId;
 
     @Override
     protected void onStart() {
@@ -50,8 +53,11 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
         setContentView(R.layout.main_listview);
         ButterKnife.bind(this);
 
+        passwordTypeId = getIntent().getIntExtra("PasswordTypeId", 0);
+        String title = DbBase.getInfoById(passwordTypeId, PasswordType.class).getName();
+
         //初始化Toolbar控件
-        toolbar.setTitle("密码箱");
+        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> finish());
 
@@ -66,7 +72,7 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
         listView.setMenuCreator(creator);
         listView.setOnMenuItemClickListener((position, menu, index) -> {
             if (index == 0) {// delete
-                PasswordManageActivityListener.deleteItem(PasswordManageActivity.this,itemList.get( position));
+                PasswordManageActivityListener.deleteItem(PasswordManageActivity.this, itemList.get(position));
             }
             return false;
         });
@@ -80,6 +86,7 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
         Intent intent = new Intent(this, PasswordManageViewPagerHome.class);
         Bundle bundle = new Bundle();
         bundle.putInt("currentItem", position);
+        bundle.putInt("PasswordTypeId", itemList.get(position).getTypeNameId());
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -99,17 +106,7 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.add) {
-            //增加信息
-            PasswordManageActivityListener.callPasswordManageItemDetails(this, -1);
-        } else if (id == R.id.modify) {
-            //调用更改密码窗口
-            startActivity(new Intent(this, my_manage.password_box.page.dialog.changePasswordDialog.class));
-        } else if (id == R.id.rebuildingDB) {
-            //重建资料和密码成功
-            PasswordManageActivityListener.resetDatabaseAndPassword(this);
-        }
+        PasswordManageActivityListener.onOptionsItemSelected(this, item.getItemId(), toolbar.getTitle().toString());
         return super.onOptionsItemSelected(item);
     }
 
@@ -126,7 +123,7 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
      */
     @Override
     public void showList() {
-        itemList=DbHelper.getInstance().getItemsByAfter(this);
+        itemList = DbHelper.getInstance().getItemsByAfter(this, passwordTypeId);
         listView.setAdapter(new CommonAdapter<UserItem>(this, R.layout.password_manage_list_item, itemList) {
             @Override
             public void onUpdate(BaseAdapterHelper helper, UserItem item, int position) {

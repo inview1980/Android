@@ -12,6 +12,8 @@
         android:id="@+id/dialog_loginPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/pwdItemHeight"
+        android:layout_marginEnd="@dimen/pwdItemHeight"
         android:hint="@string/input_password_cn"
         android:autofillHints="@string/input_password_cn"
         android:inputType="textPassword" />

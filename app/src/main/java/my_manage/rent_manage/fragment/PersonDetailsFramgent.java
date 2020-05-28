@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import my_manage.password_box.R;
+import my_manage.rent_manage.listener.PersonListener;
 import my_manage.tool.database.DbBase;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
@@ -74,6 +75,11 @@ public final class PersonDetailsFramgent extends Fragment {
         PageUtils.setEnable(this, true);
         ok.setVisibility(View.VISIBLE);
         modify.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.tel)
+    void onTelClick() {
+        PersonListener.telCall(getActivity(), tel.getText().toString());
     }
 
     @OnClick(R.id.ok)

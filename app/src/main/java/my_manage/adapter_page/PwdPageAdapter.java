@@ -14,15 +14,15 @@ import my_manage.password_box.pojo.UserItem;
 public final class PwdPageAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> vList =new ArrayList<>();
 
-    public PwdPageAdapter(FragmentManager fm, List<UserItem> vList) {
+    public PwdPageAdapter(FragmentManager fm, List<UserItem> vList,String title) {
         super(fm);
         if(vList==null){
             //新增
-            this.vList.add(new PasswordManageItemDetailsFragment(null));
+            this.vList.add(new PasswordManageItemDetailsFragment(null,title));
         }else {
             //修改
             for (int i = 0; i < vList.size(); i++) {
-                this.vList.add(new PasswordManageItemDetailsFragment(vList.get(i)));
+                this.vList.add(new PasswordManageItemDetailsFragment(vList.get(i),title));
             }
         }
     }

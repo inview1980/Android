@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">我的管理</string>
     <string name="rentalFileName">rental.db</string>
-    <string name="rentalFileNameBackup">rental_bak.xlsx</string>
+    <string name="rentalFileNameBackup">rental_bak.xls</string>
     <string name="defaultPassword">123456</string>
 
     <string name="pwdManage_cn">密码管理</string>
@@ -12,6 +12,7 @@
     <string name="ok_cn">确定</string>
     <string name="cancel_cn">取消</string>
     <string name="addUser_cn">新增用户</string>
+    <string name="passwordBox">密码箱</string>
 
     <string name="rental_codeNumber_cn">证件号码</string>
     <string name="remark_cn">备注</string>
@@ -24,4 +25,5 @@
         <item>巴黎豪庭</item>
         <item>旭辉御府</item>
     </string-array>
+
 </resources>

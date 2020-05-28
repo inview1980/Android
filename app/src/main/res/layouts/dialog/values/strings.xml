@@ -33,7 +33,7 @@
     <string name="click_close">点击收起</string>
     <string name="click_extend">点击展开</string>
     <string name="company">公司</string>
-    <string name="out2xlsx">将数据库转出为xlsx</string>
+    <string name="out2xlsx">将数据库转出为xls</string>
     <string name="showDeletedRooms">显示已删除房源</string>
     <string name="addRoom">增加房源</string>
     <string name="showAllPersonDetails">显示所有租户信息</string>
@@ -51,8 +51,9 @@
     <string name="rental_month">房租(月)</string>
     <string name="property_costs_month">物业费(月)</string>
     <string name="contract_month">合同(月)</string>
-    <string name="restore_password_cn">还原密码</string>
+    <string name="restore_password_cn">重置密码</string>
     <string name="change_password_cn">修改数据库密码</string>
+    <string name="type_CN">类型</string>
 
     <string-array name="monthNumber">
         <item>1</item>

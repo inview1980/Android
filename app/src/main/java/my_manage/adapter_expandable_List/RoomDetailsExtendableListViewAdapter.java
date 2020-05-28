@@ -9,16 +9,20 @@ import android.widget.ExpandableListAdapter;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.listener.RentRoomExpandableListViewListener;
 import my_manage.rent_manage.listener.RoomListener;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
+
+import static my_manage.rent_manage.listener.RentRoomExpandableListViewListener.*;
 
 public final class RoomDetailsExtendableListViewAdapter<T extends Activity & IShowList> extends BaseExpandableListAdapter {
     private List<ShowRoomDetails> room;
@@ -102,10 +106,10 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
                 if (date.before(Calendar.getInstance())) {
                     //租期已超过,改背景颜色
                     vh.tableLayout.setBackgroundColor(activity.getColor(R.color.red1));
-                }else {
+                } else {
                     vh.tableLayout.setBackgroundColor(activity.getColor(android.R.color.white));
                 }
-            }else {
+            } else {
                 //未填写房租的开始时间
                 vh.tableLayout.setBackgroundColor(activity.getColor(R.color.grayBlue));
             }
@@ -140,12 +144,13 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (title != null && title.contains("删除")) {
             //恢复删除的房源
-            convertView = LayoutInflater.from(activity).inflate(android.R.layout.simple_expandable_list_item_1,
+            convertView = LayoutInflater.from(activity).inflate(R.layout.rental_delroom_item,
                     parent, false);
-            TextView txt = convertView.findViewById(android.R.id.text1);
-            txt.setText("恢复删除的房源");
-            txt.setOnClickListener(v ->
+            convertView.findViewById(R.id.recover).setOnClickListener(v ->
                     RoomListener.recoverDel(this.activity, room.get(groupPosition)));
+            convertView.findViewById(R.id.delete).setOnClickListener(v ->
+                    RoomListener.deleteRoom(this.activity, room.get(groupPosition)));
+
             return convertView;
         }
         if (room.get(groupPosition).getRentalRecord().getPrimary_id() != 0) {
@@ -156,7 +161,7 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
             //自动载入各按键
             ViewHolderForBorrowed borrowed = new ViewHolderForBorrowed(convertView);
             //注册各按键的点击事件
-            OnBorrowedClick(borrowed, groupPosition);
+            myOnClick(RentRoomExpandableListViewListener::onBorrowedClick, borrowed, groupPosition);
         } else {
             //未出租
             convertView = LayoutInflater.from(activity).inflate(R.layout.rent_room_expandable_listview_null_view,
@@ -164,33 +169,24 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
             //自动载入各按键
             ViewHolderForNull aNull = new ViewHolderForNull(convertView);
             //注册各按键的点击事件
-            OnNullClick(aNull, groupPosition);
+            myOnClick(RentRoomExpandableListViewListener::onNullClick, aNull, groupPosition);
         }
         return convertView;
     }
 
-    private void OnNullClick(ViewHolderForNull aNull, int groupPosition) {
-        aNull.Details.setOnClickListener(v->RentRoomExpandableListViewListener.onNullClick(this.activity,room,groupPosition,v));
-        aNull.Continue.setOnClickListener(v->RentRoomExpandableListViewListener.onNullClick(this.activity,room,groupPosition,v));
-        aNull.Leaseback.setOnClickListener(v->RentRoomExpandableListViewListener.onNullClick(this.activity,room,groupPosition,v));
-        aNull.History.setOnClickListener(v->RentRoomExpandableListViewListener.onNullClick(this.activity,room,groupPosition,v));
-        aNull.del.setOnClickListener(v->RentRoomExpandableListViewListener.onNullClick(this.activity,room,groupPosition,v));
-    }
-
-    /**
-     * 注册各按键的点击事件
-     */
-    private void OnBorrowedClick(ViewHolderForBorrowed borrowed, int position) {
-        borrowed.Details.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.Continue.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.Leaseback.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.ChangedRent.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.ChangedDeposit.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.History.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.PayPropertycosts.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.RenewContract.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.ManInfo.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
-        borrowed.DelRoom.setOnClickListener(v -> RentRoomExpandableListViewListener.onBorrowedClick(this.activity, room, position, v));
+    private void myOnClick(myOnClick myOnClick, Object obj, int position) {
+        Field[] fields = obj.getClass().getDeclaredFields();
+        for (final Field field : fields) {
+            field.setAccessible(true);
+            if (field.getType() == TextView.class) {
+                try {
+                    ((TextView) field.get(obj)).setOnClickListener(v ->
+                            myOnClick.onClick(this.activity, room, position, v));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     //指定位置上的子元素是否可选中
@@ -216,16 +212,16 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
 
     //已租出
     class ViewHolderForBorrowed {
-        @BindView(R.id.rent_room_expandable_listview_borrowed_details)           TextView Details;
-        @BindView(R.id.rent_room_expandable_listview_continue_rent)              TextView Continue;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_leaseback)         TextView Leaseback;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_changed_rent)      TextView ChangedRent;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_changed_deposit)   TextView ChangedDeposit;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_history)           TextView History;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_pay_propertycosts) TextView PayPropertycosts;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_renew_contract)    TextView RenewContract;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_man_info)          TextView ManInfo;
-        @BindView(R.id.rent_room_expandable_listview_borrowed_del_room)          TextView DelRoom;
+        @BindView(R.id.details)           TextView Details;
+        @BindView(R.id.continue_rent)     TextView Continue;
+        @BindView(R.id.leaseback)         TextView Leaseback;
+        @BindView(R.id.changed_rent)      TextView ChangedRent;
+        @BindView(R.id.changed_deposit)   TextView ChangedDeposit;
+        @BindView(R.id.history)           TextView History;
+        @BindView(R.id.pay_propertycosts) TextView PayPropertycosts;
+        @BindView(R.id.renew_contract)    TextView RenewContract;
+        @BindView(R.id.man_info)          TextView ManInfo;
+        @BindView(R.id.del_room)          TextView DelRoom;
 
         ViewHolderForBorrowed(View view) {
             ButterKnife.bind(this, view);
@@ -237,8 +233,7 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
         @BindView(R.id.rent_room_expandable_listview_null_rent)      TextView Continue;
         @BindView(R.id.rent_room_expandable_listview_null_leaseback) TextView Leaseback;
         @BindView(R.id.rent_room_expandable_listview_null_history)   TextView History;
-        @BindView(R.id.rent_room_expandable_listview_null_del_room)   TextView del;
-
+        @BindView(R.id.rent_room_expandable_listview_null_del_room)  TextView del;
 
         ViewHolderForNull(View view) {
             ButterKnife.bind(this, view);

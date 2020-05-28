@@ -2,6 +2,7 @@ package my_manage.rent_manage.listener;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.EditText;
 
 import com.orhanobut.dialogplus.DialogPlus;
@@ -25,7 +26,6 @@ public final class PersonListener {
 
     /**
      * 弹出增加租户的窗口，并将结果存入数据库
-     *
      */
     public static void addPerson(Activity activity, IShowList flushList) {
         ViewHolder viewHolder = new ViewHolder(R.layout.add_person_dialog);
@@ -33,11 +33,11 @@ public final class PersonListener {
                 .setOnClickListener((dialog1, v) -> {
                     try {
                         if (v.getId() == R.id.rental_addPerson_ok) {
-                            EditText companyName=viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_companyName);
-                            EditText name  = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_name);
-                            EditText tel   = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_tel);
-                            EditText code  = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_code);
-                            EditText other = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_remark);
+                            EditText companyName = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_companyName);
+                            EditText name        = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_name);
+                            EditText tel         = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_tel);
+                            EditText code        = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_code);
+                            EditText other       = viewHolder.getInflatedView().findViewById(R.id.rental_addPerson_remark);
                             if (StrUtils.isNotBlank(name.getText().toString())) {
                                 PersonDetails personDetails = new PersonDetails(name.getText().toString());
                                 personDetails.setCord(code.getText().toString());
@@ -59,5 +59,18 @@ public final class PersonListener {
                 .setContentHolder(viewHolder)
                 .create();
         dialog.show();
+    }
+
+    /**
+     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+     *
+     * @param tel 电话号码
+     */
+    public static void telCall(Activity activity, String tel) {
+        if (StrUtils.isBlank(tel)) return;
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri    data   = Uri.parse("tel:" + tel);
+        intent.setData(data);
+        activity.startActivity(intent);
     }
 }

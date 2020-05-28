@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import org.apache.poi.ss.usermodel.ShapeTypes;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import my_manage.rent_manage.fragment.NewRoomFragment;
+import my_manage.rent_manage.fragment.RoomDetailsFragment;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.enums.ShowRoomType;
 
@@ -21,10 +19,10 @@ public final class NewRoomPageAdapter extends FragmentStatePagerAdapter {
         super(fm);
         if (type == ShowRoomType.Rent) {
             //出租
-            this.vList.add(new NewRoomFragment(vList.get(0), type));
+            this.vList.add(new RoomDetailsFragment(vList.get(0), type));
         } else {
             for (int i = 0; i < vList.size(); i++) {
-                this.vList.add(new NewRoomFragment(vList.get(i), type));
+                this.vList.add(new RoomDetailsFragment(vList.get(i), type));
             }
         }
     }

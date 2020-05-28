@@ -24,7 +24,7 @@ import my_manage.tool.database.DbHelper;
 import my_manage.rent_manage.fragment.PersonDetailsFramgent;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 
-public class ShowPersonDetailsActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener, IShowList {
+public class ShowPersonDetailsActivity extends AppCompatActivity implements  IShowList {
     @BindView(R.id.tab_title) TabLayout             tabTitle;
     @BindView(R.id.toolbar)   Toolbar               toolbar;
     @BindView(R.id.viewPage)  ViewPager             viewPage;
@@ -88,24 +88,12 @@ public class ShowPersonDetailsActivity extends AppCompatActivity implements TabL
         for (final ShowRoomDetails room : data) {
             tabTitle.addTab(tabTitle.newTab().setText(room.getRoomDetails().getRoomNumber()));
         }
-        tabTitle.setOnTabSelectedListener(this);
+        tabTitle.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPage){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                viewPage.setCurrentItem(tab.getPosition());
+            }
+        });
     }
-
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        viewPage.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
-
-
 }

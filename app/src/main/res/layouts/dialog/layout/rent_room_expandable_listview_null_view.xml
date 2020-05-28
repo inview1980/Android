@@ -10,6 +10,8 @@
     <my_manage.tool.IconView
         android:id="@+id/rent_room_expandable_listview_null_details"
         style="@style/rental_expandable_listview_item"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_9"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
         android:text="&#xe66f;\n查看详情" />
 
     <my_manage.tool.IconView
@@ -31,6 +33,7 @@
     <my_manage.tool.IconView
         android:id="@+id/rent_room_expandable_listview_null_del_room"
         style="@style/rental_expandable_listview_item"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_9"
         android:text="&#xe63d;\n删除房源" />
 </GridLayout>

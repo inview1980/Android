@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="@string/tel"
             android:labelFor="@id/rental_addPerson_tel"
-            android:inputType="number" />
+            android:inputType="phone" />
 
         <TextView
             style="@style/textView_1th"
@@ -62,6 +62,7 @@
 
         <EditText
             android:id="@+id/rental_addPerson_code"
+            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -77,7 +78,7 @@
             android:layout_height="wrap_content"
             android:autofillHints="@string/remark_cn"
             android:labelFor="@id/rental_addPerson_remark"
-            android:inputType="text" />
+            android:inputType="textMultiLine" />
 
         <com.deadline.statebutton.StateButton
             android:id="@+id/rental_addPerson_ok"

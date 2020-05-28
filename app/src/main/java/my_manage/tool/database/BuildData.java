@@ -5,13 +5,17 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import lombok.val;
+import my_manage.password_box.pojo.UserItem;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
+import my_manage.tool.StrUtils;
 
 public final class BuildData {
     private static int CompoundNumber = 10;//小区数量
     private static int ContactsNumber = 50;//租户数量
+    private static int UserItemNumber=30;//密码项数量
 
     public static List<RoomDetails> getRoomDes(int i) {
         Random random = new Random();
@@ -68,6 +72,22 @@ public final class BuildData {
             personDetails.setName("name:" + i);
             personDetails.setCord("4201" + getNumberForString(8) + getNumberForString(6));
             resultLst.add(personDetails);
+        }
+        return resultLst;
+    }
+
+    public static List<UserItem> getUserItem(){
+        UserItem userItem;
+        val resultLst = new ArrayList<UserItem>();
+        for (int i = 0; i < UserItemNumber; i++) {
+            userItem=new UserItem();
+            userItem.setUserName("userName:"+i);
+            userItem.setRemark("remark:"+i);
+            userItem.setSalt(StrUtils.getRandomString(18));
+            userItem.setItemName(StrUtils.getRandomString(4));
+            userItem.setAddress(StrUtils.getRandomString(5));
+            userItem.setPassword(StrUtils.getRandomString(8));
+            resultLst.add(userItem);
         }
         return resultLst;
     }

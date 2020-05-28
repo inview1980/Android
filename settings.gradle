@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':excelUtils'
 rootProject.name='Password saving cabinet'

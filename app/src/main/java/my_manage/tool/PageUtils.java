@@ -2,11 +2,9 @@ package my_manage.tool;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
@@ -23,9 +21,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import my_manage.password_box.page.PasswordManageActivity;
-import my_manage.password_box.page.PasswordManageViewPagerHome;
-
 public final class PageUtils {
     public static String Tag="MyManage";
 
@@ -35,17 +30,6 @@ public final class PageUtils {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 调用密码详情页面
-     * @param activity PasswordManageActivity类
-     */
-    public static void callPasswordManageItemDetails(PasswordManageActivity activity, int item) {
-        Intent intent = new Intent(activity, PasswordManageViewPagerHome.class);
-        Bundle bundle=new Bundle();
-        bundle.putInt("currentItem", item);
-        intent.putExtras(bundle);
-        activity.startActivity(intent);
-    }
 
     /**
      * 输入框失去焦点则关闭
@@ -119,4 +103,5 @@ public final class PageUtils {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 context.getResources().getDisplayMetrics());
     }
+
 }

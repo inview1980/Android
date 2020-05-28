@@ -49,7 +49,7 @@
 
             <EditText
                 android:autofillHints="@string/rental_codeNumber_cn"
-                android:inputType="numberDecimal"
+                android:inputType="phone"
                 android:id="@+id/codeNumber" android:enabled="false"
                 style="@style/editView_middle_right"
                 android:hint="@string/rental_codeNumber_cn" />

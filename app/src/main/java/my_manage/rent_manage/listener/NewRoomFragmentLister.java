@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 import my_manage.password_box.R;
 import my_manage.tool.database.DbBase;
 import my_manage.tool.database.DbHelper;
-import my_manage.rent_manage.fragment.NewRoomFragment;
+import my_manage.rent_manage.fragment.RoomDetailsFragment;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
@@ -24,12 +24,12 @@ import my_manage.tool.PageUtils;
 import my_manage.tool.menuEnum.CastUtils;
 
 public final class NewRoomFragmentLister implements TextWatcher {
-    private NewRoomFragment fragment;
-    private View            view;
+    private RoomDetailsFragment fragment;
+    private View                view;
 
     private boolean isChange = false;
 
-    public NewRoomFragmentLister(NewRoomFragment fragment, View view) {
+    public NewRoomFragmentLister(RoomDetailsFragment fragment, View view) {
         this.fragment = fragment;
         this.view = view;
     }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import my_manage.iface.ColumnName;
 
 /**
  * 住宅小区
@@ -19,42 +20,40 @@ public class RoomDetails {
      */
     @Getter
     @Setter
-    private String communityName;
+    @ColumnName("小区名称")
+    private                   String communityName;
     /**
      * 房间号
      */
     @Setter
     @Getter
     @PrimaryKey(AssignType.BY_MYSELF)
-    private String roomNumber;
-    private int    roomArea;
+    @ColumnName("房间号")
+    private                   String roomNumber;
+    @ColumnName("面积") private int    roomArea;
     /**
      * 电表号
      */
     @Setter
     @Getter
-    private String electricMeter;
-    @Setter@Getter
-    private String waterMeter;
-
-//    /**
-//     * 现任联系人ID
-//     */
-//    @Setter
-//    @Getter
-//    private int manId;
+    @ColumnName("电表号")
+    private                   String electricMeter;
+    @Setter
+    @Getter
+    @ColumnName("水表号")
+    private                   String waterMeter;
 
     /**
      * 物业费单价
      */
+    @ColumnName("物业费单价")
     private int propertyPrice;
-
-
-
+    @ColumnName("是否删除的房源")
     private int isDelete;
 
     @Getter
     @Setter
+    @ColumnName("记录号")
     private int recordId;
 
     public double getPropertyPrice() {

@@ -24,7 +24,7 @@ import my_manage.widght.ParallaxSwipeBackActivity;
 /**
  * 出租
  */
-public final class RoomDetailsByToolbarActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
+public final class RoomDetailsByToolbarActivity extends AppCompatActivity {
     @BindView(R.id.tab_title) TabLayout             tabTitle;
     @BindView(R.id.toolbar)   Toolbar               toolbar;
     @BindView(R.id.viewPage)  ViewPager             viewPage;
@@ -57,7 +57,13 @@ public final class RoomDetailsByToolbarActivity extends AppCompatActivity implem
                 tabTitle.addTab(tabTitle.newTab().setText(room.getRoomDetails().getRoomNumber()));
             }
         }
-        tabTitle.setOnTabSelectedListener(this);
+        tabTitle.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPage){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                viewPage.setCurrentItem(tab.getPosition());
+            }
+        });
     }
 
     private void initPage() {
@@ -71,9 +77,9 @@ public final class RoomDetailsByToolbarActivity extends AppCompatActivity implem
             initTabLayout(type);
         } catch (Exception e) {
         }
+        tabTitle.getTabAt(currentItem).select();
         viewPage.setAdapter(new NewRoomPageAdapter(getSupportFragmentManager(), data, type));
         viewPage.setCurrentItem(currentItem);
-        tabTitle.getTabAt(currentItem).select();
         viewPage.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -82,18 +88,4 @@ public final class RoomDetailsByToolbarActivity extends AppCompatActivity implem
         });
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        viewPage.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
 }
