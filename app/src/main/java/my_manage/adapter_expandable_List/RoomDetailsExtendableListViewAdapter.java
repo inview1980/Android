@@ -1,11 +1,17 @@
 package my_manage.adapter_expandable_List;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
+import android.widget.FrameLayout;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -15,12 +21,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import lombok.val;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.listener.RentRoomExpandableListViewListener;
 import my_manage.rent_manage.listener.RoomListener;
+import my_manage.rent_manage.pojo.show.MenuData;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
+import my_manage.tool.IconView;
+import my_manage.tool.database.DbHelper;
+import my_manage.tool.enums.MenuTypesEnum;
+import my_manage.tool.enums.RentalOnClickEnumHandle;
 
 import static my_manage.rent_manage.listener.RentRoomExpandableListViewListener.*;
 
@@ -142,52 +153,41 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
      */
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        convertView = LayoutInflater.from(activity).inflate(R.layout.rent_room_expandable_listview_borrowed_view,
+                parent, false);
+        GridLayout    mainLayout = convertView.findViewById(R.id.mainLayout);
+        //默认未出租
+        MenuTypesEnum types= MenuTypesEnum.NotRented;
         if (title != null && title.contains("删除")) {
-            //恢复删除的房源
-            convertView = LayoutInflater.from(activity).inflate(R.layout.rental_delroom_item,
-                    parent, false);
-            convertView.findViewById(R.id.recover).setOnClickListener(v ->
-                    RoomListener.recoverDel(this.activity, room.get(groupPosition)));
-            convertView.findViewById(R.id.delete).setOnClickListener(v ->
-                    RoomListener.deleteRoom(this.activity, room.get(groupPosition)));
-
-            return convertView;
-        }
-        if (room.get(groupPosition).getRentalRecord().getPrimary_id() != 0) {
+            //删除的房源
+            types = MenuTypesEnum.DeletedRooms;
+        } else if (room.get(groupPosition).getRentalRecord().getPrimary_id() != 0) {
             //已出租
-            convertView = LayoutInflater.from(activity).inflate(R.layout.rent_room_expandable_listview_borrowed_view,
-                    parent, false);
-
-            //自动载入各按键
-            ViewHolderForBorrowed borrowed = new ViewHolderForBorrowed(convertView);
-            //注册各按键的点击事件
-            myOnClick(RentRoomExpandableListViewListener::onBorrowedClick, borrowed, groupPosition);
-        } else {
-            //未出租
-            convertView = LayoutInflater.from(activity).inflate(R.layout.rent_room_expandable_listview_null_view,
-                    parent, false);
-            //自动载入各按键
-            ViewHolderForNull aNull = new ViewHolderForNull(convertView);
-            //注册各按键的点击事件
-            myOnClick(RentRoomExpandableListViewListener::onNullClick, aNull, groupPosition);
+            types = MenuTypesEnum.IsBorrowed;
         }
+        loadLayout(mainLayout,parent, groupPosition, types);
         return convertView;
     }
 
-    private void myOnClick(myOnClick myOnClick, Object obj, int position) {
-        Field[] fields = obj.getClass().getDeclaredFields();
-        for (final Field field : fields) {
-            field.setAccessible(true);
-            if (field.getType() == TextView.class) {
-                try {
-                    ((TextView) field.get(obj)).setOnClickListener(v ->
-                            myOnClick.onClick(this.activity, room, position, v));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
+    private void loadLayout(GridLayout mainLayout,ViewGroup viewGroup, int position, MenuTypesEnum types) {
+        val lst = DbHelper.getInstance().getMenuTypes(mainLayout.getContext(),types);
+        for (final MenuData item : lst) {
+            View view=LayoutInflater.from(mainLayout.getContext()).inflate(R.layout.line_item_style,viewGroup,false);
+            IconView iconView=view.findViewById(R.id.icon);
+            iconView.setText(Html.fromHtml(item.getIcon(), Html.FROM_HTML_MODE_COMPACT));
+            iconView.setTextColor(Color.parseColor(item.getColor()));
+            ((TextView) view.findViewById(R.id.txt1)).setText(item.getTitle());
+            view.setId(item.getPrimary_id());
+            GridLayout.LayoutParams lp = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f));
+            lp.setMargins(0, mainLayout.getResources().getDimensionPixelSize(R.dimen.rental_main_gridview_margin_9),
+                    0, mainLayout.getResources().getDimensionPixelSize(R.dimen.rental_main_gridview_margin_6));
+            view.setLayoutParams(lp);
+            view.setOnClickListener(view1 -> RentalOnClickEnumHandle.getType(view1.getId()).run(RoomDetailsExtendableListViewAdapter.this.activity,
+                    RoomDetailsExtendableListViewAdapter.this.room, position));
+            mainLayout.addView(view);
         }
     }
+
 
     //指定位置上的子元素是否可选中
     @Override
@@ -206,36 +206,6 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
         @BindView(R.id.rental_house_tableLayoutId)     TableLayout tableLayout;
 
         ViewHolderFor1Floor(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
-
-    //已租出
-    class ViewHolderForBorrowed {
-        @BindView(R.id.details)           TextView Details;
-        @BindView(R.id.continue_rent)     TextView Continue;
-        @BindView(R.id.leaseback)         TextView Leaseback;
-        @BindView(R.id.changed_rent)      TextView ChangedRent;
-        @BindView(R.id.changed_deposit)   TextView ChangedDeposit;
-        @BindView(R.id.history)           TextView History;
-        @BindView(R.id.pay_propertycosts) TextView PayPropertycosts;
-        @BindView(R.id.renew_contract)    TextView RenewContract;
-        @BindView(R.id.man_info)          TextView ManInfo;
-        @BindView(R.id.del_room)          TextView DelRoom;
-
-        ViewHolderForBorrowed(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
-
-    class ViewHolderForNull {
-        @BindView(R.id.rent_room_expandable_listview_null_details)   TextView Details;
-        @BindView(R.id.rent_room_expandable_listview_null_rent)      TextView Continue;
-        @BindView(R.id.rent_room_expandable_listview_null_leaseback) TextView Leaseback;
-        @BindView(R.id.rent_room_expandable_listview_null_history)   TextView History;
-        @BindView(R.id.rent_room_expandable_listview_null_del_room)  TextView del;
-
-        ViewHolderForNull(View view) {
             ButterKnife.bind(this, view);
         }
     }

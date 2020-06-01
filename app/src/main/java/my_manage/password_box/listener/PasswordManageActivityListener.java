@@ -15,6 +15,7 @@ import my_manage.password_box.R;
 import my_manage.password_box.page.PasswordManageActivity;
 import my_manage.password_box.page.PasswordManageViewPagerHome;
 import my_manage.password_box.pojo.UserItem;
+import my_manage.rent_manage.listener.RentalMainActivityListener;
 import my_manage.tool.ExcelUtils;
 import my_manage.tool.PageUtils;
 import my_manage.tool.database.DbHelper;
@@ -74,13 +75,16 @@ public class PasswordManageActivityListener {
                 //调用更改密码窗口
                 activity.startActivity(new Intent(activity, my_manage.password_box.page.dialog.changePasswordDialog.class));
                 break;
-            case R.id.rebuildingDB:
+            case R.id.resetPassword:
                 //重建资料和密码成功
                 PasswordManageActivityListener.resetDatabaseAndPassword(activity);
                 break;
             case R.id.saveDB:
                 //输出到xls文件
                 ExcelUtils.getInstance().saveDB(activity);
+                break;
+            case R.id.rebuildingDB:
+                new RentalMainActivityListener().rebuildingDB(activity);
                 break;
         }
     }

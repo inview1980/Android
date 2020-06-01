@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import my_manage.tool.database.DbHelper;
 @SuppressLint("Registered")
 public final class Login_Activity extends AppCompatActivity implements IShowList {
     private static final String DEFAULT_KEY_NAME = "default_key";
+private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,17 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
         setContentView(R.layout.login_activity);
 
         setTitle("登录");
+        editText= findViewById(R.id.dialog_loginPwd);
+        editText.setOnKeyListener((view, i, keyEvent) -> {
+            if (i == KeyEvent.KEYCODE_ENTER) {
+                // 监听到回车键，会执行2次该方法。按下与松开
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                    //按下事件
+                    okBtn_onClick(null);
+                }
+            }
+            return false;
+        });
 //        onAuthenticated();
         //指纹识别
         if (isNotLoginFirst() && supportFingerprint()) {
@@ -132,7 +145,6 @@ public final class Login_Activity extends AppCompatActivity implements IShowList
     }
 
     public void okBtn_onClick(View view) {
-        EditText editText = findViewById(R.id.dialog_loginPwd);
         if (!DbHelper.getInstance().loadIn(this, editText.getText().toString())) {
             Toast.makeText(this, "密码不正确", Toast.LENGTH_SHORT).show();
 //            finish();//密码不正确，退出

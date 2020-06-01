@@ -1,9 +1,13 @@
 package my_manage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         //初始化数据库
         dbInit();
 
+        ((TextView) findViewById(R.id.version)).setText("版本号:" +getVersionName(this));
+
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra("path", DBFilePath);
         startService(intent);
@@ -32,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showLog(String s) {
-        Log.i(PageUtils.Tag,s);
+        Log.i(PageUtils.Tag, s);
     }
 
 
@@ -54,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
     private void dbInit() {
         //初始化数据库
         DBFilePath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath() + "/" + getString(R.string.rentalFileName);
-        DbHelper.getInstance().dbInit(this,DBFilePath);
+        DbHelper.getInstance().dbInit(this, DBFilePath);
+    }
+
+    public  String getVersionName(Context context) {
+        PackageManager manager = context.getPackageManager();
+        String         name    = null;
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            name = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) { e.printStackTrace(); }
+        return name;
     }
 }

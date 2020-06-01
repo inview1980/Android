@@ -53,7 +53,7 @@ public final class DbBase {
 //数据库名，可设置存储路径。默认在内部存储位置databases文件夹下
         config.dbName = DB_NAME;
         config.debugged = false; //是否打Log
-        config.dbVersion = 1; // database Version
+        config.dbVersion = 2; // database Version
         config.onUpdateListener = null; //升级
         return config;
     }

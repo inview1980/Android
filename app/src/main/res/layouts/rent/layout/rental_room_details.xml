@@ -337,7 +337,7 @@
 
                 <TextView
                     style="@style/textView_1th"
-                    android:text="@string/desposit" />
+                    android:text="@string/deposit" />
 
                 <EditText
                     android:id="@+id/rental_editRoom_deposit"
@@ -345,7 +345,7 @@
                     android:layout_span="3"
                     android:enabled="false"
                     android:labelFor="@id/rental_editRoom_deposit"
-                    android:autofillHints="@string/desposit"
+                    android:autofillHints="@string/deposit"
                     android:inputType="numberDecimal" />
             </TableRow>
 

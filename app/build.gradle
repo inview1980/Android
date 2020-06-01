@@ -7,8 +7,8 @@ android {
         applicationId "my_manage.password_box"
         minSdkVersion 28
         targetSdkVersion 29
-        versionCode 6
-        versionName '1.0.5'
+        versionCode 7
+        versionName '1.0.6'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //添加如下配置 开启annotation processor
@@ -19,12 +19,18 @@ android {
         }
     }
 
+//用Gradle生成必须
+    lintOptions {
+        abortOnError false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
@@ -48,6 +54,15 @@ android {
         }
     }
 
+//    更改生成的文件的名称
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == 'release') {
+            variant.outputs.all {
+                def apkName = "我的管理${defaultConfig.versionName}"
+                outputFileName = apkName + ".apk"
+            }
+        }
+    }
 }
 
 dependencies {

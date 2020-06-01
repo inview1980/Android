@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.rent_manage.RentalMainActivity;
 import my_manage.tool.ExcelUtils;
@@ -30,12 +31,12 @@ public class RentalMainActivityListener {
     /**
      * 删除并重建数据库
      */
-    public void rebuildingDB(RentalMainActivity rentalMainActivity) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(rentalMainActivity);
+    public <T extends Activity & IShowList> void rebuildingDB(T activity) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         dialog.setMessage("删除并重建数据库吗？")
                 .setPositiveButton(R.string.ok_cn, (dialogInterface, i) -> {
-                    DbHelper.getInstance().rebuilding(rentalMainActivity.getApplicationContext());
-                    rentalMainActivity.showList();
+                    DbHelper.getInstance().rebuilding(activity.getApplicationContext());
+                    activity.showList();
                 })
                 .show();
     }

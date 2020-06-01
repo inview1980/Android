@@ -1,6 +1,5 @@
 package my_manage.password_box.page;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,12 +25,12 @@ import butterknife.OnItemClick;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.password_box.listener.PasswordManageActivityListener;
-import my_manage.password_box.pojo.PasswordType;
 import my_manage.password_box.pojo.UserItem;
+import my_manage.rent_manage.pojo.show.MenuData;
 import my_manage.tool.MenuUtils;
 import my_manage.tool.PageUtils;
-import my_manage.tool.database.DbBase;
 import my_manage.tool.database.DbHelper;
+import my_manage.tool.enums.MenuTypesEnum;
 import my_manage.widght.ParallaxSwipeBackActivity;
 
 
@@ -54,7 +53,8 @@ public final class PasswordManageActivity extends ParallaxSwipeBackActivity impl
         ButterKnife.bind(this);
 
         passwordTypeId = getIntent().getIntExtra("PasswordTypeId", 0);
-        String title = DbBase.getInfoById(passwordTypeId, PasswordType.class).getName();
+        String title =DbHelper.getInstance().getMenuTypes(this, MenuTypesEnum.PasswordType)
+                .stream().filter(item->item.getPrimary_id()==passwordTypeId).findFirst().orElse(new MenuData()).getTitle();
 
         //初始化Toolbar控件
         toolbar.setTitle(title);

@@ -11,7 +11,7 @@
         android:orderInCategory="2"
         android:title="@string/change_password_cn" />
     <item
-        android:id="@+id/rebuildingDB"
+        android:id="@+id/resetPassword"
         android:icon="@drawable/ic_file_download_black_24dp"
         android:orderInCategory="3"
         android:title="@string/restore_password_cn" />
@@ -20,4 +20,9 @@
         android:icon="@drawable/ic_file_upload_black_24dp"
         android:orderInCategory="5"
         android:title="@string/out2xlsx" />
+    <item
+        android:id="@id/rebuildingDB"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:orderInCategory="5"
+        android:title="@string/rebuildingDB" />
 </menu>

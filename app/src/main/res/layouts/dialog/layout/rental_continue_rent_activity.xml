@@ -109,7 +109,7 @@
 
             <TextView
                 style="@style/textView_1th"
-                android:text="@string/desposit" />
+                android:text="@string/deposit" />
 
             <TextView android:enabled="false"
                 android:id="@+id/deposit"

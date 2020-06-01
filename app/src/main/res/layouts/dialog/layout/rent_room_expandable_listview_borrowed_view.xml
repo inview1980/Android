@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
@@ -8,68 +9,107 @@
     android:gravity="start"
     android:layoutDirection="ltr">
 
-    <my_manage.tool.IconView
-        android:id="@+id/details"
-        style="@style/rental_expandable_listview_item"
-        android:layout_marginTop="@dimen/rental_main_gridview_margin_9"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
-        android:textColor="@color/blue"
-        android:text="&#xe66f;\n查看详情" />
+<!--        <LinearLayout-->
+<!--            android:id="@+id/details"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="@dimen/rental_main_gridview_margin_9"-->
+<!--            android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_columnWeight="1"-->
+<!--            android:orientation="vertical">-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/continue_rent" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:text="&#xe666;\n续租" />
+<!--            <my_manage.tool.IconView-->
+<!--                style="@style/iconFont_middle"-->
+<!--                android:text="&#xe66f;"-->
+<!--                android:textColor="@color/blue" />-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/leaseback" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:text="&#xe61b;\n退租" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="查看详情" />-->
+<!--        </LinearLayout>-->
+<!--    <LinearLayout-->
+<!--            android:id="@+id/details2"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="@dimen/rental_main_gridview_margin_9"-->
+<!--            android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"-->
+<!--            android:gravity="center" android:layout_columnWeight="1"-->
+<!--            android:orientation="vertical">-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/changed_rent" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:text="&#xe676;\n调整租金" />
+<!--            <my_manage.tool.IconView-->
+<!--                style="@style/iconFont_middle"-->
+<!--                android:text="&#xe66f;"-->
+<!--                android:textColor="@color/blue" />-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/changed_deposit" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
-        android:text="&#xe667;\n调整押金" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="查看详情" />-->
+<!--        </LinearLayout>-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/history" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
-        android:text="&#xe650;\n查看出租记录" />
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/continue_rent"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:text="&#xe666;\n续租"-->
+    <!--        android:textColor="@color/blue" />-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/pay_propertycosts" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:layout_columnWeight="@integer/rental_room_details_1width"
-        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
-        android:text="&#xe60e;\n支付物业费" />
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/leaseback"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:text="&#xe61b;\n退租"-->
+    <!--        android:textColor="@color/blue" />-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/renew_contract" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
-        android:text="&#xe616;\n续签合同" />
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/changed_rent"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:text="&#xe676;\n调整租金"-->
+    <!--        android:textColor="@color/blue" />-->
 
-    <my_manage.tool.IconView android:textColor="@color/blue"
-        android:id="@+id/man_info"
-        style="@style/rental_expandable_listview_item"
-        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_9"
-        android:text="&#xe611;\n租户资料" />
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/changed_deposit"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:text="&#xe667;\n调整押金"-->
+    <!--        android:textColor="@color/blue" />-->
 
-    <my_manage.tool.IconView
-        android:id="@+id/del_room" android:textColor="@color/blue"
-        style="@style/rental_expandable_listview_item"
-        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
-        android:text="&#xe63d;\n删除房源" />
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/history"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:text="&#xe650;\n查看出租记录"-->
+    <!--        android:textColor="@color/blue" />-->
+
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/pay_propertycosts"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:layout_columnWeight="@integer/rental_room_details_1width"-->
+    <!--        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:text="&#xe60e;\n支付物业费"-->
+    <!--        android:textColor="@color/blue" />-->
+
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/renew_contract"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:text="&#xe616;\n续签合同"-->
+    <!--        android:textColor="@color/blue" />-->
+
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/man_info"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:layout_marginBottom="@dimen/rental_main_gridview_margin_9"-->
+    <!--        android:text="&#xe611;\n租户资料"-->
+    <!--        android:textColor="@color/blue" />-->
+
+    <!--    <my_manage.tool.IconView-->
+    <!--        android:id="@+id/del_room"-->
+    <!--        style="@style/rental_expandable_listview_item"-->
+    <!--        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"-->
+    <!--        android:text="&#xe63d;\n删除房源"-->
+    <!--        android:textColor="@color/blue" />-->
 </GridLayout>

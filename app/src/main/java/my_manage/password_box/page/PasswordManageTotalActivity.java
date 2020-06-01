@@ -1,14 +1,12 @@
 package my_manage.password_box.page;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,22 +18,20 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemClick;
 import lombok.val;
 import my_manage.iface.IShowList;
 import my_manage.password_box.R;
 import my_manage.password_box.listener.PasswordManageActivityListener;
-import my_manage.password_box.pojo.PasswordType;
-import my_manage.tool.ExcelUtils;
+import my_manage.rent_manage.pojo.show.MenuData;
 import my_manage.tool.MenuUtils;
-import my_manage.tool.database.DbBase;
 import my_manage.tool.database.DbHelper;
+import my_manage.tool.enums.MenuTypesEnum;
 import my_manage.widght.ParallaxSwipeBackActivity;
 
 public final class PasswordManageTotalActivity extends ParallaxSwipeBackActivity implements IShowList {
-    @BindView(R.id.toolbar) Toolbar            toolbar;
-    @BindView(R.id.content) RecyclerView       content;
-    private                 List<PasswordType> passwordTypeList;
+    @BindView(R.id.toolbar) Toolbar        toolbar;
+    @BindView(R.id.content) RecyclerView   content;
+    private                 List<MenuData> passwordTypeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,21 +74,22 @@ public final class PasswordManageTotalActivity extends ParallaxSwipeBackActivity
 
     @Override
     public void showList() {
-        passwordTypeList = DbHelper.getInstance().getPasswordTypes();
-        val adapter = new CommonRecyclerAdapter<PasswordType>(this, R.layout.password_manage_totle_item, passwordTypeList) {
+        passwordTypeList = DbHelper.getInstance().getMenuTypes(getBaseContext(),MenuTypesEnum.PasswordType);
+        val adapter = new CommonRecyclerAdapter<MenuData>(this, R.layout.password_manage_totle_item, passwordTypeList) {
             @Override
-            public void onUpdate(BaseAdapterHelper helper, PasswordType item, int position) {
-                helper.setText(R.id.icon, Html.fromHtml(item.getUrl(), Html.FROM_HTML_MODE_COMPACT))
-                        .setText(R.id.name, item.getName())
-                        .setText(R.id.count, "(" + DbHelper.getInstance().getPasswordTypeCount(item.getId()) + ")");
+            public void onUpdate(BaseAdapterHelper helper, MenuData item, int position) {
+                helper.setText(R.id.icon, Html.fromHtml(item.getIcon(), Html.FROM_HTML_MODE_COMPACT))
+                        .setTextColor(R.id.icon, Color.parseColor(item.getColor()))
+                        .setText(R.id.name, item.getTitle())
+                        .setText(R.id.count, "(" + DbHelper.getInstance().getPasswordTypeCount(item.getPrimary_id()) + ")");
             }
         };
         adapter.setOnItemClickListener((viewHolder, view, i) -> {
-            int size = DbHelper.getInstance().getPasswordTypeCount(passwordTypeList.get(i).getId());
+            int size = DbHelper.getInstance().getPasswordTypeCount(passwordTypeList.get(i).getPrimary_id());
             if (size == 0) return;
 
             Intent intent = new Intent(PasswordManageTotalActivity.this, PasswordManageActivity.class);
-            intent.putExtra("PasswordTypeId", passwordTypeList.get(i).getId());
+            intent.putExtra("PasswordTypeId", passwordTypeList.get(i).getPrimary_id());
             startActivity(intent);
         });
         content.setAdapter(adapter);

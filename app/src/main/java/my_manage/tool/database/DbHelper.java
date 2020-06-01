@@ -4,53 +4,29 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.litesuits.orm.db.assit.Encrypt;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
 import lombok.Cleanup;
-import lombok.Data;
 import lombok.val;
-import my_manage.iface.ColumnName;
 import my_manage.password_box.R;
-import my_manage.password_box.pojo.PasswordType;
 import my_manage.password_box.pojo.UserItem;
 import my_manage.password_box.secret.SecretUtil;
 import my_manage.rent_manage.pojo.PersonDetails;
 import my_manage.rent_manage.pojo.RentalRecord;
 import my_manage.rent_manage.pojo.RoomDetails;
 import my_manage.rent_manage.pojo.show.ExcelData;
+import my_manage.rent_manage.pojo.show.MenuData;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.ExcelUtils;
 import my_manage.tool.StrUtils;
+import my_manage.tool.enums.MenuTypesEnum;
 
 public final class DbHelper {
     private static DbHelper dbHelper;
@@ -418,11 +394,6 @@ public final class DbHelper {
                 itemList.remove(0);
             itemList = decryptItems(itemList);
         }
-//        if (itemList == null || itemList.size() == 0) {
-//            //数据库无数据时
-//            addDefaultItem(context);
-//            return new ArrayList<>();
-//        }
         return itemList;
     }
 
@@ -440,12 +411,28 @@ public final class DbHelper {
         return resetPassword(context, old, newStr);
     }
 
-    public List<PasswordType> getPasswordTypes() {
-        return DbBase.getQueryAll(PasswordType.class);
+    public List<MenuData> getMenuTypes(Context context,MenuTypesEnum typesEnum) {
+        String[] arrays=context.getResources().getStringArray(R.array.menuTypes);
+        val resultLst = new ArrayList<MenuData>();
+        for (final String item : arrays) {
+            String[] tmp=item.split("-");
+            int type=Integer.parseInt(tmp[4]);
+            if(type==typesEnum.getId()) {
+                int      i  = 0;
+                MenuData md = new MenuData();
+                md.setPrimary_id(Integer.parseInt(tmp[i++]));
+                md.setIcon(tmp[i++]);
+                md.setTitle(tmp[i++]);
+                md.setColor(tmp[i]);
+                md.setType(type);
+                resultLst.add(md);
+            }
+        }
+        return resultLst;
     }
 
-    public PasswordType getPasswordTypeByID(int typeNameId) {
-        return DbBase.getInfoById(typeNameId, PasswordType.class);
+    public MenuData getPasswordTypeByID(int typeNameId) {
+        return DbBase.getInfoById(typeNameId, MenuData.class);
     }
 
     public int getPasswordTypeCount(int id) {

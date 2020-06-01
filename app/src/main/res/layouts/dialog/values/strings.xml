@@ -41,7 +41,7 @@
     <string name="roomRentalDetails">房租信息</string>
     <string name="payTotalMoney">缴费总金额</string>
     <string name="payDate">交费时间</string>
-    <string name="desposit">押金</string>
+    <string name="deposit">押金</string>
     <string name="contract">合同</string>
     <string name="continueMonth">时长（月）</string>
     <string name="lastStartDate">上次开始日期</string>

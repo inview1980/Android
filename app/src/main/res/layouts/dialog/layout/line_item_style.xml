@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/line_item_style"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="@dimen/rental_main_gridview_margin_9"
+    android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+    android:gravity="center"
+    android:layout_columnWeight="1"
+    android:orientation="vertical">
+
+    <my_manage.tool.IconView android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/icon_fontsize"
+        android:text="&#xe66f;"
+        android:textColor="@color/blue" />
+
+    <TextView android:id="@+id/txt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看详情" />
+</LinearLayout>

@@ -43,8 +43,8 @@ public final class PersonExtendableListViewAdapterListener {
      * 弹出租户具体内容的窗口
      */
     public static <T extends Activity & IShowList> void showPersonDetails(T activity, int manId) {
-        Intent                intent  = new Intent(activity, ShowPersonDetailsActivity.class);
-        intent.putExtra("manId",manId);
+        Intent intent = new Intent(activity, ShowPersonDetailsActivity.class);
+        intent.putExtra("manId", manId);
         activity.startActivity(intent);
     }
 }

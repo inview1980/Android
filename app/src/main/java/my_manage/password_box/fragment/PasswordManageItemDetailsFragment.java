@@ -1,6 +1,5 @@
 package my_manage.password_box.fragment;
 
-import android.icu.text.CaseMap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,25 +27,26 @@ import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import lombok.NoArgsConstructor;
 import my_manage.password_box.R;
-import my_manage.password_box.pojo.PasswordType;
 import my_manage.password_box.pojo.UserItem;
+import my_manage.rent_manage.pojo.show.MenuData;
 import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
 import my_manage.tool.database.DbHelper;
+import my_manage.tool.enums.MenuTypesEnum;
 
 @NoArgsConstructor
 public final class PasswordManageItemDetailsFragment extends Fragment implements View.OnClickListener {
-    @BindView(R.id.pwd_ItemDetailsId)      EditText           itemEdit;
-    @BindView(R.id.pwd_AddressDetailsId)   EditText           addressEdit;
-    @BindView(R.id.pwd_UserNameDetailsId)  EditText           userNameEdit;
-    @BindView(R.id.pwd_PasswordDetailsId)  EditText           passwordEdit;
-    @BindView(R.id.pwd_RemarkDetailsId)    EditText           remarkEdit;
-    @BindView(R.id.pwd_ManageDet_Ok_BtnId) Button             okBtn;
-    @BindView(R.id.types)                  Spinner            types;
-    private                                UserItem           userItem;
-    private                                Unbinder           bind;
-    private                                boolean            isInited = false;
-    private                                List<PasswordType> passwordTypeList;
+    @BindView(R.id.pwd_ItemDetailsId)      EditText       itemEdit;
+    @BindView(R.id.pwd_AddressDetailsId)   EditText       addressEdit;
+    @BindView(R.id.pwd_UserNameDetailsId)  EditText       userNameEdit;
+    @BindView(R.id.pwd_PasswordDetailsId)  EditText       passwordEdit;
+    @BindView(R.id.pwd_RemarkDetailsId)    EditText       remarkEdit;
+    @BindView(R.id.pwd_ManageDet_Ok_BtnId) Button         okBtn;
+    @BindView(R.id.types)                  Spinner        types;
+    private                                UserItem       userItem;
+    private                                Unbinder       bind;
+    private                                boolean        isInited = false;
+    private                                List<MenuData> passwordTypeList;
 
     public PasswordManageItemDetailsFragment(UserItem userItem,String title) {
         Bundle bundle = new Bundle();
@@ -63,11 +63,11 @@ public final class PasswordManageItemDetailsFragment extends Fragment implements
         View v = inflater.inflate(R.layout.password_manage_item_details, container, false);
         bind = ButterKnife.bind(this, v);
         //初始化类型列表
-        passwordTypeList = DbHelper.getInstance().getPasswordTypes();
-        types.setAdapter(new CommonAdapter<PasswordType>(getActivity(), android.R.layout.simple_list_item_1, passwordTypeList) {
+        passwordTypeList = DbHelper.getInstance().getMenuTypes(getContext(),MenuTypesEnum.PasswordType);
+        types.setAdapter(new CommonAdapter<MenuData>(getActivity(), android.R.layout.simple_list_item_1, passwordTypeList) {
             @Override
-            public void onUpdate(BaseAdapterHelper helper, PasswordType item, int position) {
-                helper.setText(android.R.id.text1, item.getName());
+            public void onUpdate(BaseAdapterHelper helper, MenuData item, int position) {
+                helper.setText(android.R.id.text1, item.getTitle());
             }
         });
 
@@ -101,11 +101,11 @@ public final class PasswordManageItemDetailsFragment extends Fragment implements
             String title=getArguments().getString("title");
             if (userItem == null) {
                 userItem = new UserItem();
-                int i=passwordTypeList.stream().map(PasswordType::getName).collect(Collectors.toList()).indexOf(title);
+                int i=passwordTypeList.stream().map(MenuData::getTitle).collect(Collectors.toList()).indexOf(title);
                 types.setSelection(i);
             } else {
                 for (int i = 0; i < passwordTypeList.size(); i++) {
-                    if(passwordTypeList.get(i).getId()==userItem.getTypeNameId()){
+                    if(passwordTypeList.get(i).getPrimary_id()==userItem.getTypeNameId()){
                         types.setSelection(i);
                         break;
                     }
@@ -130,7 +130,7 @@ public final class PasswordManageItemDetailsFragment extends Fragment implements
         userItem.setPassword(passwordEdit.getText().toString());
         userItem.setRemark(remarkEdit.getText().toString());
         userItem.setSalt(StrUtils.getRandomString(getResources().getInteger(R.integer.defaultSaltLength)));
-        userItem.setTypeNameId(passwordTypeList.get(types.getSelectedItemPosition()).getId());
+        userItem.setTypeNameId(passwordTypeList.get(types.getSelectedItemPosition()).getPrimary_id());
         if (DbHelper.getInstance().saveUserItem(userItem)) {
             PageUtils.showMessage(getContext(), "修改成功！");
         }
