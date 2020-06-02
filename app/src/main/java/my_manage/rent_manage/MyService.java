@@ -44,7 +44,7 @@ public class MyService extends IntentService {
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         // 间隔时间的毫秒数
         final int anHour =this.getResources().getInteger(R.integer.Message_Interval_byHour)  * 60 * 60 *1000;//
-        Log.i(PageUtils.Tag, "毫秒数：" + anHour);
+        PageUtils.Log("毫秒数：" + anHour);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + anHour, pi);
     }
 

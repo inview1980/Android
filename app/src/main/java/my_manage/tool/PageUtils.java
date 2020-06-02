@@ -2,6 +2,7 @@ package my_manage.tool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -22,11 +23,26 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public final class PageUtils {
-    public static String Tag="MyManage";
+    public static  String  Tag         = "MyManage";
+    private static boolean isDebug     = false;
 
+    public static void Log( String msg) {
+        if (isDebug)
+            Log.i(Tag, msg);
+    }
 
-    public static void showMessage(Context context,  String msg) {
-        Log.i( Tag,msg);
+    //判断当前应用是否是debug状态
+    public static void isApkInDebug(Context context) {
+        try {
+            ApplicationInfo info = context.getApplicationInfo();
+            isDebug= (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (Exception e) {
+            isDebug= false;
+        }
+    }
+
+    public static void showMessage(Context context, String msg) {
+        Log.i(Tag, msg);
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -34,10 +50,10 @@ public final class PageUtils {
     /**
      * 输入框失去焦点则关闭
      */
-    public static void closeInput(Activity activity,boolean b){
+    public static void closeInput(Activity activity, boolean b) {
         if (!b) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm!=null)//软键盘如果打开就关闭
+            if (imm != null)//软键盘如果打开就关闭
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
@@ -68,7 +84,7 @@ public final class PageUtils {
     /**
      * 通过反射，将本类中控制所有的EditText、CheckBox、TextView、Spinner控件的setEnable方法
      */
-    public static void setEnable(Object obj,boolean b) {
+    public static void setEnable(Object obj, boolean b) {
         try {
             Field[]  fields = obj.getClass().getDeclaredFields();
             Class<?> clazz  = Class.forName("android.view.View");
@@ -86,11 +102,11 @@ public final class PageUtils {
     }
 
 
-    public static void getSwipeMenuItem(Context context,SwipeMenu menu, String title, int color, int iconId) {
+    public static void getSwipeMenuItem(Context context, SwipeMenu menu, String title, int color, int iconId) {
         // create  item
         SwipeMenuItem item = new SwipeMenuItem(context);
         item.setBackground(new ColorDrawable(color));
-        item.setWidth(dp2px(context,70));
+        item.setWidth(dp2px(context, 70));
         item.setTitle(title);
         item.setTitleSize(18);
         item.setTitleColor(Color.WHITE);
@@ -99,7 +115,8 @@ public final class PageUtils {
         // add to menu
         menu.addMenuItem(item);
     }
-    private static int dp2px(Context context,int dp) {
+
+    private static int dp2px(Context context, int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 context.getResources().getDisplayMetrics());
     }

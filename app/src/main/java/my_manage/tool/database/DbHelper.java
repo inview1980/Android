@@ -5,6 +5,9 @@ import android.content.res.Resources;
 
 import com.alibaba.fastjson.JSON;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -25,6 +28,7 @@ import my_manage.rent_manage.pojo.show.ExcelData;
 import my_manage.rent_manage.pojo.show.MenuData;
 import my_manage.rent_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.ExcelUtils;
+import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
 import my_manage.tool.enums.MenuTypesEnum;
 
@@ -217,7 +221,10 @@ public final class DbHelper {
             roomDet = new ShowRoomDetails(DbBase.getInfoById(record.getRoomNumber(), RoomDetails.class));
             roomDet.setRentalRecord(record);
             roomDet.setPersonDetails(person);
-            result.add(roomDet);
+            //去除重复的房号
+            val rooms = result.stream().map(rr -> rr.getRoomDetails().getRoomNumber()).collect(Collectors.toList());
+            if (!rooms.contains(roomDet.getRoomDetails().getRoomNumber()))
+                result.add(roomDet);
         }
         return result;
     }
@@ -238,42 +245,63 @@ public final class DbHelper {
     /**
      * 删除并重建数据库
      */
-    public void rebuilding(Context context) {
-        String path = DbBase.DB_NAME;
+    public void rebuilding() {
+//        String path = DbBase.DB_NAME;
         //删除数据库文件
         DbBase.getLiteOrm().deleteDatabase();
         DbBase.getLiteOrm().openOrCreateDatabase();
 
-        //重新初始化数据库
-        dbInit(context, path);
+        //载入默认数据填充数据库
+//        dbInit(context, path);
     }
 
     /**
-     * 初始化数据库，如数据库无数据，读取xlsx文件并填入数据
+     * 读取指定文件并填充入数据库
      */
-    public void dbInit(Context context, String DBFilePath) {
-        //初始化数据库
-        DbBase.createCascadeDB(context, DBFilePath);
+    public void loadFile2DB( String filename) {
+        if(StrUtils.isBlank(filename))return;
 
-        List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsToList();
-        if (rd != null && rd.size() != 0) return;
-        //当数据库空时，填充数据库内容
+        try{
+            @Cleanup InputStream is= new FileInputStream(filename);
+            read2DB(is);
+        } catch (IllegalAccessException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 重建数据库，读取xlsx文件并填入数据
+     */
+    public void loadDefault2DB(Context context) {
         try {
             @Cleanup InputStream is = context.getResources().openRawResource(R.raw.db);
-            ExcelData            ed = ExcelUtils.getInstance().readExcel(is);
-            is.close();
-            //将读取xls文件的内容写入数据库中
-            Field[] fields = ExcelData.class.getDeclaredFields();
-            for (final Field field : fields) {
-                field.setAccessible(true);
-                if (field.getType() != List.class) continue;
-                List obj = (List) field.get(ed);
-                if (obj != null) {
-                    DbBase.insertAll(obj);
-                }
-            }
+            read2DB(is);
+            PageUtils.Log("读取默认数据并写入数据库");
         } catch (Resources.NotFoundException | IOException | IllegalAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void read2DB(InputStream is) throws IOException, IllegalAccessException {
+
+        ExcelData ed = ExcelUtils.getInstance().readExcel(is);
+        is.close();
+        //读取文件，如果读取的内容为空则退出
+        if(ed!=null&&ed.getRoomDetailsList().size()>0 &&ed.getRentalRecordList().size()>0){
+            //重建数据库
+            rebuilding();
+        }else {
+            return;
+        }
+        //将读取xls文件的内容写入数据库中
+        Field[] fields = ExcelData.class.getDeclaredFields();
+        for (final Field field : fields) {
+            field.setAccessible(true);
+            if (field.getType() != List.class) continue;
+            List obj = (List) field.get(ed);
+            if (obj != null) {
+                DbBase.insertAll(obj);
+            }
         }
     }
 
@@ -411,13 +439,13 @@ public final class DbHelper {
         return resetPassword(context, old, newStr);
     }
 
-    public List<MenuData> getMenuTypes(Context context,MenuTypesEnum typesEnum) {
-        String[] arrays=context.getResources().getStringArray(R.array.menuTypes);
-        val resultLst = new ArrayList<MenuData>();
+    public List<MenuData> getMenuTypes(Context context, MenuTypesEnum typesEnum) {
+        String[] arrays    = context.getResources().getStringArray(R.array.menuTypes);
+        val      resultLst = new ArrayList<MenuData>();
         for (final String item : arrays) {
-            String[] tmp=item.split("-");
-            int type=Integer.parseInt(tmp[4]);
-            if(type==typesEnum.getId()) {
+            String[] tmp  = item.split("-");
+            int      type = Integer.parseInt(tmp[4]);
+            if (type == typesEnum.getId()) {
                 int      i  = 0;
                 MenuData md = new MenuData();
                 md.setPrimary_id(Integer.parseInt(tmp[i++]));
@@ -441,8 +469,8 @@ public final class DbHelper {
     }
 
     public boolean deleteRoom(ShowRoomDetails showRoomDetails) {
-        if(showRoomDetails!=null && showRoomDetails.getRoomDetails()!=null && showRoomDetails.getRoomDetails().getRoomNumber()!=null){
-           return DbBase.deleteWhere(RoomDetails.class,"roomNumber",new String[]{showRoomDetails.getRoomDetails().getRoomNumber()})>0;
+        if (showRoomDetails != null && showRoomDetails.getRoomDetails() != null && showRoomDetails.getRoomDetails().getRoomNumber() != null) {
+            return DbBase.deleteWhere(RoomDetails.class, "roomNumber", new String[]{showRoomDetails.getRoomDetails().getRoomNumber()}) > 0;
         }
         return false;
     }

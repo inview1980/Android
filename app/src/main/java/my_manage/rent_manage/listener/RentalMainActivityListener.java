@@ -35,7 +35,7 @@ public class RentalMainActivityListener {
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
         dialog.setMessage("删除并重建数据库吗？")
                 .setPositiveButton(R.string.ok_cn, (dialogInterface, i) -> {
-                    DbHelper.getInstance().rebuilding(activity.getApplicationContext());
+                    DbHelper.getInstance().rebuilding();
                     activity.showList();
                 })
                 .show();

@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import my_manage.adapter_page.PwdPageAdapter;
 import my_manage.password_box.R;
 import my_manage.password_box.pojo.UserItem;
+import my_manage.tool.PageUtils;
 import my_manage.tool.database.DbHelper;
 
 
@@ -45,7 +46,7 @@ public final class PasswordManageViewPagerHome extends AppCompatActivity  {
         int    currentItem = bundle.getInt("currentItem", 0);
         passwordTypeId=bundle.getInt("PasswordTypeId",0);
         String title=bundle.getString("title");
-        Log.i(this.getLocalClassName(), "currentItem:" + currentItem);
+        PageUtils.Log("currentItem:" + currentItem);
         if (-1 == currentItem) {
             //==-1时，为新增
             viewPage.setAdapter(new PwdPageAdapter(getSupportFragmentManager(), null,title));

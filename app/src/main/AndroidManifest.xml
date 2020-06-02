@@ -37,7 +37,7 @@
         <receiver
             android:name="my_manage.receiver.AlarmReceiver"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <service
             android:name="my_manage.rent_manage.MyService"
@@ -65,7 +65,7 @@
         <activity android:name="my_manage.rent_manage.page.RentalForHouseActivity" />
         <activity android:name="my_manage.rent_manage.page.RoomHistoryActivity" />
         <activity android:name="my_manage.rent_manage.page.RoomDetailsByToolbarActivity" />
-        <activity android:name=".page.PasswordManageTotalActivity"/>
+        <activity android:name=".page.PasswordManageTotalActivity" />
     </application>
 
 </manifest>

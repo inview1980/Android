@@ -113,7 +113,7 @@ public final class RoomListener {
     public static <T extends Activity & IShowList> void delCommunity(T activity, ShowRoomDetails showRoomDetails) {
         if (showRoomDetails == null) return;
 
-        Log.i(PageUtils.Tag, "删除小区");
+        PageUtils.Log("删除小区");
         androidx.appcompat.app.AlertDialog.Builder d2 = new androidx.appcompat.app.AlertDialog.Builder(activity);
         d2.setTitle("警告:");
         d2.setMessage("确定要删除此小区所有房源吗?");
