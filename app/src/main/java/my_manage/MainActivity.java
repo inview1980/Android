@@ -1,30 +1,19 @@
 package my_manage;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.ActionMenuItem;
-import androidx.appcompat.view.menu.MenuBuilder;
-
-import com.aditya.filebrowser.Constants;
-import com.aditya.filebrowser.FileChooser;
 
 import my_manage.password_box.R;
 import my_manage.password_box.page.dialog.Login_Activity;
@@ -78,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         DbBase.createCascadeDB(this, DBFilePath);
         //初始化系统参数
         PageUtils.isApkInDebug(this);
-//        DbHelper.getInstance().dbInit(this, DBFilePath);
     }
 
     public String getVersionName(Context context) {
@@ -116,9 +104,15 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     }
 
     private void loadFile() {
-        Intent i2 = new Intent(getApplicationContext(), FileChooser.class);
-        i2.putExtra(Constants.SELECTION_MODE, Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
-        startActivityForResult(i2, 111);
+//        Intent i2 = new Intent(getApplicationContext(), FileChooser.class);
+//        i2.putExtra(Constants.SELECTION_MODE, Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
+//        startActivityForResult(i2, 111);
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");//文件类型限制
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        String title="请选择一个指定后缀名的数据库文件："+getString(R.string.extensionName);
+        startActivityForResult(Intent.createChooser(intent,title ), 111);
     }
 
     @Override
@@ -128,13 +122,15 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             if (data.getData() != null) {//只有一个文件咯
                 Uri    uri  = data.getData(); // 获取用户选择文件的URI
                 String path = ContentUriUtil.getPath(this, uri);
-
+                //排除非本应用的指定后缀名的文件
+                if (!path.endsWith(getString(R.string.extensionName))) {
+                    PageUtils.showMessage(this,"请选择指定后缀名的文件");
+                }
                 PageUtils.Log("选择的文件路径：" + path);
                 DbHelper.getInstance().loadFile2DB(path);
 
                 PageUtils.Log("读取指定文件并写入数据库成功");
             }
-
         }
     }
 }

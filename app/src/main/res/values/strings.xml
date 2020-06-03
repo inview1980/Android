@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">我的管理</string>
     <string name="rentalFileName">rental.db</string>
-    <string name="rentalFileNameBackup">rental_bak.xls</string>
+    <string name="rentalFileNameBackup">rental_bak</string>
+    <string name="extensionName">MyManage</string>
     <string name="defaultPassword">123456</string>
 
     <string name="pwdManage_cn">密码管理</string>

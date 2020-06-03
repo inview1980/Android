@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 
 public final class PageUtils {
     public static  String  Tag         = "MyManage";
-    private static boolean isDebug     = false;
+    private static boolean isDebug     = true;
 
     public static void Log( String msg) {
         if (isDebug)

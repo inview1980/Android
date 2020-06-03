@@ -115,6 +115,6 @@ dependencies {
     implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
 
     // https://mvnrepository.com/artifact/com.adityak/browsemyfiles 第三方文件选择器
-    implementation group: 'com.adityak', name: 'browsemyfiles', version: '1.7'
+//    implementation group: 'com.adityak', name: 'browsemyfiles', version: '1.7'
 
 }

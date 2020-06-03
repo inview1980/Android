@@ -58,7 +58,7 @@ public class ExcelUtils {
         return excelUtils;
     }
 
-    private   Map<String, String> getAnnotation(Class cClass) {
+    private Map<String, String> getAnnotation(Class cClass) {
         Map<String, String> result = new LinkedHashMap<>();
         Field[]             fields = cClass.getDeclaredFields();
         for (final Field field : fields) {
@@ -124,11 +124,11 @@ public class ExcelUtils {
 
                 }
             }
-            int              sheetNo  = 0;
+            int sheetNo = 0;
 
             workbook = Workbook.createWorkbook(new File(filename));
             for (final Map.Entry<Field, Class> item : map) {
-                createSheet((List)item.getKey().get(data),workbook,item.getValue().getSimpleName(),sheetNo++);
+                createSheet((List) item.getKey().get(data), workbook, item.getValue().getSimpleName(), sheetNo++);
             }
             workbook.write();
             return true;
@@ -355,12 +355,13 @@ public class ExcelUtils {
      */
     public void saveDB(Context context) {
         String path = context.getApplicationContext().getExternalFilesDir(null).getAbsolutePath()
-                + "/" + context.getResources().getString(R.string.rentalFileNameBackup);
+                + "/" + context.getResources().getString(R.string.rentalFileNameBackup) + "."
+                + context.getResources().getString(R.string.extensionName);
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setMessage("文件将保存在："+path )
-                .setPositiveButton(R.string.ok_cn,null)
+        dialog.setMessage("文件将保存在：" + path)
+                .setPositiveButton(R.string.ok_cn, null)
                 .show();
-        if(ExcelUtils.getInstance().toExcel(path))
-            Toast.makeText(context,"导出数据库文件成功",Toast.LENGTH_SHORT).show();
+        if (ExcelUtils.getInstance().toExcel(path))
+            Toast.makeText(context, "导出数据库文件成功", Toast.LENGTH_SHORT).show();
     }
 }

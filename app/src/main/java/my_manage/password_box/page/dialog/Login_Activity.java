@@ -57,7 +57,6 @@ private EditText editText;
 //        onAuthenticated();
         //指纹识别
         if (isNotLoginFirst() && supportFingerprint()) {
-//             TODO: 2020/5/25 debug模式
             initKey();
         }
     }
