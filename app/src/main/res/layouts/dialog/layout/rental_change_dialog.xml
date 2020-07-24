@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/rental_main_gridview_margin_6"
     android:background="@color/grayWhite"
     android:focusable="true"
@@ -43,18 +43,16 @@
             android:text="@string/rental_change_rentmoney_det_cn" />
 
         <EditText
-            android:autofillHints="@string/rental_change_rentmoney_cn"
-            android:labelFor="@id/rental_changeRent_newNum"
             android:id="@+id/rental_changeRent_newNum"
             style="@style/editView_middle_right"
             android:layout_columnWeight="@integer/rental_room_details_1width"
-            android:inputType="numberDecimal" />
+            android:autofillHints="@string/rental_change_rentmoney_cn"
+            android:inputType="numberDecimal"
+            android:labelFor="@id/rental_changeRent_newNum" />
     </TableRow>
 
 
-    <TableRow
-        style="@style/rental_room_details_tableRow"
-        >
+    <TableRow style="@style/rental_room_details_tableRow">
 
         <com.deadline.statebutton.StateButton
             android:id="@+id/rental_changeRent_okBtn"

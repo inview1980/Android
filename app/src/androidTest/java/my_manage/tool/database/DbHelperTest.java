@@ -1,14 +1,13 @@
 package my_manage.tool.database;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.test.InstrumentationRegistry;
 
 import org.junit.Test;
 
 import lombok.val;
-import my_manage.password_box.R;
+import my_manage.ui.password_box.R;
 import my_manage.tool.PageUtils;
 
 import static org.junit.Assert.assertNotNull;
@@ -18,7 +17,7 @@ public class DbHelperTest {
 
 //    @Test
 //    public void getShowRoomDesForPerson() {
-//        DbBase.createCascadeDB(InstrumentationRegistry.getTargetContext(), "/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
+//        DbBase.createCascadeDB(InstrumentationRegistry.getTargetContext(), "/storage/emulated/0/Android/data/my_manage.ui.password_box/files/rental.db");
 //        List<ShowRoomDetails> lst = DbHelper.getInstance().getShowRoomDesForPerson(3);
 //
 //        assertTrue(lst.size() > 0);
@@ -26,13 +25,13 @@ public class DbHelperTest {
 
 //    @Test
 //    public void rebuilding() {
-//        DbBase.createCascadeDB(InstrumentationRegistry.getTargetContext(), "/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
+//        DbBase.createCascadeDB(InstrumentationRegistry.getTargetContext(), "/storage/emulated/0/Android/data/my_manage.ui.password_box/files/rental.db");
 //        DbHelper.getInstance().rebuilding(InstrumentationRegistry.getTargetContext());
 //    }
 
 //    @Test
 //    public void toExcel() {
-//        DbHelper.getInstance().dbInit(InstrumentationRegistry.getTargetContext(), "/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
+//        DbHelper.getInstance().dbInit(InstrumentationRegistry.getTargetContext(), "/storage/emulated/0/Android/data/my_manage.ui.password_box/files/rental.db");
 //        Context context = InstrumentationRegistry.getTargetContext();
 //        String path = context.getApplicationContext().getExternalFilesDir(null).getAbsolutePath()
 //                + "/" + context.getResources().getString(R.string.rentalFileNameBackup);

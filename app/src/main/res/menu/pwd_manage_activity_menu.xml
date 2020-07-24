@@ -19,7 +19,7 @@
         android:id="@+id/saveDB"
         android:icon="@drawable/ic_file_upload_black_24dp"
         android:orderInCategory="5"
-        android:title="@string/out2xlsx" />
+        android:title="@string/out2File" />
     <item
         android:id="@id/rebuildingDB"
         android:icon="@drawable/ic_file_download_black_24dp"

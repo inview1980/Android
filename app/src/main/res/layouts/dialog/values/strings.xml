@@ -33,7 +33,7 @@
     <string name="click_close">点击收起</string>
     <string name="click_extend">点击展开</string>
     <string name="company">公司</string>
-    <string name="out2xlsx">将数据库转出为xls</string>
+    <string name="out2File">将数据库转出到文件</string>
     <string name="showDeletedRooms">显示已删除房源</string>
     <string name="addRoom">增加房源</string>
     <string name="showAllPersonDetails">显示所有租户信息</string>
@@ -54,54 +54,14 @@
     <string name="restore_password_cn">重置密码</string>
     <string name="change_password_cn">修改数据库密码</string>
     <string name="type_CN">类型</string>
+    <string name="title_activity_login_">Login_Activity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
-    <string-array name="monthNumber">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
-        <item>25</item>
-        <item>26</item>
-        <item>27</item>
-        <item>28</item>
-        <item>29</item>
-        <item>30</item>
-        <item>31</item>
-        <item>32</item>
-        <item>33</item>
-        <item>34</item>
-        <item>35</item>
-        <item>36</item>
-        <item>37</item>
-        <item>38</item>
-        <item>39</item>
-        <item>40</item>
-        <item>48</item>
-        <item>60</item>
-        <item>72</item>
-        <item>84</item>
-        <item>96</item>
-        <item>108</item>
-        <item>120</item>
-    </string-array>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
 </resources>

@@ -10,6 +10,7 @@
     <dimen name="rental_main_gridview_margin_6">6dp</dimen>
     <dimen name="rental_main_gridview_margin_9">9dp</dimen>
     <dimen name="rental_main_gridview_margin_12">12dp</dimen>
+    <dimen name="rental_main_gridview_margin_18">18dp</dimen>
     <dimen name="rental_main_gridview_margin_3">3dp</dimen>
 
     <dimen name="rental_label_textSize">16dp</dimen>
@@ -23,4 +24,7 @@
 
     <dimen name="min_size">14sp</dimen>
     <dimen name="fontSize">40sp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+
 </resources>

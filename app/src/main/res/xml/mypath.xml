@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <files-path name="files" path="files/"/>
-<!--    <cache-path-->
-<!--        name="cache"-->
-<!--        path="MyManageCache/"/>-->
-<!--    <external-cache-path-->
-<!--        name="externalPath"-->
-<!--        path="MyManageExternalPath"/>-->
+<paths>
     <external-files-path
         name="myFiles"
-        path="/"/>
-<!--    <external-path-->
-<!--        name="rootPath"-->
-<!--        path="MyManageRoot/"/>-->
+        path="/" />
+
+    <!-- 物理路径为Context.getFilesDir() + /files/* -->
+    <files-path
+        name="files"
+        path="files" />
+    <!-- 物理路径为Context.getCacheDir() + /files/* -->
+    <cache-path
+        name="cache"
+        path="files" />
+    <!-- 物理路径为Environment.getExternalStorageDirectory() + /files/* -->
+    <external-path
+        name="external"
+        path="files" />
+    <!-- 物理路径为Context.getExternalFilesDir(String) + /files/* -->
+<!--    <external-files-path-->
+<!--        name="externalfiles"-->
+<!--        path="files" />-->
+    <!-- 物理路径为Context.getExternalCacheDir() + /files/* -->
+    <external-cache-path
+        name="externalcache"
+        path="files" />
+    <!-- 物理路径为`Context.getExternalMediaDirs() + /files/*, 要求API21+ -->
+
 </paths>

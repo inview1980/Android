@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import lombok.val;
-import my_manage.password_box.pojo.UserItem;
-import my_manage.rent_manage.pojo.PersonDetails;
-import my_manage.rent_manage.pojo.RentalRecord;
-import my_manage.rent_manage.pojo.RoomDetails;
+import my_manage.pojo.UserItem;
+import my_manage.pojo.PersonDetails;
+import my_manage.pojo.RentalRecord;
+import my_manage.pojo.RoomDetails;
 import my_manage.tool.StrUtils;
 
 public final class BuildData {

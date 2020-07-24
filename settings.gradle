@@ -1,2 +1,3 @@
-include ':app', ':excelUtils'
+include ':app', 'my_manage_pojo'
+project(':my_manage_pojo').projectDir = new File(settingsDir, '../../java/my_manage_pojo')
 rootProject.name='Password saving cabinet'

@@ -5,9 +5,7 @@ import android.content.res.Resources;
 
 import com.alibaba.fastjson.JSON;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -18,15 +16,15 @@ import java.util.stream.DoubleStream;
 
 import lombok.Cleanup;
 import lombok.val;
-import my_manage.password_box.R;
-import my_manage.password_box.pojo.UserItem;
-import my_manage.password_box.secret.SecretUtil;
-import my_manage.rent_manage.pojo.PersonDetails;
-import my_manage.rent_manage.pojo.RentalRecord;
-import my_manage.rent_manage.pojo.RoomDetails;
-import my_manage.rent_manage.pojo.show.ExcelData;
-import my_manage.rent_manage.pojo.show.MenuData;
-import my_manage.rent_manage.pojo.show.ShowRoomDetails;
+import my_manage.ui.password_box.R;
+import my_manage.pojo.UserItem;
+import my_manage.ui.password_box.secret.SecretUtil;
+import my_manage.pojo.PersonDetails;
+import my_manage.pojo.RentalRecord;
+import my_manage.pojo.RoomDetails;
+import my_manage.pojo.show.ExcelData;
+import my_manage.pojo.show.MenuData;
+import my_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.ExcelUtils;
 import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
@@ -258,40 +256,42 @@ public final class DbHelper {
     /**
      * 读取指定文件并填充入数据库
      */
-    public void loadFile2DB( String filename) {
-        if(StrUtils.isBlank(filename))return;
+    public boolean loadFile2DB(String filename) {
+        if (StrUtils.isBlank(filename)) return false;
 
-        try{
-            @Cleanup InputStream is= new FileInputStream(filename);
-            read2DB(is);
+        try {
+            @Cleanup InputStream is = new FileInputStream(filename);
+            return read2DB(is);
         } catch (IllegalAccessException | IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**
      * 重建数据库，读取xlsx文件并填入数据
      */
-    public void loadDefault2DB(Context context) {
+    public boolean loadDefault2DB(Context context) {
         try {
-            @Cleanup InputStream is = context.getResources().openRawResource(R.raw.db);
-            read2DB(is);
+            @Cleanup InputStream is   = context.getResources().openRawResource(R.raw.db);
+            boolean              isOk = read2DB(is);
             PageUtils.Log("读取默认数据并写入数据库");
+            return isOk;
         } catch (Resources.NotFoundException | IOException | IllegalAccessException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    private void read2DB(InputStream is) throws IOException, IllegalAccessException {
-
+    private boolean read2DB(InputStream is) throws IOException, IllegalAccessException {
         ExcelData ed = ExcelUtils.getInstance().readExcel(is);
         is.close();
         //读取文件，如果读取的内容为空则退出
-        if(ed!=null&&ed.getRoomDetailsList().size()>0 &&ed.getRentalRecordList().size()>0){
+        if (ed != null && ed.getRoomDetailsList().size() > 0 && ed.getRentalRecordList().size() > 0) {
             //重建数据库
             rebuilding();
-        }else {
-            return;
+        } else {
+            return false;
         }
         //将读取xls文件的内容写入数据库中
         Field[] fields = ExcelData.class.getDeclaredFields();
@@ -303,6 +303,7 @@ public final class DbHelper {
                 DbBase.insertAll(obj);
             }
         }
+        return true;
     }
 
     public boolean saveUserItem(UserItem userItem) {

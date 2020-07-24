@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rental_house_tableLayoutId"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_margin="@dimen/rental_main_gridview_margin_3"
+    android:background="@android:color/white"
+    android:columnCount="4"
+    android:gravity="center"
+    android:layoutDirection="ltr">
+
+
+    <TextView
+        style="@style/textView_1th"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_columnWeight="1"
+        android:text="@string/create_date" />
+
+    <TextView
+        android:id="@+id/create_date"
+        style="@style/rental_textView_context"
+        android:layout_columnWeight="@integer/rental_room_details_1width" />
+
+    <TextView
+        style="@style/textView_1th"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_columnWeight="1"
+        android:text="@string/file_Size" />
+
+    <TextView
+        android:id="@+id/file_Size"
+        style="@style/rental_textView_context"
+        android:layout_columnWeight="@integer/rental_room_details_2width" />
+
+</GridLayout>

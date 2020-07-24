@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import my_manage.rent_manage.MyService;
+import my_manage.ui.rent_manage.MyService;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

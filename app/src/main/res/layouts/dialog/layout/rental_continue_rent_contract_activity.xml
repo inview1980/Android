@@ -8,13 +8,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue"
-        app:navigationIcon="@drawable/ic_chevron_left_black_24dp"
-        app:titleTextColor="@android:color/white" />
+    <include layout="@layout/main_toolbar"/>
 
     <TableLayout
         android:layout_width="match_parent"

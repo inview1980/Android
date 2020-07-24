@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="my_manage.password_box"
+    package="my_manage.ui.password_box"
     android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
@@ -14,39 +14,43 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name="my_manage.MyApplication"
         android:allowBackup="true"
+        android:requestLegacyExternalStorage="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/home"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/home_round"
         android:supportsRtl="true"
         android:theme="@style/AppMyTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="my_manage.rent_manage.page.ShowPersonDetailsActivity" />
-
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="my_manage.ui.password_box.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/mypath" />
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/mypath" />
         </provider>
 
         <receiver
-            android:name="my_manage.receiver.AlarmReceiver"
-            android:enabled="true"
-            android:exported="false" />
+        android:name="my_manage.receiver.AlarmReceiver"
+        android:enabled="true"
+        android:exported="false" />
 
         <service
-            android:name="my_manage.rent_manage.MyService"
-            android:exported="false" />
+        android:name="my_manage.ui.rent_manage.MyService"
+        android:exported="false" />
 
-        <activity android:name="my_manage.rent_manage.page.ContinueContractActivity" />
-        <activity android:name="my_manage.rent_manage.page.ContinuePropertyActivity" />
-        <activity android:name="my_manage.rent_manage.page.ContinueRentActivity" />
+        <activity android:name=".page.DownloadActivity"></activity>
+        <activity android:name="my_manage.ui.common.Login_Activity" />
+        <activity android:name="my_manage.ui.rent_manage.page.ShowPersonDetailsActivity" />
+        <activity android:name="my_manage.ui.rent_manage.page.ContinueContractActivity" />
+        <activity android:name="my_manage.ui.rent_manage.page.ContinuePropertyActivity" />
+        <activity android:name="my_manage.ui.rent_manage.page.ContinueRentActivity" />
         <activity
             android:name="my_manage.MainActivity"
             android:theme="@style/AppMyTheme">
@@ -56,16 +60,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="my_manage.rent_manage.page.ShowPersonExpandActivity" />
+        <activity android:name="my_manage.ui.rent_manage.page.ShowPersonExpandActivity" />
         <activity android:name=".page.PasswordManageActivity" />
         <activity android:name=".fragment.PasswordManageItemDetailsFragment" />
-        <activity android:name=".page.dialog.changePasswordDialog" />
-        <activity android:name=".page.dialog.Login_Activity" />
+        <activity android:name="my_manage.ui.common.changePasswordDialog" />
+        <activity android:name="my_manage.ui.common.CheckPassword" />
         <activity android:name=".page.PasswordManageViewPagerHome" />
-        <activity android:name="my_manage.rent_manage.RentalMainActivity" />
-        <activity android:name="my_manage.rent_manage.page.RentalForHouseActivity" />
-        <activity android:name="my_manage.rent_manage.page.RoomHistoryActivity" />
-        <activity android:name="my_manage.rent_manage.page.RoomDetailsByToolbarActivity" />
+        <activity android:name="my_manage.ui.rent_manage.RentalMainActivity" />
+        <activity android:name="my_manage.ui.rent_manage.page.RentalForHouseActivity" />
+        <activity android:name="my_manage.ui.rent_manage.page.RoomHistoryActivity" />
+        <activity android:name="my_manage.ui.rent_manage.page.RoomDetailsByToolbarActivity" />
         <activity android:name=".page.PasswordManageTotalActivity" />
     </application>
 

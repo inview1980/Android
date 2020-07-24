@@ -27,8 +27,8 @@
                 app:tabSelectedTextColor="@color/red"
                 app:tabTextColor="@color/grayBlue" />
         </RelativeLayout>
-
     </androidx.appcompat.widget.Toolbar>
+
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -29,4 +29,13 @@
     </style>
 
     <dimen name="rent_room_details_tableRow_margin">1dp</dimen>
+
+    <style name="AppMyTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppMyTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppMyTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

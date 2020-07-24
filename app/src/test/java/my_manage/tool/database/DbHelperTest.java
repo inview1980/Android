@@ -1,17 +1,12 @@
 package my_manage.tool.database;
 
-import com.alibaba.fastjson.JSONObject;
-
-import org.json.JSONArray;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import my_manage.password_box.pojo.UserItem;
-import my_manage.rent_manage.pojo.show.ExcelData;
+import my_manage.pojo.UserItem;
+import my_manage.pojo.show.ExcelData;
 import my_manage.tool.ExcelUtils;
 import my_manage.tool.StrUtils;
 

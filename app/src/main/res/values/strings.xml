@@ -2,6 +2,7 @@
     <string name="app_name">我的管理</string>
     <string name="rentalFileName">rental.db</string>
     <string name="rentalFileNameBackup">rental_bak</string>
+    <string name="configFile">config</string>
     <string name="extensionName">MyManage</string>
     <string name="defaultPassword">123456</string>
 
@@ -17,43 +18,8 @@
 
     <string name="rental_codeNumber_cn">证件号码</string>
     <string name="remark_cn">备注</string>
-
-    <string-array name="communityName">
-        <item>祥和雅居</item>
-        <item>湖口社区</item>
-        <item>青年城</item>
-        <item>佛祖岭</item>
-        <item>巴黎豪庭</item>
-        <item>旭辉御府</item>
-    </string-array>
-
-<!--字体图标的定义，序号-图标-名称-颜色-图标的使用类型-->
-    <string-array name="menuTypes">
-        <item>1-&#xe75e;-APP-#3396d8-1</item>
-        <item>2-&#xe607;-工作-#3396d8-1</item>
-        <item>3-&#xe601;-游戏-#3396d8-1</item>
-        <item>4-&#xe608;-生活-#3396d8-1</item>
-        <item>5-&#xe63e;-银行-#e64a19-1</item>
-        <item>6-&#xe64e;-学习-#3396d8-1</item>
-        <item>7-&#xe60b;-邮箱-#ffff8d-1</item>
-        <item>8-&#xe767;-其他-#9e9e9e-1</item>
-        <item>100-&#xe66f;-查看详情-#3396d8-2</item>
-        <item>101-&#xe666;-续租-#3396d9-2</item>
-        <item>102-&#xe61b;-退租-#e64a19-2</item>
-        <item>103-&#xe676;-调整租金-#3396d8-2</item>
-        <item>104-&#xe667;-调整押金-#3396d8-2</item>
-        <item>105-&#xe650;-查看出租记录-#3396d8-2</item>
-        <item>106-&#xe60e;-支付物业费-#3396d8-2</item>
-        <item>107-&#xe616;-续签合同-#3396d8-2</item>
-        <item>108-&#xe611;-租户资料-#3396d8-2</item>
-        <item>109-&#xe63d;-删除房源-#3396d8-2</item>
-        <item>200-&#xe66f;-查看详情-#3396d8-3</item>
-        <item>201-&#xe63d;-出租-#3396d8-3</item>
-        <item>202-&#xe676;-撤销退租-#3396d8-3</item>
-        <item>203-&#xe650;-查看出租记录-#3396d8-3</item>
-        <item>204-&#xe63d;-删除房源-#3396d8-3</item>
-        <item>300-&#xe61c;-恢复房源-#3396d8-4</item>
-        <item>301-&#xe600;-彻底删除房源-#bf360c-4</item>
-    </string-array>
+    <string name="file_Name">文件名</string>
+    <string name="create_date">创建日期</string>
+    <string name="file_Size">文件大小</string>
 
 </resources>

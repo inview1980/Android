@@ -7,4 +7,10 @@
     <item
         android:id="@+id/loadFile2DB"
         android:title="从指定文件加载数据到数据库" />
+    <item
+        android:id="@+id/updateDB"
+        android:title="将数据库上传到服务器" />
+    <item
+        android:id="@+id/downloadDB"
+        android:title="从服务器下载指定数据库" />
 </menu>

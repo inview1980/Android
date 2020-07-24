@@ -6,7 +6,7 @@ import android.content.Context;
 
 import java.util.Arrays;
 
-import my_manage.password_box.R;
+import my_manage.ui.password_box.R;
 
 public final class NotificationChannels {
     public final static String CRITICAL = "critical";

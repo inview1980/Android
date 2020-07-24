@@ -11,7 +11,7 @@
 //import java.util.Collection;
 //import java.util.Optional;
 //
-//import my_manage.password_box.pojo.UserItem;
+//import my_manage.pojo.UserItem;
 //
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertFalse;

@@ -5,9 +5,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,7 +17,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,16 +33,13 @@ import jxl.write.WriteException;
 import lombok.Cleanup;
 import lombok.val;
 import my_manage.iface.ColumnName;
-import my_manage.password_box.R;
-import my_manage.rent_manage.pojo.PersonDetails;
-import my_manage.rent_manage.pojo.RentalRecord;
-import my_manage.rent_manage.pojo.RoomDetails;
-import my_manage.rent_manage.pojo.show.ExcelData;
+import my_manage.ui.password_box.R;
+import my_manage.pojo.show.ExcelData;
 import my_manage.tool.database.DbBase;
-import my_manage.tool.database.DbHelper;
 
 public class ExcelUtils {
     private static ExcelUtils excelUtils;
+    public         String     outFilePath;
 
     private ExcelUtils() {
     }
@@ -353,15 +346,21 @@ public class ExcelUtils {
     /**
      * 将数据库转出为xlsx
      */
-    public void saveDB(Context context) {
-        String path = context.getApplicationContext().getExternalFilesDir(null).getAbsolutePath()
+    public boolean saveDB(Context context, boolean isShowDialog) {
+        outFilePath = context.getApplicationContext().getExternalFilesDir(null).getAbsolutePath()
                 + "/" + context.getResources().getString(R.string.rentalFileNameBackup) + "."
                 + context.getResources().getString(R.string.extensionName);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setMessage("文件将保存在：" + path)
-                .setPositiveButton(R.string.ok_cn, null)
-                .show();
-        if (ExcelUtils.getInstance().toExcel(path))
-            Toast.makeText(context, "导出数据库文件成功", Toast.LENGTH_SHORT).show();
+        if (isShowDialog) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+            dialog.setMessage("文件将保存在：" + outFilePath)
+                    .setPositiveButton(R.string.ok_cn, null)
+                    .show();
+        }
+        if (ExcelUtils.getInstance().toExcel(outFilePath)) {
+            if (isShowDialog)
+                Toast.makeText(context, "导出数据库文件成功", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 }
