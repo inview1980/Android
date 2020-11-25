@@ -17,8 +17,8 @@ public class DbHelperTest {
     @Test
     public void readExcel() {
 //        Random             random    = new Random();
-        ExcelData excelData = ExcelUtils.getInstance().readExcel("F:\\db.xls");
-        assertNotNull(excelData.getRentalRecordList());
+//        ExcelData excelData = ExcelUtils.getInstance().readExcel("F:\\db.xls");
+//        assertNotNull(excelData.getRentalRecordList());
 //        assertNotNull(excelData.getRoomDetailsList());
 ////        assertNotNull(excelData.getPersonDetailsList());
 //

@@ -166,18 +166,18 @@ public class ExcelUtils {
         return result.toArray(new Method[0]);
     }
 
-    public ExcelData readExcel(String filename) {
-        if (StrUtils.isBlank(filename)) return null;
-        File inFile = new File(filename);
-        if (!inFile.exists()) return null;
-        try {
-            @Cleanup InputStream is = new FileInputStream(inFile);
-            return readExcel(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public ExcelData readExcel(String filename) {
+//        if (StrUtils.isBlank(filename)) return null;
+//        File inFile = new File(filename);
+//        if (!inFile.exists()) return null;
+//        try {
+//            @Cleanup InputStream is = new FileInputStream(inFile);
+//            return readExcel(is);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     private Map<Field, Class> getExcelDataFieldType2Map() {
         Map<Field, Class> resultMap = new HashMap<>();

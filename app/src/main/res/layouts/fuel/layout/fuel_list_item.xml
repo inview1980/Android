@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/rental_main_gridview_margin_3"
+    android:background="@android:color/white" >
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_date" />
+
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/money" />
+
+        <TextView
+            android:id="@+id/totalMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payTotalMoney" />
+
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saveMoney" />
+
+        <TextView
+            android:id="@+id/save_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payTotalMoney" />
+    </TableRow>
+
+    <TableRow><TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/price" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payTotalMoney" />
+
+
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/original_price" />
+
+        <TextView
+            android:id="@+id/original_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12.34" />
+
+
+
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rise" />
+
+        <TextView
+            android:id="@+id/rise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="34.76" />
+
+
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/station_name" />
+
+        <TextView
+            android:id="@+id/station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payTotalMoney" />
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/odometerNumber" />
+
+        <TextView
+            android:id="@+id/odometerNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12345" />
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fuel_consumption" />
+
+        <TextView
+            android:id="@+id/fuel_consumption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payTotalMoney" />
+
+
+    </TableRow>
+</TableLayout>

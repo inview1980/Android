@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/addFuelRecord"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:orderInCategory="1"
+        android:title="添加加油记录" />
+    <item
+        android:id="@+id/dataAnalysis"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:orderInCategory="1"
+        android:title="数据分析" />
+    <item
+        android:id="@+id/deleteAllFuelRecord"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:orderInCategory="1"
+        android:title="删除所有加油记录" />
+</menu>

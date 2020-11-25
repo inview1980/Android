@@ -62,7 +62,8 @@
         </activity>
         <activity android:name="my_manage.ui.rent_manage.page.ShowPersonExpandActivity" />
         <activity android:name=".page.PasswordManageActivity" />
-        <activity android:name=".fragment.PasswordManageItemDetailsFragment" />
+        <activity android:name="my_manage.ui.password_box.fragment.PasswordManageItemDetailsFragment"
+            tools:ignore="Instantiatable" />
         <activity android:name="my_manage.ui.common.changePasswordDialog" />
         <activity android:name="my_manage.ui.common.CheckPassword" />
         <activity android:name=".page.PasswordManageViewPagerHome" />
@@ -70,6 +71,9 @@
         <activity android:name="my_manage.ui.rent_manage.page.RentalForHouseActivity" />
         <activity android:name="my_manage.ui.rent_manage.page.RoomHistoryActivity" />
         <activity android:name="my_manage.ui.rent_manage.page.RoomDetailsByToolbarActivity" />
+        <activity android:name="my_manage.ui.fuel.page.FuelRecordMainActivity" />
+        <activity android:name="my_manage.ui.fuel.page.AddFuelRecordActivity" />
+        <activity android:name="my_manage.ui.fuel.page.DataAnalysisShowActivity" />
         <activity android:name=".page.PasswordManageTotalActivity" />
     </application>
 

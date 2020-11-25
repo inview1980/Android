@@ -2,16 +2,19 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/mainLayout"
     android:layout_height="wrap_content">
+
     <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@color/grayWhite"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
         android:stretchColumns="1">
 
         <TableRow style="@style/rental_room_details_tableRow">
@@ -21,10 +24,10 @@
                 android:text="@string/rental_communityName_cn" />
 
             <Spinner
-                style="@style/textView_1th"
-                android:entries="@array/communityName"
                 android:id="@+id/rental_addRoom_communityName"
-                android:layout_marginEnd="@dimen/rental_main_gridview_margin_9" />
+                style="@style/textView_1th"
+                android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+                android:entries="@array/communityName" />
         </TableRow>
 
 
@@ -35,10 +38,10 @@
                 android:text="@string/rental_houseNumber_cn" />
 
             <EditText
-                android:inputType="phone"
+                android:id="@+id/rental_addRoom_houseNumber"
                 style="@style/editView_middle_right"
                 android:gravity="center_vertical|left"
-                android:id="@+id/rental_addRoom_houseNumber" />
+                android:inputType="phone" />
         </TableRow>
 
 
@@ -50,9 +53,9 @@
                 android:text="@string/rental_area_cn" />
 
             <EditText
+                android:id="@+id/rental_addRoom_area"
                 style="@style/editView_middle_right"
                 android:gravity="center_vertical|left"
-                android:id="@+id/rental_addRoom_area"
                 android:inputType="numberDecimal" />
         </TableRow>
 
@@ -64,10 +67,10 @@
                 android:text="@string/rental_meterNumber_cn" />
 
             <EditText
-                android:inputType="phone"
+                android:id="@+id/rental_addRoom_meterNumber"
                 style="@style/editView_middle_right"
                 android:gravity="center_vertical|left"
-                android:id="@+id/rental_addRoom_meterNumber" />
+                android:inputType="phone" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
@@ -91,9 +94,9 @@
                 android:text="@string/rental_propertyPrice_cn" />
 
             <EditText
+                android:id="@+id/rental_addRoom_propertyPrice"
                 style="@style/editView_middle_right"
                 android:gravity="center_vertical|left"
-                android:id="@+id/rental_addRoom_propertyPrice"
                 android:inputType="numberDecimal" />
         </TableRow>
 
@@ -103,11 +106,11 @@
             android:gravity="right">
 
             <com.deadline.statebutton.StateButton
-                style="@style/StateButtonStyle"
                 android:id="@+id/rental_addRoom_OkBtn"
+                style="@style/StateButtonStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_span="2"
-                android:layout_width="match_parent"
                 android:text="@string/ok_cn"
                 app:normalBackgroundColor="@color/blue"
                 app:pressedBackgroundColor="@color/blue"

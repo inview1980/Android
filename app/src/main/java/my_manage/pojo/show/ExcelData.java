@@ -3,6 +3,7 @@ package my_manage.pojo.show;
 import java.util.List;
 
 import lombok.Data;
+import my_manage.pojo.FuelRecord;
 import my_manage.pojo.UserItem;
 import my_manage.pojo.PersonDetails;
 import my_manage.pojo.RentalRecord;
@@ -14,5 +15,6 @@ public final class ExcelData {
     private List<PersonDetails> personDetailsList;
     private List<RentalRecord>  rentalRecordList;
     private List<UserItem>      userItemList;
+    private List<FuelRecord> fuelRecordList;
 //    private List<MenuData>      menuDataList;
 }

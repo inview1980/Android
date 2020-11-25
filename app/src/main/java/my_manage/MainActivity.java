@@ -35,6 +35,7 @@ import my_manage.ui.rent_manage.RentalMainActivity;
 import my_manage.tool.ContentUriUtil;
 import my_manage.tool.PageUtils;
 import my_manage.tool.database.DbHelper;
+import my_manage.ui.fuel.page.FuelRecordMainActivity;
 import web.WebResult;
 
 public class MainActivity extends AppCompatActivity implements View.OnLongClickListener, PopupMenu.OnMenuItemClickListener {
@@ -66,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         if (btn == R.id.main_timeBtn) {
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, RentalMainActivity.class);
+            startActivity(intent);
+        }
+
+        if(btn==R.id.refuel_record_Btn){
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, FuelRecordMainActivity.class);
             startActivity(intent);
         }
     }
@@ -163,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
                 Uri    uri  = data.getData(); // 获取用户选择文件的URI
                 String path = ContentUriUtil.getPath(this, uri);
                 //排除非本应用的指定后缀名的文件
-                if (null != path && !path.endsWith(getString(R.string.extensionName))) {
+                if (null != path && !path.toLowerCase().endsWith(getString(R.string.extensionName).toLowerCase())) {
                     PageUtils.showMessage(this, "请选择指定后缀名的文件");
                     return;
                 }

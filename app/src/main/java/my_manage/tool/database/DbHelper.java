@@ -1,5 +1,6 @@
 package my_manage.tool.database;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 
@@ -16,6 +17,8 @@ import java.util.stream.DoubleStream;
 
 import lombok.Cleanup;
 import lombok.val;
+import my_manage.iface.IShowList;
+import my_manage.pojo.FuelRecord;
 import my_manage.ui.password_box.R;
 import my_manage.pojo.UserItem;
 import my_manage.ui.password_box.secret.SecretUtil;
@@ -474,5 +477,22 @@ public final class DbHelper {
             return DbBase.deleteWhere(RoomDetails.class, "roomNumber", new String[]{showRoomDetails.getRoomDetails().getRoomNumber()}) > 0;
         }
         return false;
+    }
+
+    public List<FuelRecord> getFuelRecordList() {
+        List<FuelRecord> fuelRecordList = null;
+        fuelRecordList = DbBase.getQueryAll(FuelRecord.class);
+        if (fuelRecordList != null)
+            fuelRecordList.sort((f1, f2) -> Integer.compare(f2.getOdometerNumber(), f1.getOdometerNumber()));
+        return fuelRecordList;
+    }
+
+    public boolean delFuelRecord(int primary_id) {
+        int i = DbBase.deleteWhere(FuelRecord.class, "primary_id", new Object[]{primary_id});
+        return i!=0;
+    }
+
+    public <T extends Activity & IShowList> void delAllFuelRecord(T activity) {
+        DbBase.deleteAll(FuelRecord.class);
     }
 }

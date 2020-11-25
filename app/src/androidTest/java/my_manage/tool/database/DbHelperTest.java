@@ -6,7 +6,11 @@ import androidx.test.InstrumentationRegistry;
 
 import org.junit.Test;
 
+import java.util.Calendar;
+import java.util.Random;
+
 import lombok.val;
+import my_manage.pojo.FuelRecord;
 import my_manage.ui.password_box.R;
 import my_manage.tool.PageUtils;
 
@@ -106,5 +110,33 @@ public class DbHelperTest {
         val t1=DbHelper.getInstance().getPersonList();
         t1.forEach(tt-> PageUtils.Log(tt.toString()));
         assertTrue(t1.size()>0);
+    }
+
+    @Test
+    public void insertFuelRecord(){
+        Context context=InstrumentationRegistry.getTargetContext();
+        //初始化数据库
+        String DBFilePath = context.getFilesDir().getAbsolutePath() + "/" + context.getString(R.string.rentalFileName);
+        DbBase.createCascadeDB(context,DBFilePath);
+        DbBase.deleteAll(FuelRecord.class);
+
+        for (int i = 0; i < 100; i++) {
+            val fr=buildFR();
+            DbBase.insert(fr);
+        }
+        val t1=DbHelper.getInstance().getFuelRecordList();
+        t1.forEach(tt-> PageUtils.Log(tt.toString()));
+        assertTrue(t1.size()>0);
+    }
+    private FuelRecord buildFR(){
+        Random random=new Random();
+        FuelRecord fr=new FuelRecord();
+        fr.setTime(Calendar.getInstance());
+        fr.setMoney((double)random.nextInt(10000)/100);
+        fr.setRise((double) random.nextInt(10000) / 100);
+        fr.setMarketPrice((double)random.nextInt(1000)/100);
+        fr.setStationName("station:"+random.nextInt(1000));
+        fr.setOdometerNumber(random.nextInt(100000));
+        return fr;
     }
 }
