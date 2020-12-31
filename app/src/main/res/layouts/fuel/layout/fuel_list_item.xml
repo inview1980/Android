@@ -13,23 +13,23 @@
             android:text="@string/date" />
 
         <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
+            android:id="@+id/date" android:layout_gravity="fill"
+            android:layout_width="@dimen/dateTextWidth"
             android:layout_height="wrap_content"
             android:text="@string/create_date" />
 
-        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/money" />
 
         <TextView
-            android:id="@+id/totalMoney"
-            android:layout_width="wrap_content"
+            android:id="@+id/totalMoney" android:singleLine="true"
+            android:layout_width="@dimen/byte5Width"
             android:layout_height="wrap_content"
             android:text="@string/payTotalMoney" />
 
-        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/saveMoney" />
@@ -53,20 +53,11 @@
             android:text="@string/payTotalMoney" />
 
 
-        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/original_price" />
-
-        <TextView
-            android:id="@+id/original_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12.34" />
 
 
 
-        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rise" />
@@ -77,7 +68,17 @@
             android:layout_height="wrap_content"
             android:text="34.76" />
 
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/station_name" />
 
+        <TextView
+            android:id="@+id/station_name"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payTotalMoney" />
     </TableRow>
 
     <TableRow>
@@ -85,14 +86,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/station_name" />
+            android:text="@string/original_price" />
 
         <TextView
-            android:id="@+id/station_name"
+            android:id="@+id/original_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/payTotalMoney" />
-        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:text="12.34" />
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/odometerNumber" />
@@ -102,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="12345" />
-        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+        <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fuel_consumption" />

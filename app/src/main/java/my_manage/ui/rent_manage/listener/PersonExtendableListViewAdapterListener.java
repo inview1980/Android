@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
 
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.database.DbHelper;
+import my_manage.ui.rent_manage.fragment.DialogFragmentInsertPerson;
 import my_manage.ui.rent_manage.page.ShowPersonDetailsActivity;
 import my_manage.pojo.PersonDetails;
 
@@ -21,7 +24,8 @@ public final class PersonExtendableListViewAdapterListener {
         } else if (v.getId() == R.id.rental_person_expandable_delete) {
             delPerson(activity, data.get(position).getPrimary_id());
         } else if (v.getId() == R.id.rental_person_expandable_addperson) {
-            PersonListener.addPerson(activity, activity);
+//            PersonListener.addPerson(activity, activity);
+            new DialogFragmentInsertPerson(activity,activity).show(((AppCompatActivity)activity).getSupportFragmentManager(),"");
         }
         activity.showList();
     }

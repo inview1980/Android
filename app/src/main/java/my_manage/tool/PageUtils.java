@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.ui.common.CheckPassword;
 
 public final class PageUtils {
@@ -174,23 +174,6 @@ public final class PageUtils {
         });
     }
 
-//    /**
-//     * 背景颜色动画，闪烁
-//     */
-//    public static void backColorFlash(View view, int colorValues) {
-//        if (colorValues == view.getResources().getColor(android.R.color.white)) {
-//            ValueAnimator animator = ObjectAnimator.ofInt(view, "backgroundColor", colorValues);
-//            animator.end();
-//            return;
-//        }
-//        int[]         colors   = new int[]{colorValues ^ 0x77000000, colorValues & 0x00ffffff};
-//        ValueAnimator animator = ObjectAnimator.ofInt(view, "backgroundColor", colors);//对背景色颜色进行改变，操作的属性为"backgroundColor",此处必须这样写，不能全小写,后面的颜色为在对应颜色间进行渐变
-//        animator.setDuration((new Random().nextInt(4) + 4) * 100);
-//        animator.setRepeatMode(ValueAnimator.REVERSE);
-//        animator.setRepeatCount(ValueAnimator.INFINITE);
-//        animator.setEvaluator(new ArgbEvaluator());//如果要颜色渐变必须要ArgbEvaluator，来实现颜色之间的平滑变化，否则会出现颜色不规则跳动
-//        animator.start();
-//    }
 
     /**
      * 如果超过时间，要求输入密码；如果数据已变更，重新载入数据
@@ -210,4 +193,5 @@ public final class PageUtils {
             activity.startActivityForResult(intent, 8080);
         }
     }
+
 }

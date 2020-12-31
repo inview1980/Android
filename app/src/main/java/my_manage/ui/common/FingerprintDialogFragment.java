@@ -13,7 +13,7 @@ import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
 import androidx.fragment.app.DialogFragment;
 
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.PageUtils;
 
 import javax.crypto.Cipher;

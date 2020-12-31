@@ -6,7 +6,7 @@ import android.content.Intent;
 import androidx.appcompat.app.AlertDialog;
 
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.ui.rent_manage.RentalMainActivity;
 import my_manage.tool.database.DbHelper;
 import my_manage.ui.rent_manage.page.RentalForHouseActivity;

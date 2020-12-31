@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/rental_main_gridview_margin_9"
+    android:background="@drawable/shape_corner_white_10"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <my_manage.ui.widght.IconViewAlibabaGithub
+        android:id="@+id/icon"
+        android:layout_width="wrap_content" android:textColor="@color/blue"
+        android:layout_height="wrap_content"
+        android:text="&#xe66f;"
+        android:textSize="@dimen/fontSize" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/water_number"
+        android:textSize="@dimen/rental_main_gridview_normal_fontsize" />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/water_number"
+        android:textSize="@dimen/rental_main_gridview_normal_fontsize" />
+</LinearLayout>

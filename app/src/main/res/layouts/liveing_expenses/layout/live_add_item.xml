@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/rental_main_gridview_margin_6"
+    android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+    android:orientation="vertical">
+
+    <include layout="@layout/main_toolbar" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shap_corner_blue_3"
+        android:paddingStart="@dimen/rental_main_gridview_margin_6"
+        android:paddingEnd="@dimen/rental_main_gridview_margin_6"
+        android:stretchColumns="1">
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="记录类型:" />
+
+            <Spinner
+                android:id="@+id/typeSpanner"
+                style="@style/editView_middle_right" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/rental_communityName_cn" />
+
+            <Spinner
+                android:id="@+id/communitySpanner"
+                style="@style/editView_middle_right" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/rental_houseNumber_cn" />
+
+            <Spinner
+                android:id="@+id/roomNumberSpanner"
+                style="@style/editView_middle_right" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/payDate" />
+
+            <TextView
+                android:id="@+id/payDate"
+                style="@style/editView_middle_right"
+                android:paddingStart="@dimen/rental_main_gridview_margin_12"/>
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/money" />
+
+            <EditText
+                android:id="@+id/payMoney"
+                android:text="0"
+                style="@style/editView_middle_right"
+                android:paddingStart="@dimen/rental_main_gridview_margin_12"
+                android:inputType="numberDecimal" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <EditText
+                android:id="@+id/remark"
+                android:layout_span="2"
+                android:hint="@string/remark_cn"
+                android:lines="3"
+                android:paddingStart="@dimen/rental_main_gridview_margin_3"
+                android:paddingEnd="@dimen/rental_main_gridview_margin_3"
+                android:textSize="@dimen/min_size" />
+        </TableRow>
+    </TableLayout>
+
+    <com.deadline.statebutton.StateButton
+        android:id="@+id/ok"
+        style="@style/StateButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_3"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:enabled="false"
+        android:text="@string/ok_cn"
+        app:normalBackgroundColor="@color/blue"
+        app:pressedBackgroundColor="@color/blue"
+        app:round="true"
+        app:unableBackgroundColor="@color/blue" />
+</LinearLayout>

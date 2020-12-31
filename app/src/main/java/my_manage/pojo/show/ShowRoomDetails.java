@@ -38,6 +38,11 @@ public final class ShowRoomDetails {
     this.roomDetails = roomDetails;
   }
 
+  public ShowRoomDetails(RentalRecord rentalRecord, RoomDetails roomDetails) {
+    this.rentalRecord = rentalRecord;
+    this.roomDetails = roomDetails;
+  }
+
   /**
    * 房租结束日期
    */

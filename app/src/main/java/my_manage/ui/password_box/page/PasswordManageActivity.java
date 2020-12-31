@@ -1,4 +1,4 @@
-package my_manage.ui.password_box.page;
+package my_manage.password_box.page;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,12 +21,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
-import my_manage.ui.password_box.listener.PasswordManageActivityListener;
+import my_manage.password_box.R;
+import my_manage.password_box.listener.PasswordManageActivityListener;
 import my_manage.pojo.UserItem;
 import my_manage.pojo.show.MenuData;
-import my_manage.tool.MenuUtils;
 import my_manage.tool.PageUtils;
 import my_manage.tool.database.DbHelper;
 import my_manage.tool.enums.MenuTypesEnum;

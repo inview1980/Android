@@ -1,4 +1,4 @@
-package my_manage.ui.password_box.database;
+package my_manage.password_box.database;
 
 import org.junit.Test;
 

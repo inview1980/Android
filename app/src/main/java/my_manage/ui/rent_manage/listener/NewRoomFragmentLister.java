@@ -1,6 +1,5 @@
 package my_manage.ui.rent_manage.listener;
 
-import android.app.DatePickerDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Pair;
@@ -9,27 +8,27 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 
-import java.util.Calendar;
 import java.util.stream.IntStream;
 
-import my_manage.ui.password_box.R;
-import my_manage.tool.database.DbBase;
-import my_manage.tool.database.DbHelper;
-import my_manage.ui.rent_manage.fragment.RoomDetailsFragment;
+import my_manage.password_box.R;
 import my_manage.pojo.PersonDetails;
 import my_manage.pojo.RentalRecord;
 import my_manage.pojo.RoomDetails;
 import my_manage.tool.DateUtils;
 import my_manage.tool.PageUtils;
+import my_manage.tool.database.DbBase;
+import my_manage.tool.database.DbHelper;
 import my_manage.tool.menuEnum.CastUtils;
+import my_manage.ui.rent_manage.fragment.DialogFragmentInsertPerson;
+import my_manage.ui.rent_manage.fragment.FragmentRoomDetails;
 
 public final class NewRoomFragmentLister implements TextWatcher {
-    private RoomDetailsFragment fragment;
+    private FragmentRoomDetails fragment;
     private View                view;
 
     private boolean isChange = false;
 
-    public NewRoomFragmentLister(RoomDetailsFragment fragment, View view) {
+    public NewRoomFragmentLister(FragmentRoomDetails fragment, View view) {
         this.fragment = fragment;
         this.view = view;
     }
@@ -45,7 +44,8 @@ public final class NewRoomFragmentLister implements TextWatcher {
             updateRoomDetails();
         } else if (view.getId() == R.id.rental_editRoom_add) {
             //增加租户资料
-            PersonListener.addPerson(fragment.getActivity(), fragment);
+//            PersonListener.addPerson(fragment.getActivity(), fragment);
+            new DialogFragmentInsertPerson(fragment.getContext(),fragment).show(fragment.getFragmentManager(),"");
         }
     }
 
@@ -56,25 +56,19 @@ public final class NewRoomFragmentLister implements TextWatcher {
                 || view.getId() == R.id.rental_editRoom_contract_BeginDate)) {
             int months = 0;
             if (view.getId() == R.id.rental_editRoom_beginDate) {
-                months=Integer.parseInt(fragment.getRentalMonth().getSelectedItem().toString());
-            }else if(view.getId()==R.id.rental_editRoom_propertyBeginDate){
+                months = Integer.parseInt(fragment.getRentalMonth().getSelectedItem().toString());
+            } else if (view.getId() == R.id.rental_editRoom_propertyBeginDate) {
                 months = Integer.parseInt(fragment.getPropertyMonth().getSelectedItem().toString());
-            }else if(view.getId()==R.id.rental_editRoom_contract_BeginDate){
+            } else if (view.getId() == R.id.rental_editRoom_contract_BeginDate) {
                 months = Integer.parseInt(fragment.getContractMonth().getSelectedItem().toString());
             }
             // 初始化日期
-            Calendar myCalendar = Calendar.getInstance();
-            int      myYear     = myCalendar.get(Calendar.YEAR);
-            int      month      = myCalendar.get(Calendar.MONTH);
-            int      day        = myCalendar.get(Calendar.DAY_OF_MONTH);
-            final int finalMonths = months;
-            DatePickerDialog dpd = new DatePickerDialog(fragment.getActivity(), DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, monthOfYear, dayOfMonth) -> {
-                ((TextView) this.view.findViewById(view.getId())).setText(DateUtils.string2DateString(year,monthOfYear,dayOfMonth, finalMonths));
-                isChange = true;
-                this.view.findViewById(R.id.rental_editRoom_okBtn).setEnabled(true);
-                fragment.onFocusChange();
-            }, myYear, month, day);
-            dpd.show();
+            DateUtils.showDateDialog(fragment.getContext(), ((TextView) this.view.findViewById(view.getId()))::setText
+                    , str -> {
+                        isChange = true;
+                        this.view.findViewById(R.id.rental_editRoom_okBtn).setEnabled(true);
+                        fragment.onFocusChange();
+                    }, months);
         }
     }
 

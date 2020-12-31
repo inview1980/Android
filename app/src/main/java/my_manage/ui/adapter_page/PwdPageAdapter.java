@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import my_manage.ui.password_box.fragment.PasswordManageItemDetailsFragment;
+import my_manage.password_box.fragment.PasswordManageItemDetailsFragment;
 import my_manage.pojo.UserItem;
 
 public final class PwdPageAdapter extends FragmentStatePagerAdapter {

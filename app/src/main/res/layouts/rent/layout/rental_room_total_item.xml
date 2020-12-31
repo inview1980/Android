@@ -25,31 +25,40 @@
         android:layout_height="match_parent"
         android:layout_columnWeight="3"
         android:background="@android:color/white"
-        android:paddingStart="@dimen/rental_main_gridview_margin_6">
+        android:paddingStart="@dimen/rental_main_gridview_margin_9">
 
-            <TableRow>
-
-                <TextView
-                    style="@style/textView_1th"
-                    android:text="@string/rental_roomCount_cn" android:gravity="center"
-                     />
-                <TextView
-                    android:id="@+id/rental_main_item_roomTotal"
-                    android:text="@string/rental_roomCount_cn"
-                    style="@style/rental_textView_context"/>
-            </TableRow>
-
-
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="@dimen/rental_main_gridview_margin_9"
+            android:layout_marginBottom="@dimen/rental_main_gridview_margin_9">
 
             <TextView
-                style="@style/textView_1th"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/rental_roomCount_cn"
+                android:textSize="@dimen/rental_label_textSize" />
+
+            <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+                android:id="@+id/rental_main_item_roomTotal"
+                android:layout_width="wrap_content"
+                android:text="@string/rental_roomCount_cn"
+                android:textSize="@dimen/rental_label_textSize" />
+        </TableRow>
+
+
+        <TableRow android:layout_marginBottom="@dimen/rental_main_gridview_margin_9">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:singleLine="true"
                 android:text="@string/rental_areaTotal_cn"
-                />
+                android:textSize="@dimen/rental_label_textSize" />
 
-            <TextView
+            <TextView android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
                 android:id="@+id/rental_main_item_areaTotal"
-                style="@style/rental_textView_context"/>
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/rental_label_textSize" />
         </TableRow>
     </TableLayout>
 </GridLayout>

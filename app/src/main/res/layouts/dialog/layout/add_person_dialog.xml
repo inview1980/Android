@@ -1,94 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/grayWhite"
+    android:stretchColumns="1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/rental_main_gridview_margin_6"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical">
+    <include layout="@layout/main_toolbar" />
+
+    <TableRow style="@style/rental_room_details_tableRow">
 
         <TextView
-            style="@style/textView_1th"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textView_min_1th"
             android:text="@string/company" />
 
         <EditText
             android:id="@+id/rental_addPerson_companyName"
-            android:layout_width="match_parent"
-            android:labelFor="@id/rental_addPerson_companyName"
+            style="@style/editView_middle_right"
             android:autofillHints="@string/company"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="text"
+            android:labelFor="@id/rental_addPerson_companyName" />
+    </TableRow>
+
+    <TableRow style="@style/rental_room_details_tableRow">
 
         <TextView
-            style="@style/textView_1th"
+            style="@style/textView_min_1th"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name_cn" />
 
         <EditText
             android:id="@+id/rental_addPerson_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/editView_middle_right"
             android:autofillHints="@string/name_cn"
-            android:labelFor="@id/rental_addPerson_name"
-            android:inputType="text" />
+            android:inputType="text"
+            android:labelFor="@id/rental_addPerson_name" />
+    </TableRow>
+
+    <TableRow style="@style/rental_room_details_tableRow">
 
         <TextView
-            style="@style/textView_1th"
+            style="@style/textView_min_1th"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tel" />
 
         <EditText
             android:id="@+id/rental_addPerson_tel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/editView_middle_right"
             android:autofillHints="@string/tel"
-            android:labelFor="@id/rental_addPerson_tel"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:labelFor="@id/rental_addPerson_tel" />
+    </TableRow>
+
+    <TableRow style="@style/rental_room_details_tableRow">
 
         <TextView
-            style="@style/textView_1th"
+            style="@style/textView_min_1th"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rental_codeNumber_cn" />
 
         <EditText
             android:id="@+id/rental_addPerson_code"
-            android:inputType="phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/editView_middle_right"
+            android:inputType="phone" />
+    </TableRow>
 
-        <TextView
-            style="@style/textView_1th"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/remark_cn" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/rental_addPerson_remark"
+            style="@style/editView_middle_right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
             android:autofillHints="@string/remark_cn"
-            android:labelFor="@id/rental_addPerson_remark"
-            android:inputType="textMultiLine" />
-
-        <com.deadline.statebutton.StateButton
-            android:id="@+id/rental_addPerson_ok"
-            style="@style/StateButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ok_cn"
-            app:normalBackgroundColor="@color/blue"
-            app:pressedBackgroundColor="@color/blue"
-            app:round="true"
-            app:unableBackgroundColor="@color/blue" />
+            android:background="@null"
+            android:gravity="left"
+            android:hint="@string/remark_cn"
+            android:inputType="textMultiLine"
+            android:lines="3" />
     </LinearLayout>
-</ScrollView>
+
+    <com.deadline.statebutton.StateButton
+        android:id="@+id/rental_addPerson_ok"
+        style="@style/StateButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_6"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:text="@string/ok_cn"
+        android:enabled="false"
+        app:normalBackgroundColor="@color/blue"
+        app:pressedBackgroundColor="@color/blue"
+        app:round="true"
+        app:unableBackgroundColor="@color/blue" />
+</TableLayout>

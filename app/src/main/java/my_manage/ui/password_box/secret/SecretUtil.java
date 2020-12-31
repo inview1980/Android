@@ -1,4 +1,4 @@
-package my_manage.ui.password_box.secret;
+package my_manage.password_box.secret;
 
 import org.jasypt.util.text.BasicTextEncryptor;
 

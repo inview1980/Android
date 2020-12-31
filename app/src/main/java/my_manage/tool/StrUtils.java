@@ -1,8 +1,11 @@
 package my_manage.tool;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public final class StrUtils {
+    public static DecimalFormat df4 = new DecimalFormat("###.##");
+
     public static boolean isBlank(String string) {
         if (string == null || string.length() == 0 || string.trim().length() == 0) {
             return true;

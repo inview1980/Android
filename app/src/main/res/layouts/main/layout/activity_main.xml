@@ -4,102 +4,142 @@
     android:layout_height="match_parent"
     android:background="@color/grayBlue">
 
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TableRow>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView android:layout_height="@dimen/pwdItemHeight" />
-        </TableRow>
+            <TableRow>
 
-        <TableRow android:gravity="center_horizontal">
+                <TextView android:layout_height="@dimen/pwdItemHeight" />
+            </TableRow>
+
+            <TableRow android:gravity="center_horizontal">
 
 
-            <RelativeLayout
-                android:id="@+id/layout1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/main_pwdBtn"
-                    style="@style/mainBtnStyle"
-                    android:background="@mipmap/cabinet" />
+                    <ImageButton
+                        android:id="@+id/main_pwdBtn"
+                        style="@style/mainBtnStyle"
+                        android:background="@mipmap/cabinet" />
+
+                    <TextView
+                        style="@style/main_TxtStyle"
+                        android:layout_alignTop="@+id/main_pwdBtn"
+                        android:text="@string/pwdManage_cn" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/refuel_record_Btn"
+                        style="@style/mainBtnStyle"
+                        android:background="@mipmap/refuel" />
+
+                    <TextView
+                        style="@style/main_TxtStyle"
+                        android:text="加油记录" />
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow android:gravity="center_horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/layout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/rentalBtn"
+                        style="@style/mainBtnStyle"
+                        android:background="@mipmap/rental_pic" />
+
+                    <TextView
+                        style="@style/main_TxtStyle"
+                        android:layout_alignTop="@id/rentalBtn"
+                        android:text="@string/timeManage_cn" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/layout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/car_maintenance_Btn"
+                        style="@style/mainBtnStyle"
+                        android:background="@mipmap/car" />
+
+                    <TextView
+                        style="@style/main_TxtStyle"
+                        android:text="@string/carMaintenance_cn" />
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow android:gravity="center_horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/layout5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/liftBtn"
+                        style="@style/mainBtnStyle"
+                        android:background="@mipmap/living_expenses" />
+
+                    <TextView
+                        style="@style/main_TxtStyle"
+                        android:layout_alignTop="@id/liftBtn"
+                        android:text="@string/living_expenses" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/layout6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/shopping_record_Btn"
+                        style="@style/mainBtnStyle"
+                        android:background="@mipmap/buy_record" />
+
+                    <TextView
+                        style="@style/main_TxtStyle"
+                        android:text="@string/buy_record" />
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow>
+
+                <TextView android:layout_height="@dimen/pwdItemHeight" />
+            </TableRow>
+
+            <TableRow>
 
                 <TextView
-                    style="@style/main_TxtStyle"
-                    android:layout_alignTop="@+id/main_pwdBtn"
-                    android:text="@string/pwdManage_cn" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/refuel_record_Btn"
-                    style="@style/mainBtnStyle"
-                    android:background="@mipmap/refuel" />
-
-                <TextView
-                    style="@style/main_TxtStyle"
-                    android:text="加油记录" />
-            </RelativeLayout>
-        </TableRow>
-
-        <TableRow android:gravity="center_horizontal">
-
-            <RelativeLayout
-                android:id="@+id/layout2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/main_timeBtn"
-                    style="@style/mainBtnStyle"
-                    android:background="@mipmap/rental_pic" />
-
-                <TextView
-                    style="@style/main_TxtStyle"
-                    android:layout_alignTop="@id/main_timeBtn"
-                    android:text="@string/timeManage_cn" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/layout4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <!--                <ImageButton-->
-                <!--                    android:id="@+id/refuel_record_Btn"-->
-                <!--                    style="@style/mainBtnStyle"-->
-                <!--                    android:background="@mipmap/rental_pic" />-->
-
-                <!--                <TextView-->
-                <!--                    style="@style/main_TxtStyle"-->
-                <!--                    android:text="@string/timeManage_cn" />-->
-            </RelativeLayout>
-        </TableRow>
-
-        <TableRow>
-
-            <TextView android:layout_height="@dimen/pwdItemHeight" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/version"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
-                android:gravity="end"
-                android:text="@string/water_number" />
-        </TableRow>
-    </TableLayout>
+                    android:id="@+id/version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+                    android:gravity="end"
+                    android:text="@string/water_number" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

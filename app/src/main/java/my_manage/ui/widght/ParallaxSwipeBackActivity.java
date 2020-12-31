@@ -14,18 +14,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 
 /**
- * @Title: ${file_name}
- * @Description: 带视觉差的滑动返回
+ *
+ *  带视觉差的滑动返回
  * Created by bushijie33@gmail.com on 2015/7/5.
  */
 @SuppressLint("Registered")

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whiteGray"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="20dp"
+    android:stretchColumns="1">
+
+    <TableRow style="@style/rental_room_details_tableRow">
+
+        <TextView
+            style="@style/textView_1th"
+            android:text="@string/date" />
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/editView_middle_right" />
+    </TableRow>
+
+    <TableRow style="@style/rental_room_details_tableRow">
+
+        <TextView
+            style="@style/textView_1th"
+            android:text="@string/money" />
+
+        <EditText
+            android:id="@+id/money"
+            style="@style/editView_middle_right"
+            android:inputType="numberDecimal" />
+    </TableRow><TableRow style="@style/rental_room_details_tableRow">
+
+        <TextView
+            style="@style/textView_1th"
+            android:text="@string/odometerNumber" />
+
+        <EditText
+            android:id="@+id/odometerNumber"
+            style="@style/editView_middle_right"
+            android:inputType="numberDecimal" />
+    </TableRow>
+
+    <TableRow style="@style/rental_room_details_tableRow">
+
+        <TextView
+            style="@style/textView_1th"
+            android:text="@string/address_main_cn" />
+
+        <my_manage.ui.widght.DropEditText
+            android:id="@+id/address"
+            style="@style/editView_middle_right" />
+    </TableRow>
+
+    <TableRow style="@style/rental_room_details_tableRow">
+
+        <TextView
+            style="@style/textView_1th"
+            android:text="@string/type_CN" />
+
+        <my_manage.ui.widght.DropEditText
+            android:id="@+id/car_type_name"
+            style="@style/editView_middle_right" />
+    </TableRow>
+
+    <TableRow style="@style/rental_room_details_tableRow">
+
+        <TextView
+            style="@style/textView_1th"
+            android:text="@string/remark_cn" />
+
+        <EditText
+            android:id="@+id/remark"
+            style="@style/editView_middle_right" />
+    </TableRow>
+
+    <TableRow>
+
+        <com.deadline.statebutton.StateButton
+            android:id="@+id/ok"
+            style="@style/StateButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/rental_main_gridview_margin_6"
+            android:layout_span="3"
+            android:text="@string/ok_cn"
+            app:normalBackgroundColor="@color/blue"
+            app:pressedBackgroundColor="@color/blue"
+            app:round="true"
+            android:enabled="false"
+            app:unableBackgroundColor="@color/blue" />
+    </TableRow>
+</TableLayout>

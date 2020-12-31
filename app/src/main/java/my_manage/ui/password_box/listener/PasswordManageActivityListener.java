@@ -1,4 +1,4 @@
-package my_manage.ui.password_box.listener;
+package my_manage.password_box.listener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,8 +8,8 @@ import android.widget.EditText;
 
 import my_manage.iface.IShowList;
 import my_manage.ui.common.changePasswordDialog;
-import my_manage.ui.password_box.R;
-import my_manage.ui.password_box.page.PasswordManageViewPagerHome;
+import my_manage.password_box.R;
+import my_manage.password_box.page.PasswordManageViewPagerHome;
 import my_manage.pojo.UserItem;
 import my_manage.ui.rent_manage.listener.RentalMainActivityListener;
 import my_manage.tool.ExcelUtils;

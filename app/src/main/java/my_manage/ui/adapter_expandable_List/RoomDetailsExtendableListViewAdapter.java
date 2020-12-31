@@ -19,10 +19,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.val;
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.pojo.show.MenuData;
 import my_manage.pojo.show.ShowRoomDetails;
-import my_manage.tool.IconView;
+import my_manage.ui.widght.IconView;
+import my_manage.tool.StrUtils;
 import my_manage.tool.database.DbHelper;
 import my_manage.tool.enums.MenuTypesEnum;
 import my_manage.tool.enums.RentalOnClickEnumHandle;
@@ -99,9 +100,9 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
             vh = (ViewHolderFor1Floor) convertView.getTag();
         }
         vh.houseNumber.setText(room.get(i).getRoomDetails().getRoomNumber());
-        vh.area.setText(String.valueOf(room.get(i).getRoomDetails().getRoomArea()));
+        vh.area.setText(StrUtils.df4.format(room.get(i).getRoomDetails().getRoomArea()));
         if (room.get(i).getRentalRecord().getPrimary_id() != 0) {//租房记录不为空
-            vh.monthlyRent.setText(String.valueOf(room.get(i).getRentalRecord().getMonthlyRent()));
+            vh.monthlyRent.setText(StrUtils.df4.format(room.get(i).getRentalRecord().getMonthlyRent()));
             //未填写出租的开始日期
             if (room.get(i).getRentalEndDate() != null) {
                 Calendar date = room.get(i).getRentalEndDate();
@@ -171,8 +172,8 @@ public final class RoomDetailsExtendableListViewAdapter<T extends Activity & ISh
             ((TextView) view.findViewById(R.id.txt1)).setText(item.getTitle());
             view.setId(item.getPrimary_id());
             GridLayout.LayoutParams lp = new GridLayout.LayoutParams(GridLayout.spec(GridLayout.UNDEFINED, 1f), GridLayout.spec(GridLayout.UNDEFINED, 1f));
-            lp.setMargins(0, mainLayout.getResources().getDimensionPixelSize(R.dimen.rental_main_gridview_margin_9),
-                    0, mainLayout.getResources().getDimensionPixelSize(R.dimen.rental_main_gridview_margin_6));
+//            lp.setMargins(0, mainLayout.getResources().getDimensionPixelSize(R.dimen.rental_main_gridview_margin_9),
+//                    0, mainLayout.getResources().getDimensionPixelSize(R.dimen.rental_main_gridview_margin_6));
             view.setLayoutParams(lp);
             view.setOnClickListener(view1 -> RentalOnClickEnumHandle.getType(view1.getId()).run(RoomDetailsExtendableListViewAdapter.this.activity,
                     RoomDetailsExtendableListViewAdapter.this.room, position));

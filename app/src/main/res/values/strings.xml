@@ -8,15 +8,16 @@
 
     <string name="pwdManage_cn">密码管理</string>
     <string name="timeManage_cn">房租管理</string>
-    <string name="address_main_cn">地址</string>
-    <string name="userName_cn">用户名</string>
-    <string name="password_cn">密码</string>
+    <string name="carMaintenance_cn">车辆维修</string>
+    <string name="address_main_cn">地址:</string>
+    <string name="userName_cn">用户名:</string>
+    <string name="password_cn">密码:</string>
     <string name="ok_cn">确定</string>
     <string name="cancel_cn">取消</string>
     <string name="addUser_cn">新增用户</string>
     <string name="passwordBox">密码箱</string>
 
-    <string name="rental_codeNumber_cn">证件号码</string>
+    <string name="rental_codeNumber_cn">证件号码:</string>
     <string name="remark_cn">备注</string>
     <string name="file_Name">文件名</string>
     <string name="create_date">创建日期</string>
@@ -31,6 +32,6 @@
     <string name="rise">升:</string>
     <string name="station_name">加油站:</string>
     <string name="odometerNumber">里程:</string>
-    <string name="fuel_consumption">100km/L:</string>
+    <string name="fuel_consumption">L/100km:</string>
 
 </resources>

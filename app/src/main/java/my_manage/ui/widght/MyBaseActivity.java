@@ -10,7 +10,7 @@ import java.util.Date;
 
 import my_manage.iface.IShowList;
 import my_manage.tool.MenuUtils;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.ui.common.CheckPassword;
 
 /**

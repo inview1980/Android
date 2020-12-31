@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_corner">
+
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+
+        <com.hanks.htextview.rainbow.RainbowTextView
+            android:id="@+id/car_type_name"
+            style="@style/textView_1th"
+            app:colorSpace="150dp"
+            app:colorSpeed="4dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:lines="2"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="@dimen/rental_main_gridview_margin_3"
+        android:paddingTop="@dimen/rental_main_gridview_margin_3"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/rental_main_gridview_margin_3">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:layout_height="wrap_content"
+                android:text="@string/date" />
+
+            <TextView
+                android:id="@+id/date"
+                style="@style/rental_textView_context"
+                android:layout_width="@dimen/dateTextWidth"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/min_size" />
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:layout_height="wrap_content"
+                android:text="@string/money" />
+
+            <TextView
+                android:id="@+id/money"
+                style="@style/rental_textView_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/min_size" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/rental_main_gridview_margin_3">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:layout_height="wrap_content"
+                android:text="@string/odometerNumber" />
+
+            <TextView
+                android:id="@+id/odometerNumber"
+                style="@style/rental_textView_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/min_size" />
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:layout_height="wrap_content"
+                android:text="地址：" />
+
+            <TextView
+                android:id="@+id/address"
+                style="@style/rental_textView_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textSize="@dimen/min_size" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/remarkLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-3dp"
+            android:layout_marginBottom="@dimen/rental_main_gridview_margin_3"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:layout_height="wrap_content"
+                android:text="@string/remark_cn" />
+
+            <TextView
+                android:id="@+id/remark"
+                style="@style/rental_textView_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+        </TableRow>
+    </TableLayout>
+
+
+</LinearLayout>

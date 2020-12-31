@@ -2,7 +2,7 @@ package my_manage.ui.widght;
 
 import androidx.appcompat.widget.Toolbar;
 
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 
 public abstract class MyBaseSwipeBackActivity  extends ParallaxSwipeBackActivity  {
 

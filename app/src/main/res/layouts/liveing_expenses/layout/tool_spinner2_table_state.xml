@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayWhite2">
+
+    <include layout="@layout/main_toolbar" />
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/shap_corner_blue_3">
+
+        <Spinner
+            android:id="@+id/leftSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            />
+
+        <Spinner
+            android:id="@+id/rightSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+           />
+    </GridLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/statesBar"
+        android:layout_below="@id/gridLayout"
+        android:background="@drawable/shap_corner_blue_3" />
+
+    <TextView
+        android:id="@+id/statesBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/banana"
+        android:paddingStart="@dimen/rental_main_gridview_margin_6"
+        android:paddingTop="@dimen/rental_main_gridview_margin_3"
+        android:paddingBottom="@dimen/rental_main_gridview_margin_3"
+        android:textSize="@dimen/min_size"
+        tools:ignore="RtlSymmetry" />
+</RelativeLayout>

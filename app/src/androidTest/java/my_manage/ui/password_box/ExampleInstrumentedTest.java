@@ -1,4 +1,4 @@
-package my_manage.ui.password_box;
+package my_manage.password_box;
 
 import android.content.Context;
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:columnCount="6"
+    android:padding="@dimen/rental_main_gridview_margin_6">
+
+    <TextView
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_3"
+        android:text="@string/startDate" />
+
+    <TextView
+        android:id="@+id/startDate"
+        android:layout_width="@dimen/dateTextWidth" />
+
+    <TextView android:text="@string/payDate" />
+
+    <TextView
+        android:id="@+id/payDate"
+        android:layout_width="@dimen/dateTextWidth" />
+
+
+    <TextView android:text="@string/money" />
+
+    <TextView android:id="@+id/totalMoney" />
+
+    <TextView android:text="@string/endDate" />
+
+    <TextView
+        android:id="@+id/endDate"
+        android:layout_width="@dimen/dateTextWidth" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备注：" />
+
+        <TextView
+            android:id="@+id/remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true" />
+
+    </LinearLayout>
+</GridLayout>

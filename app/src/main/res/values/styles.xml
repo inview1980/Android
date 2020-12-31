@@ -52,7 +52,8 @@
     <style name="rental_textView_context">
         <item name="android:layout_marginEnd">3dp</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/rental_label_textSize</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/min_size</item>
     </style>
 
     <style name="textView_1th">
@@ -60,18 +61,54 @@
         <item name="android:textSize">@dimen/rental_label_textSize</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
         <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
+    </style>
+
+
+    <style name="rental_room_details_textView">
+        <item name="android:paddingStart">@dimen/rental_main_gridview_margin_6</item>
+        <item name="android:textSize">@dimen/min_size</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
+    </style>
+
+    <style name="rental_person_details_textView" parent="rental_room_details_textView"/>
+
+    <style name="rental_person_details_editView">
+        <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/min_size</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:enabled">false</item>
+        <item name="android:layout_marginBottom">@dimen/rental_main_gridview_margin_9</item>
+        <item name="android:layout_marginTop">@dimen/rental_main_gridview_margin_9</item>
+    </style>
+
+    <style name="textView_min_1th" parent="textView_1th">
+        <item name="android:paddingStart">@dimen/rental_main_gridview_margin_3</item>
+        <item name="android:textSize">@dimen/min_size</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
+        <item name="android:paddingEnd">@dimen/rental_main_gridview_margin_3</item>
     </style>
 
     <style name="editView_middle_right">
         <item name="android:paddingEnd">@dimen/rent_room_details_endPadding</item>
         <item name="android:background">@null</item>
-        <item name="android:textSize">@dimen/rental_label_textSize</item>
+        <item name="android:textSize">@dimen/min_size</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_height">@dimen/rent_room_expandable_listview_item_height</item>
     </style>
 
-    <style name="AppMyTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="AppMyTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>

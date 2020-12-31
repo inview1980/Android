@@ -13,15 +13,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import my_manage.ui.adapter_expandable_List.RoomDetailsExtendableListViewAdapter;
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
-import my_manage.tool.database.DbHelper;
-import my_manage.ui.rent_manage.listener.PersonListener;
-import my_manage.ui.rent_manage.listener.RentalMainActivityListener;
-import my_manage.ui.rent_manage.listener.RoomListener;
+import my_manage.password_box.R;
 import my_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.MenuUtils;
+import my_manage.tool.database.DbHelper;
+import my_manage.ui.adapter_expandable_List.RoomDetailsExtendableListViewAdapter;
+import my_manage.ui.rent_manage.fragment.DialogFragmentInsertPerson;
+import my_manage.ui.rent_manage.fragment.DialogFragmentInsertRoom;
+import my_manage.ui.rent_manage.fragment.DialogFragmentPayPropertyAdd;
+import my_manage.ui.rent_manage.fragment.DialogFragmentPayPropertyShowAll;
+import my_manage.ui.rent_manage.listener.RentalMainActivityListener;
 import my_manage.ui.widght.MyBaseSwipeBackActivity;
 
 /**
@@ -80,16 +82,28 @@ public final class RentalForHouseActivity extends MyBaseSwipeBackActivity implem
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.addPerson) {
-            //增加租户信息
-            PersonListener.addPerson(this,this);
-        } else if (id == R.id.addRoom) {
-            //增加房源信息
-            RoomListener.addRoomDetails(this,null);
-        } else if (id ==  R.id.showDeletedRoomDetails) {
-            //显示已删除房源
-            new RentalMainActivityListener().showDeletedRoom(this);
+        switch (item.getItemId()) {
+            case R.id.addPerson:
+                //增加租户信息
+//            PersonListener.addPerson(this,this);
+                new DialogFragmentInsertPerson(this, this).show(getSupportFragmentManager(), "");
+                break;
+            case R.id.addRoom:
+                //增加房源信息
+                new DialogFragmentInsertRoom<>(this, title).show(getSupportFragmentManager(), "");
+                break;
+            case R.id.showDeletedRoomDetails:
+                //显示已删除房源
+                new RentalMainActivityListener().showDeletedRoom(this);
+                break;
+            case R.id.insertPayPropertyRecord:
+                new DialogFragmentPayPropertyAdd().show(this.getSupportFragmentManager(), "");
+                break;
+            case  R.id.showPayPropertyRecord:
+                new DialogFragmentPayPropertyShowAll().show(getSupportFragmentManager(),"");
+                break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

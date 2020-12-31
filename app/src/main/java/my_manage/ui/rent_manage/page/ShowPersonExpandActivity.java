@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import my_manage.ui.adapter_expandable_List.PersonExtendableListViewAdapter;
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.database.DbHelper;
 import my_manage.pojo.PersonDetails;
 import my_manage.ui.widght.MyBaseSwipeBackActivity;

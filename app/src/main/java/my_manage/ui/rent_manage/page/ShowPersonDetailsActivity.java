@@ -20,10 +20,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnPageChange;
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.PageUtils;
 import my_manage.tool.database.DbHelper;
-import my_manage.ui.rent_manage.fragment.PersonDetailsFramgent;
+import my_manage.ui.rent_manage.fragment.FramgentPersonDetails;
 import my_manage.pojo.show.ShowRoomDetails;
 
 import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
@@ -71,7 +71,7 @@ public class ShowPersonDetailsActivity extends AppCompatActivity implements ISho
         data.forEach(room -> tabTitle.addTab(tabTitle.newTab().setText(room.getRoomDetails().getRoomNumber())));
 
         viewPage.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            List<Fragment> vList = data.stream().map(PersonDetailsFramgent::new).collect(Collectors.toList());
+            List<Fragment> vList = data.stream().map(FramgentPersonDetails::new).collect(Collectors.toList());
 
             @Override
             public int getCount() {

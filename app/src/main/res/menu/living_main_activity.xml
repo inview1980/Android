@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/addRecord"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="1"
+        android:title="添加记录" />
+    <item
+        android:id="@+id/dataAnalysis"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:orderInCategory="2"
+        android:title="数据分析" />
+    <item
+        android:id="@+id/deleteAllRecord"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:orderInCategory="3"
+        android:title="删除所有记录" />
+</menu>

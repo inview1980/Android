@@ -10,7 +10,7 @@ import my_manage.iface.ColumnName;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor()
 public final class UserItem {
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     private int    id;

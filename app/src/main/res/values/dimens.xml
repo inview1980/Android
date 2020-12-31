@@ -6,16 +6,16 @@
 
     <dimen name="rental_main_gridview_title_fontsize">21sp</dimen>
     <dimen name="icon_fontsize">25sp</dimen>
-    <dimen name="rental_main_gridview_nomal_fontsize">16sp</dimen>
+    <dimen name="rental_main_gridview_normal_fontsize">16sp</dimen>
     <dimen name="rental_main_gridview_margin_6">6dp</dimen>
     <dimen name="rental_main_gridview_margin_9">9dp</dimen>
     <dimen name="rental_main_gridview_margin_12">12dp</dimen>
     <dimen name="rental_main_gridview_margin_18">18dp</dimen>
     <dimen name="rental_main_gridview_margin_3">3dp</dimen>
 
-    <dimen name="rental_label_textSize">16dp</dimen>
+    <dimen name="rental_label_textSize">16sp</dimen>
     <dimen name="middle_textSize">18dp</dimen>
-    <dimen name="rent_room_expandable_listview_item_height">40dp</dimen>
+    <dimen name="rent_room_expandable_listview_item_height">35dp</dimen>
     <dimen name="rent_room_details_endPadding">10dp</dimen>
     <dimen name="radiusMiddle">10dp</dimen>
     <dimen name="radiusSmall">5dp</dimen>
@@ -27,4 +27,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
 
+    <dimen name="dateTextWidth">75dp</dimen>
+    <dimen name="byte5Width">55dp</dimen>
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grayWhite2"
+    android:orientation="vertical">
+
+    <include layout="@layout/main_toolbar" />
+
+    <my_manage.ui.widght.FlowRadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_3"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_3"
+        android:background="@drawable/shap_corner_blue_3">
+
+        <RadioButton
+            android:id="@+id/radioAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="全部"
+            android:textSize="@dimen/min_size" />
+
+        <RadioButton
+            android:id="@+id/radioKM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="里程"
+            android:textSize="@dimen/min_size" />
+
+        <RadioButton
+            android:id="@+id/radioFuelNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="油量"
+            android:textSize="@dimen/min_size" />
+
+        <RadioButton
+            android:id="@+id/radioMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="花费"
+            android:textSize="@dimen/min_size" />
+
+        <RadioButton
+            android:id="@+id/radioFuelConsumption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="油耗"
+            android:textSize="@dimen/min_size" />
+
+        <RadioButton
+            android:id="@+id/radioSaveMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优惠"
+            android:textSize="@dimen/min_size" />
+    </my_manage.ui.widght.FlowRadioGroup>
+<FrameLayout android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shap_corner_blue_3"/>
+</LinearLayout>

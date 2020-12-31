@@ -1,4 +1,4 @@
-package my_manage.ui.password_box.fragment;
+package my_manage.password_box.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,7 +26,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import lombok.NoArgsConstructor;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.pojo.UserItem;
 import my_manage.pojo.show.MenuData;
 import my_manage.tool.PageUtils;
@@ -70,7 +70,6 @@ public final class PasswordManageItemDetailsFragment extends Fragment implements
                 helper.setText(android.R.id.text1, item.getTitle());
             }
         });
-
         loadParameters();
         return v;
     }

@@ -4,7 +4,7 @@
     <style name="rental_expandable_listview_item">
         <item name="android:background">#0000</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/rental_label_textSize</item>
+        <item name="android:textSize">@dimen/min_size</item>
         <item name="android:layout_columnWeight">@integer/rental_room_details_1width</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:gravity">center</item>

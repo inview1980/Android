@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tableRow_style"
+    android:layout_marginBottom="@dimen/rental_main_gridview_margin_3"
+    android:background="@color/banana">
+    <com.hanks.htextview.rainbow.RainbowTextView
+        android:id="@+id/title1"
+        android:textColor="@color/rentalMainGridViewTitleColor"
+        android:textSize="@dimen/rental_main_gridview_normal_fontsize"
+        android:textStyle="bold"
+        app:colorSpace="100dp"
+        app:colorSpeed="4dp" />
+
+    <com.hanks.htextview.rainbow.RainbowTextView
+        android:id="@+id/title2"
+        android:textColor="@color/rentalMainGridViewTitleColor"
+        android:textSize="@dimen/rental_main_gridview_normal_fontsize"
+        android:textStyle="bold"
+        app:colorSpace="100dp"
+        app:colorSpeed="4dp" />
+</TableRow>

@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.database.DbHelper;
 import my_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.DateUtils;
@@ -59,6 +59,8 @@ public final class RoomHistoryActivity extends MyBaseSwipeBackActivity implement
         bundle.putInt("currentItem", i);
         intent.putExtras(bundle);
         startActivity(intent);
+//        new DialogFragmentRoomDetails(getSupportFragmentManager(),DbHelper.getInstance().getHistoryByRoomNumber(roomNumber)
+//        ,ShowRoomType.History,i).show(getSupportFragmentManager(),"");
     }
 
     @Override

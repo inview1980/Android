@@ -7,39 +7,36 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.HttpParams;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
-
 import java.io.File;
 
-import my_manage.tool.ExcelUtils;
-import my_manage.tool.http.HttpUtils;
-import my_manage.ui.password_box.R;
-import my_manage.ui.password_box.page.DownloadActivity;
+import my_manage.iface.IShowList;
+import my_manage.password_box.R;
 import my_manage.ui.password_box.page.PasswordManageTotalActivity;
-import my_manage.ui.rent_manage.RentalMainActivity;
 import my_manage.tool.ContentUriUtil;
+import my_manage.tool.ExcelUtils;
 import my_manage.tool.PageUtils;
 import my_manage.tool.database.DbHelper;
+import my_manage.ui.car.page.ActivityCarMaintenanceMain;
 import my_manage.ui.fuel.page.FuelRecordMainActivity;
-import web.WebResult;
+import my_manage.ui.living_expenses.page.ActivityLivingMain;
+import my_manage.ui.rent_manage.RentalMainActivity;
+import my_manage.ui.rent_manage.listener.RentalMainActivityListener;
+import my_manage.ui.shopping.page.ActivityShoppingMain;
 
-public class MainActivity extends AppCompatActivity implements View.OnLongClickListener, PopupMenu.OnMenuItemClickListener {
-    private       TextView versionTxt;
+//import com.lzy.okgo.OkGo;
+//import com.lzy.okgo.model.HttpParams;
+
+public class MainActivity extends AppCompatActivity implements View.OnLongClickListener, PopupMenu.OnMenuItemClickListener, IShowList {
+    private TextView versionTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +55,27 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
 
     public void mainBtn_onClick(View view) {
         int btn = view.getId();//获取按键的值
-        if (btn == R.id.main_pwdBtn) {
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, PasswordManageTotalActivity.class);
-            startActivity(intent);
-        }
-
-        if (btn == R.id.main_timeBtn) {
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, RentalMainActivity.class);
-            startActivity(intent);
-        }
-
-        if(btn==R.id.refuel_record_Btn){
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, FuelRecordMainActivity.class);
-            startActivity(intent);
+        switch (btn) {
+            case R.id.main_pwdBtn:
+                startActivity(new Intent(this, PasswordManageTotalActivity.class));
+                break;
+            case R.id.rentalBtn:
+                startActivity(new Intent(this, RentalMainActivity.class));
+                break;
+            case R.id.refuel_record_Btn:
+                startActivity(new Intent(this, FuelRecordMainActivity.class));
+                break;
+            case R.id.car_maintenance_Btn:
+                startActivity(new Intent(this, ActivityCarMaintenanceMain.class));
+                break;
+            case R.id.liftBtn:
+                startActivity(new Intent(this, ActivityLivingMain.class));
+                break;
+            case R.id.shopping_record_Btn:
+                startActivity(new Intent(this, ActivityShoppingMain.class));
+                break;
+            default:
+                break;
         }
     }
 
@@ -108,43 +110,50 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
             case R.id.loadFile2DB:
                 loadFile();
                 break;
-            case R.id.downloadDB:
-                startActivity(new Intent(this, DownloadActivity.class));
+            case R.id.rebuildingDB:
+                new RentalMainActivityListener().rebuildingDB(this);
                 break;
-            case R.id.updateDB:
-                updateDB();
+            case R.id.saveDB:
+                //将数据库转出为xlsx
+                ExcelUtils.getInstance().saveDB(this, true);
+                break;
+//            case R.id.downloadDB:
+//                startActivity(new Intent(this, DownloadActivity.class));
+//                break;
+//            case R.id.updateDB:
+//                updateDB();
 //                startActivity(new Intent(this, my_manage.ui.common.Login_Activity.class));
-                break;
+//                break;
             default:
                 break;
         }
         return false;
     }
 
-    private void updateDB() {
-        DialogPlus dialog = DialogPlus.newDialog(this)
-                .setCancelable(true)
-                .setGravity(Gravity.CENTER)
-                .setContentHolder(new ViewHolder(new ProgressBar(this)))
-                .setContentWidth(ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setContentBackgroundResource(R.color.grayBlue)
-                .setOnDismissListener(dialog1 -> {
-                    OkGo.getInstance().cancelAll();
-                })
-                .create();
-        dialog.show();
-        //先测试是否已登录
-        HttpUtils.post(this, "/isLogged", null, result -> {
-            if (result.getState() == WebResult.OK) {
-                //先将数据库保存到xls文件，成功后再上传
-                if (ExcelUtils.getInstance().saveDB(this, false)) {
-                    HttpParams params = new HttpParams("saveFile", new File(ExcelUtils.getInstance().outFilePath));
-                    HttpUtils.post(this, "/info/updateDB", params,
-                            webResult -> PageUtils.showMessage(this, webResult.getDetails()), null,dialog);
-                }
-            }
-        }, null,dialog);
-    }
+//    private void updateDB() {
+//        DialogPlus dialog = DialogPlus.newDialog(this)
+//                .setCancelable(true)
+//                .setGravity(Gravity.CENTER)
+//                .setContentHolder(new ViewHolder(new ProgressBar(this)))
+//                .setContentWidth(ViewGroup.LayoutParams.WRAP_CONTENT)
+//                .setContentBackgroundResource(R.color.grayBlue)
+//                .setOnDismissListener(dialog1 -> {
+//                    OkGo.getInstance().cancelAll();
+//                })
+//                .create();
+//        dialog.show();
+//        //先测试是否已登录
+//        HttpUtils.post(this, "/isLogged", null, result -> {
+//            if (result.getState() == WebResult.OK) {
+//                //先将数据库保存到xls文件，成功后再上传
+//                if (ExcelUtils.getInstance().saveDB(this, false)) {
+//                    HttpParams params = new HttpParams("saveFile", new File(ExcelUtils.getInstance().outFilePath));
+//                    HttpUtils.post(this, "/info/updateDB", params,
+//                            webResult -> PageUtils.showMessage(this, webResult.getDetails()), null, dialog);
+//                }
+//            }
+//        }, null, dialog);
+//    }
 
     private void loadFile() {
         String path = getExternalFilesDir(null).getAbsolutePath()
@@ -153,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         File   file   = new File(path);
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         if (file.exists()) {
-            Uri uri = FileProvider.getUriForFile(this, "my_manage.ui.password_box.fileprovider", file);
+            Uri uri = FileProvider.getUriForFile(this, "my_manage.password_box.fileprovider", file);
             intent.setDataAndType(uri, "*/*");
         } else
             intent.setType("*/*");//文件类型限制
@@ -182,7 +191,12 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         }
         if (requestCode == 8080 && resultCode == 8080) {
             //登录成功后
-            updateDB();
+//            updateDB();
         }
+    }
+
+    @Override
+    public void showList() {
+
     }
 }

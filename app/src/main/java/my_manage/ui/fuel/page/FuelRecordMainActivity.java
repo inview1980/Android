@@ -1,5 +1,6 @@
 package my_manage.ui.fuel.page;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,18 +16,20 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.classic.adapter.BaseAdapterHelper;
 import com.classic.adapter.CommonAdapter;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import my_manage.iface.IShowList;
 import my_manage.pojo.FuelRecord;
+import my_manage.tool.DateUtils;
 import my_manage.tool.PageUtils;
+import my_manage.tool.StrUtils;
 import my_manage.tool.database.DbHelper;
 import my_manage.ui.fuel.listener.FuelListener;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.ui.widght.ParallaxSwipeBackActivity;
 
 /**
@@ -35,7 +38,7 @@ import my_manage.ui.widght.ParallaxSwipeBackActivity;
  * @Description :
  */
 public final class FuelRecordMainActivity extends ParallaxSwipeBackActivity implements IShowList {
-    public static                   List<FuelRecord>  fuelRecordList;
+    private                 List<FuelRecord>  fuelRecordList;
     @BindView(R.id.toolbar)         Toolbar           toolbar;
     @BindView(R.id.main_ListViewId) SwipeMenuListView listView;
     @BindView(R.id.main_viewId)     RelativeLayout    mainViewId;
@@ -64,7 +67,8 @@ public final class FuelRecordMainActivity extends ParallaxSwipeBackActivity impl
             FuelRecord item = fuelRecordList.get(position);
             switch (index) {
                 case 0:
-                    FuelListener.modifyFuelRecordCallActivity(this,item);
+//                    FuelListener.modifyFuelRecordCallActivity(this, item);
+                    new DialogFragmentModifyFuelRecord< >(item,this).show(getSupportFragmentManager(),"" );
                     break;
                 case 1:
                     FuelListener.deleteFuelRecord(FuelRecordMainActivity.this, item);
@@ -82,27 +86,29 @@ public final class FuelRecordMainActivity extends ParallaxSwipeBackActivity impl
 
     @Override
     public void showList() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");
-        DecimalFormat    df4        = new DecimalFormat("###.##");
-
+        //判断窗口的参数中是否包含year键，否则显示全部
+        int year = getIntent().getIntExtra("year", 0);
         fuelRecordList = DbHelper.getInstance().getFuelRecordList();
+        if (year != 0)
+            fuelRecordList = fuelRecordList.stream().filter(fr -> fr.getTime().get(Calendar.YEAR) == year).collect(Collectors.toList());
+
         listView.setAdapter(new CommonAdapter<FuelRecord>(this,
                 //视图
                 R.layout.fuel_list_item,
                 fuelRecordList) {
             @Override
             public void onUpdate(BaseAdapterHelper helper, FuelRecord item, int position) {
-                int oldOdometerNumber = (position < fuelRecordList.size()-1) ? fuelRecordList.get(position + 1).getOdometerNumber() : 0;
+                int oldOdometerNumber = (position < fuelRecordList.size() - 1) ? fuelRecordList.get(position + 1).getOdometerNumber() : 0;
                 if (item.getRise() == 0) item.setRise(1);//如果升数=0，默认为1
-                helper.setText(R.id.date, dateFormat.format(item.getTime().getTime()))
-                        .setText(R.id.original_price, df4.format(item.getMarketPrice()))
-                        .setText(R.id.rise, df4.format(item.getRise()))
-                        .setText(R.id.odometerNumber, df4.format(item.getOdometerNumber()))
-                        .setText(R.id.fuel_consumption, df4.format(Math.abs(item.getOdometerNumber() - oldOdometerNumber) / item.getRise()))
-                        .setText(R.id.totalMoney, df4.format(item.getMoney()))
-                        .setText(R.id.save_money, df4.format(item.getRise() * item.getMarketPrice() - item.getMoney()))
+                helper.setText(R.id.date, DateUtils.date2String(item.getTime()))
+                        .setText(R.id.original_price, StrUtils.df4.format(item.getMarketPrice()))
+                        .setText(R.id.rise, StrUtils.df4.format(item.getRise()))
+                        .setText(R.id.odometerNumber, StrUtils.df4.format(item.getOdometerNumber()))
+                        .setText(R.id.fuel_consumption, StrUtils.df4.format(item.getRise() / Math.abs(item.getOdometerNumber() - oldOdometerNumber) * 100))
+                        .setText(R.id.totalMoney, StrUtils.df4.format(item.getMoney()))
+                        .setText(R.id.save_money, StrUtils.df4.format(item.getRise() * item.getMarketPrice() - item.getMoney()))
                         .setText(R.id.station_name, item.getStationName())
-                        .setText(R.id.price, df4.format(item.getMoney() / item.getRise()));
+                        .setText(R.id.price, StrUtils.df4.format(item.getMoney() / item.getRise()));
             }
         });
     }
@@ -118,13 +124,14 @@ public final class FuelRecordMainActivity extends ParallaxSwipeBackActivity impl
         int id = item.getItemId();
         if (id == R.id.addFuelRecord) {
             //添加加油记录
-            FuelListener.addFuelRecordCallActivity(this);
+            new DialogFragmentModifyFuelRecord<>(null,this).show(getSupportFragmentManager(),"" );
+//            startActivityForResult(new Intent(this, AddFuelRecordActivity.class), 2020);
         } else if (id == R.id.deleteAllFuelRecord) {
             //删除所有加油记录
             FuelListener.deleteAllFuelRecord(this);
         } else if (id == R.id.dataAnalysis) {
             //数据分析
-            FuelListener.dataAnalysis(this);
+            new DialogFragmentDataAnalysis().show(getSupportFragmentManager(),"");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -135,6 +142,7 @@ public final class FuelRecordMainActivity extends ParallaxSwipeBackActivity impl
         showList();
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         showList();

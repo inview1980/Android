@@ -22,7 +22,7 @@
 //import java.util.ArrayList;
 //import java.util.List;
 //
-//import my_manage.ui.password_box.BuildConfig;
+//import my_manage.password_box.BuildConfig;
 //
 ///**
 // * @author：ivan huang

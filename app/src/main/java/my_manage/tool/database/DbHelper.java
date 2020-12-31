@@ -11,17 +11,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
+import kotlin.Triple;
 import lombok.Cleanup;
 import lombok.val;
 import my_manage.iface.IShowList;
+import my_manage.pojo.CarMaintenanceRecord;
 import my_manage.pojo.FuelRecord;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
+import my_manage.pojo.LivingExpenses;
+import my_manage.pojo.PayProperty;
+import my_manage.pojo.ShoppingRecord;
 import my_manage.pojo.UserItem;
-import my_manage.ui.password_box.secret.SecretUtil;
+import my_manage.password_box.secret.SecretUtil;
 import my_manage.pojo.PersonDetails;
 import my_manage.pojo.RentalRecord;
 import my_manage.pojo.RoomDetails;
@@ -46,10 +52,14 @@ public final class DbHelper {
         return dbHelper;
     }
 
-    public List<String> getCommunityNames() {
+    public List<String> getCommunityNamesByNoDel() {
         return getRoomDetailsToList().stream()
                 .map(RoomDetails::getCommunityName).distinct()
                 .collect(Collectors.toList());
+    }
+
+    public List<String> getCommunityNames() {
+        return DbBase.getQueryAll(RoomDetails.class).stream().map(RoomDetails::getCommunityName).distinct().collect(Collectors.toList());
     }
 
     public List<ShowRoomDetails> getDeleteRoomDetails() {
@@ -111,12 +121,30 @@ public final class DbHelper {
         }
     }
 
+    public List<RoomDetails> getRoomDetailsAll() {
+        return DbBase.getQueryAll(RoomDetails.class);
+    }
+
     public List<RoomDetails> getRoomDetailsByDelete() {
         //查询删除的房屋信息，因为数据库中的true存为int=1
         return DbBase.getQueryByWhere(RoomDetails.class, "isDelete", new Object[]{1});
     }
 
-    public List<ShowRoomDetails> getShowRoomDesList() {
+    /**
+     * 获取所有房间（包括已删除）和当前出租数据的列表，不包含当前租户信息
+     */
+    public List<ShowRoomDetails> getAllRoomList() {
+        val roomLst = DbBase.getQueryAll(RoomDetails.class);
+        val rr      = DbBase.getQueryAll(RentalRecord.class);
+        return roomLst.stream().map(room ->
+                new ShowRoomDetails(rr.stream().filter(record -> record.getPrimary_id() == room.getRecordId()).findFirst().orElse(new RentalRecord())
+                        , room)).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取所有小区中房间数量、面积的统计数据
+     */
+    public List<ShowRoomDetails> getRoomByCommunityList() {
         List<RoomDetails> roomDetailsList = getRoomDetailsToList();
         if (roomDetailsList == null || roomDetailsList.size() == 0) return null;
 
@@ -365,7 +393,6 @@ public final class DbHelper {
 
     public boolean resetPassword(Context context, String oldPwd, String pwd) {
         if (!getPassword().equals(oldPwd)) return false;
-
         UserItem item = new UserItem();
         item.setSalt(StrUtils.getRandomString(context.getResources().getInteger(R.integer.defaultSaltLength)));
         String str = pwd == null ? context.getString(R.string.defaultPassword) : pwd;
@@ -479,20 +506,101 @@ public final class DbHelper {
         return false;
     }
 
+    /**
+     * 获取所有加油记录并按日期从大到小排序
+     *
+     * @return
+     */
     public List<FuelRecord> getFuelRecordList() {
-        List<FuelRecord> fuelRecordList = null;
-        fuelRecordList = DbBase.getQueryAll(FuelRecord.class);
-        if (fuelRecordList != null)
-            fuelRecordList.sort((f1, f2) -> Integer.compare(f2.getOdometerNumber(), f1.getOdometerNumber()));
+        List<FuelRecord> fuelRecordList = DbBase.getQueryAll(FuelRecord.class);
+        if (fuelRecordList != null) {
+            try {
+                fuelRecordList.sort((f1, f2) -> Long.compare(f2.getTime().getTimeInMillis(), f1.getTime().getTimeInMillis()));
+            } catch (Exception e) {
+                PageUtils.Error(this.getClass().getSimpleName() + " 集合按日期从大到小排序出错");
+            }
+        }
         return fuelRecordList;
     }
 
     public boolean delFuelRecord(int primary_id) {
         int i = DbBase.deleteWhere(FuelRecord.class, "primary_id", new Object[]{primary_id});
-        return i!=0;
+        return i != 0;
     }
 
-    public <T extends Activity & IShowList> void delAllFuelRecord(T activity) {
-        DbBase.deleteAll(FuelRecord.class);
+    public <T extends Activity & IShowList> boolean delAllFuelRecord(T activity) {
+        return DbBase.deleteAll(FuelRecord.class) > 0;
+    }
+
+    /**
+     * 获取所有车辆维修记录并按日期从大到小排序
+     *
+     * @return
+     */
+    public List<CarMaintenanceRecord> getCarMaintenanceList() {
+        List<CarMaintenanceRecord> cars = DbBase.getQueryAll(CarMaintenanceRecord.class);
+        if (cars != null) {
+            try {
+                cars.sort((f1, f2) -> Double.compare(f2.getDate().getTimeInMillis(), f1.getDate().getTimeInMillis()));
+            } catch (Exception e) {
+                PageUtils.Error(this.getClass().getSimpleName() + " 集合按日期从大到小排序出错");
+            }
+        }
+        return cars;
+    }
+
+    /**
+     * 距上次保养的时间，距上次加油时里程，距上次保养的里程
+     *
+     * @return
+     */
+    public Triple<Calendar, Integer, Integer> getCarMaintenanceTimeAndOdometerNumber() {
+        val carList = getCarMaintenanceList();
+        //状态栏显示：距上次保养的时间，距上次保养的里程
+        if (carList == null || carList.size() == 0)
+            return new Triple<>(Calendar.getInstance(), 0, 0);
+
+        Calendar date = carList.stream().filter(car -> "保养".equals(car.getMaintenanceType())).filter(c -> c.getDate() != null)
+                .max((l1, l2) -> Long.compare(l1.getDate().getTimeInMillis(), l2.getDate().getTimeInMillis()))
+                .map(CarMaintenanceRecord::getDate)
+                .orElse(Calendar.getInstance());
+        //最后一次加油里程
+        int numNow = DbHelper.getInstance().getFuelRecordList().stream()
+                .map(FuelRecord::getOdometerNumber)
+                .max(Integer::compare)
+                .orElse(0);
+
+        //最后一次保养里程
+        int numLast = carList.stream().filter(car -> "保养".equals(car.getMaintenanceType())).map(CarMaintenanceRecord::getOdometerNumber)
+                .max(Integer::compare)
+                .orElse(0);
+        return new Triple<>(date, numNow, numLast);
+    }
+
+    public List<PayProperty> getPayPropertyByRoomNumber(String roomNumber) {
+        if (StrUtils.isBlank(roomNumber))
+            return DbBase.getQueryAll(PayProperty.class);
+        else
+            return DbBase.getQueryByWhere(PayProperty.class, "roomNumber", new Object[]{roomNumber});
+    }
+
+    public int getLiveTypeCount(String title) {
+        return DbBase.getQueryByWhere(LivingExpenses.class, "project", new Object[]{title}).size();
+    }
+
+    public List<LivingExpenses> getLiveByType(String title) {
+        return DbBase.getQueryByWhere(LivingExpenses.class, "project", new Object[]{title});
+    }
+
+    public List<LivingExpenses> getAllLive() {
+        return DbBase.getQueryAll(LivingExpenses.class);
+    }
+
+    public int delLivingExpensesById(int primary_id) {
+        return DbBase.deleteWhere(LivingExpenses.class, "primary_id", new Object[]{primary_id});
+    }
+
+    public List<ShoppingRecord> getShoppingToList() {
+        return DbBase.getQueryAll(ShoppingRecord.class);
     }
 }

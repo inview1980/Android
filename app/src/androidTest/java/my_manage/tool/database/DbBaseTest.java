@@ -15,13 +15,13 @@ import my_manage.pojo.RoomDetails;
 public class DbBaseTest {
 @Test
 public void showDB(){
-    DbBase.createCascadeDB( InstrumentationRegistry.getTargetContext(),"/storage/emulated/0/Android/data/my_manage.ui.password_box/files/rental.db");
+    DbBase.createCascadeDB( InstrumentationRegistry.getTargetContext(),"/storage/emulated/0/Android/data/my_manage.password_box/files/rental.db");
 
     List<RoomDetails> rd = DbHelper.getInstance().getRoomDetailsByDelete();
 //    List<RentalRecord> rList = DbBase.getQueryByWhere(RentalRecord.class, "roomDesID", new Object[]{new Random().nextInt(10)});
 //    List<RentalRecord> r2=DbBase.getRentalRecordAll(rList);
 //    List<ShowRoomForMain> rList=DbHelper.getInstance().getShowRoomDesList();
-//    boolean t1 = DbHelper.getInstance().toExcel("/storage/emulated/0/Android/data/my_manage.ui.password_box/files/db.xlsx");
+//    boolean t1 = DbHelper.getInstance().toExcel("/storage/emulated/0/Android/data/my_manage.password_box/files/db.xlsx");
     System.out.println(rd);//F:\program\android\Password saving cabinet\app\db.xlsx
 
 }

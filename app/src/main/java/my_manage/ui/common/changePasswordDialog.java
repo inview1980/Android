@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.PageUtils;
 import my_manage.tool.StrUtils;
 import my_manage.tool.database.DbHelper;

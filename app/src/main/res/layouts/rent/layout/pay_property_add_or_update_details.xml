@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/main_toolbar" />
+
+    <Spinner
+        android:id="@+id/community"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/rental_main_gridview_margin_3"
+        android:background="@drawable/shap_corner_blue_3"
+        android:popupBackground="@color/blue" />
+
+    <my_manage.ui.widght.FlowRadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+        android:layout_marginEnd="@dimen/rental_main_gridview_margin_3"
+        android:background="@drawable/shap_corner_blue_3"
+        android:paddingStart="@dimen/rental_main_gridview_margin_3">
+
+        <!--        <GridLayout-->
+        <!--            android:id="@+id/gridLayout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_margin="@dimen/rental_main_gridview_margin_3"-->
+        <!--            android:background="@drawable/shap_corner_blue_3"-->
+        <!--            android:columnCount="4"-->
+        <!--            android:padding="@dimen/rental_main_gridview_margin_3">-->
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+    </my_manage.ui.widght.FlowRadioGroup>
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/rental_main_gridview_margin_3"
+        android:background="@drawable/shap_corner_blue_3"
+        android:paddingStart="@dimen/rental_main_gridview_margin_3"
+        android:paddingEnd="@dimen/rental_main_gridview_margin_3"
+        android:stretchColumns="1">
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/rental_area_cn" />
+
+            <TextView
+                android:id="@+id/area"
+                style="@style/editView_middle_right" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/payDate" />
+
+            <TextView
+                android:id="@+id/payDate"
+                style="@style/editView_middle_right" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/startDate" />
+
+            <TextView
+                android:id="@+id/startDate"
+                style="@style/editView_middle_right" />
+
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/property_costs_month" />
+
+            <my_manage.ui.widght.DropEditText
+                android:id="@+id/propertyMonth"
+                style="@style/editView_middle_right"
+                android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
+                android:inputType="number" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="物业费现行标准：" />
+
+            <EditText
+                android:id="@+id/propertyPrice"
+                android:text="0.0"
+                style="@style/editView_middle_right"
+                android:inputType="numberDecimal" />
+        </TableRow>
+
+        <TableRow style="@style/rental_room_details_tableRow">
+
+            <TextView
+                style="@style/textView_min_1th"
+                android:text="@string/money" />
+
+            <EditText
+                android:id="@+id/money"
+                android:text="0.0"
+                style="@style/editView_middle_right"
+                android:inputType="numberDecimal" />
+        </TableRow>
+
+        <EditText
+            android:id="@+id/remark"
+            style="@style/editView_middle_right"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:layout_marginTop="@dimen/rental_main_gridview_margin_3"
+            android:layout_marginBottom="@dimen/rent_room_details_tableRow_margin"
+            android:background="@color/white"
+            android:hint="@string/remark_cn"
+            android:lines="3" />
+
+    </TableLayout>
+
+    <com.deadline.statebutton.StateButton
+        android:id="@+id/ok"
+        style="@style/StateButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/rental_main_gridview_margin_3"
+        android:enabled="false"
+        android:text="@string/ok_cn"
+        app:normalBackgroundColor="@color/blue"
+        app:pressedBackgroundColor="@color/blue"
+        app:round="true"
+        app:unableBackgroundColor="@color/blue" />
+</LinearLayout>

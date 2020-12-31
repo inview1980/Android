@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/main_toolbar" />
+
+    <Spinner
+        android:id="@+id/community"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginBottom="@dimen/rental_main_gridview_margin_3"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_3"
+        android:background="@drawable/shap_corner_blue_3"
+        android:popupBackground="@color/blue" />
+
+    <my_manage.ui.widght.FlowRadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/community"
+        android:background="@drawable/shap_corner_blue_3"
+        android:paddingStart="@dimen/rental_main_gridview_margin_3">
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="@dimen/pwdItemWidth"
+            android:text="7-1-801" />
+
+    </my_manage.ui.widght.FlowRadioGroup>
+
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/main_ListViewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/radioGroup"
+        android:layout_above="@id/statesBar"
+        android:background="@drawable/shap_corner_blue_3"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_3"
+        android:divider="#00000000"
+        android:paddingStart="@dimen/rental_main_gridview_margin_3"
+        android:paddingEnd="@dimen/rental_main_gridview_margin_3"
+        android:dividerHeight="2dp" />
+
+    <TextView
+        android:id="@+id/statesBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/banana"
+        android:paddingStart="@dimen/rental_main_gridview_margin_6"
+        android:paddingTop="@dimen/rental_main_gridview_margin_3"
+        android:paddingBottom="@dimen/rental_main_gridview_margin_3"
+        android:textSize="@dimen/min_size"
+        android:visibility="visible" />
+</RelativeLayout>

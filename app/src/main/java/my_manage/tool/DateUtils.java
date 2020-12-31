@@ -1,20 +1,17 @@
 package my_manage.tool;
 
-import android.util.Pair;
+import android.app.DatePickerDialog;
+import android.content.Context;
 
 import androidx.annotation.Nullable;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.function.Consumer;
 
-import lombok.val;
-import my_manage.tool.menuEnum.CastUtils;
+import my_manage.iface.ISetValueByString;
 
 public final class DateUtils {
     private static String                  JoinerString = " ～ ";
@@ -67,5 +64,39 @@ public final class DateUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 点击弹出日期选择窗口,并将指定的View设置为字符串
+     *
+     * @param setText
+     */
+    public static void showDateDialog(Context context, ISetValueByString setText) {
+        showDateDialog(context, setText, null, 0);
+    }
+
+    /**
+     * 点击弹出日期选择窗口,并将指定的View设置为字符串
+     *
+     * @param setText
+     */
+    public static void showDateDialog(Context context, ISetValueByString setText, Consumer<String> consumer) {
+        showDateDialog(context,setText,consumer,0);
+    }
+
+
+    /**
+     * 点击弹出日期选择窗口,并将指定的View设置为字符串
+     *
+     * @param setText
+     */
+    public static void showDateDialog(Context context, ISetValueByString setText, Consumer<String> consumer, int months) {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog dpd = new DatePickerDialog(context, DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, monthOfYear, dayOfMonth) -> {
+            setText.setText(string2DateString(year, monthOfYear, dayOfMonth, months));
+            if (consumer != null)
+                consumer.accept(null);
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        dpd.show();
     }
 }

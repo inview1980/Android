@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.ui.rent_manage.listener.PersonExtendableListViewAdapterListener;
 import my_manage.pojo.PersonDetails;
 
@@ -74,6 +75,9 @@ public final class PersonExtendableListViewAdapter<T extends Activity & IShowLis
         txt.setBackgroundColor(activity.getColor(android.R.color.white));
         txt.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         txt.setText(showRoomDetailsList.get(groupPosition).getCompany() + "-" + showRoomDetailsList.get(groupPosition).getName());
+        convertView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT
+                , (int)activity.getResources().getDimension(R.dimen.pwdItemHeight)));
+
         return convertView;
     }
 

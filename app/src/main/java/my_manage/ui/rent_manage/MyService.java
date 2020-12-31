@@ -15,13 +15,16 @@ import androidx.annotation.Nullable;
 import java.util.Calendar;
 import java.util.List;
 
-import my_manage.ui.password_box.R;
+import kotlin.Triple;
+import my_manage.password_box.R;
 import my_manage.receiver.AlarmReceiver;
+import my_manage.tool.StrUtils;
 import my_manage.tool.database.DbHelper;
 import my_manage.tool.database.DbBase;
 import my_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.NotificationChannels;
 import my_manage.tool.PageUtils;
+import my_manage.ui.car.page.ActivityCarMaintenanceMain;
 
 public class MyService extends IntentService {
     public MyService() {
@@ -42,16 +45,28 @@ public class MyService extends IntentService {
         i.putExtra("path", path);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         // 间隔时间的毫秒数
-        final int anHour =this.getResources().getInteger(R.integer.Message_Interval_byHour)  * 60 * 60 *1000;//
+        final int anHour = this.getResources().getInteger(R.integer.Message_Interval_byHour) * 60 * 60 * 1000;//
         PageUtils.Log("毫秒数：" + anHour);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + anHour, pi);
     }
 
+    /**
+     * 检查是否需要车辆保养
+     */
+    private boolean checkCarMaintenance() {
+        Triple<Calendar, Integer, Integer> result = DbHelper.getInstance().getCarMaintenanceTimeAndOdometerNumber();
+        //计算日期之间的差
+        Calendar date3 = Calendar.getInstance();
+        date3.setTimeInMillis(Calendar.getInstance().getTimeInMillis() - result.getFirst().getTimeInMillis());
+        //保养时间大于6个月或公里数大于7500
+        return date3.get(Calendar.MONTH) >= 6 || result.getSecond() - result.getThird() >= 7500;
+    }
 
-    public void sendSimpleNotification(Context context, String title, String msg) {
+
+    public void sendSimpleNotification(Context context, String title, String msg, Class<?> classes) {
         //创建点击通知时发送的广播
-        Intent intent = new Intent(context, RentalMainActivity.class);
-        intent.setAction("RentalMainActivity");
+        Intent intent = new Intent(context, classes);
+        intent.setAction(classes.getSimpleName());
         PendingIntent pi = PendingIntent.getActivity(context, R.string.app_name, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 //        //创建删除通知时发送的广播
 //        Intent deleteIntent = new Intent(context,RentalMainActivity.class);
@@ -82,6 +97,11 @@ public class MyService extends IntentService {
         nm.notify(R.string.app_name, nb.build());
     }
 
+    /**
+     * 检查是否需要收取房租
+     *
+     * @param path 数据库文件路径
+     */
     private void checkAndSendNotification(String path) {
         StringBuilder sendMsg = new StringBuilder();
         DbBase.getLiteOrm(MyService.this, path);
@@ -101,10 +121,14 @@ public class MyService extends IntentService {
                 sendMsg.append("，");
             sendMsg.append("房租即将到期数量：").append(count2);
         }
+
+        String title ="";
+        if (checkCarMaintenance()) title = "车辆需保养";
         //如果需发送的消息不为空，则发送消息
         if (sendMsg.length() > 1) {
-            sendSimpleNotification(this, "出租房收租啦", sendMsg.toString());
+            title = (StrUtils.isNotBlank(title)) ? title + "\t" : "";
+            title += "出租房收租啦";
+            sendSimpleNotification(this, title, sendMsg.toString(), RentalMainActivity.class);
         }
-
     }
 }

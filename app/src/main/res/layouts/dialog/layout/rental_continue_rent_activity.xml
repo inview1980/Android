@@ -1,176 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/rental_main_gridview_margin_9"
     android:background="@color/grayWhite"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <include layout="@layout/main_toolbar"/>
+    <include layout="@layout/main_toolbar" />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/rental_main_gridview_margin_6"
         android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
+        android:paddingEnd="@dimen/rental_main_gridview_margin_6"
         android:stretchColumns="1">
 
 
-
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/rental_area_cn" />
 
-            <TextView android:enabled="false"
+            <TextView
                 android:id="@+id/area"
-                style="@style/editView_middle_right" />
+                style="@style/editView_middle_right"
+                android:enabled="false" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/lastStartDate" />
 
-            <TextView android:enabled="false"
+            <TextView
                 android:id="@+id/rent_startDate"
-                style="@style/editView_middle_right" />
+                style="@style/editView_middle_right"
+                android:enabled="false" />
         </TableRow>
 
-        <TableRow style="@style/rental_room_details_tableRow"
+        <TableRow
+            style="@style/rental_room_details_tableRow"
             android:layout_marginBottom="@dimen/rental_main_gridview_margin_6">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/rental_endDate_cn" />
 
-            <TextView android:enabled="false"
+            <TextView
                 android:id="@+id/rent_endDate"
-                style="@style/editView_middle_right" />
+                style="@style/editView_middle_right"
+                android:enabled="false" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/continueMonth" />
 
             <Spinner
                 android:id="@+id/continueMonth"
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:layout_width="match_parent"
                 android:entries="@array/monthNumber" />
         </TableRow>
+
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/payDate" />
 
             <TextView
                 android:id="@+id/payDate"
                 style="@style/editView_middle_right" />
         </TableRow>
+
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/endDate" />
 
-            <TextView android:enabled="false"
+            <TextView
                 android:id="@+id/renting_endDate"
-                style="@style/editView_middle_right" />
+                style="@style/editView_middle_right"
+                android:enabled="false" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/rental_monthlyRent_cn" />
 
-            <EditText android:inputType="numberDecimal"
-                android:autofillHints="@string/rental_monthlyRent_cn"
+            <EditText
                 android:id="@+id/monthlyRent"
-                android:labelFor="@id/monthlyRent"
                 style="@style/editView_middle_right"
-                 />
+                android:autofillHints="@string/rental_monthlyRent_cn"
+                android:inputType="numberDecimal"
+                android:labelFor="@id/monthlyRent" />
         </TableRow>
+
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/deposit" />
 
-            <TextView android:enabled="false"
+            <TextView
                 android:id="@+id/deposit"
                 style="@style/editView_middle_right"
-                />
+                android:enabled="false" />
         </TableRow>
+
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/textView_min_1th"
                 android:text="@string/payTotalMoney" />
 
-            <TextView android:enabled="false"
+            <TextView
                 android:id="@+id/totalMoney"
                 style="@style/editView_middle_right"
-                />
+                android:enabled="false" />
         </TableRow>
     </TableLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        style="@style/editView_middle_right"
-        android:lines="3"
-        android:hint="@string/remark_cn"
-        android:gravity="start"
-        android:autofillHints="@string/remark_cn"
-        android:inputType="textMultiLine"
-        android:id="@+id/remark"/>
-</LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/rental_main_gridview_margin_6"
         android:background="@android:color/white"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <com.deadline.statebutton.StateButton
-            android:id="@+id/ok"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/remark"
+            style="@style/editView_middle_right"
             android:layout_width="match_parent"
-            app:round="true"
-            app:normalBackgroundColor="@color/blue"
-            app:pressedBackgroundColor="@color/blue"
-            app:unableBackgroundColor="@color/blue"
-            style="@style/StateButtonStyle"
-            android:text="@string/ok_cn" />
-
-        <com.deadline.statebutton.StateButton
-            android:id="@+id/cancel"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:round="true"
-            app:normalBackgroundColor="@color/blue"
-            app:pressedBackgroundColor="@color/blue"
-            app:unableBackgroundColor="@color/blue"
-            android:layout_marginEnd="@dimen/rental_main_gridview_margin_9"
-            style="@style/StateButtonStyle"
-            android:text="@string/cancel_cn" />
-
+            android:layout_marginStart="@dimen/rental_main_gridview_margin_3"
+            android:autofillHints="@string/remark_cn"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="@string/remark_cn"
+            android:inputType="textMultiLine"
+            android:lines="3" />
     </LinearLayout>
+
+
+    <com.deadline.statebutton.StateButton
+        android:id="@+id/ok"
+        style="@style/StateButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ok_cn"
+        app:normalBackgroundColor="@color/blue"
+        app:pressedBackgroundColor="@color/blue"
+        android:layout_marginTop="@dimen/rental_main_gridview_margin_3"
+        app:round="true"
+        app:unableBackgroundColor="@color/blue" />
+
 </LinearLayout>

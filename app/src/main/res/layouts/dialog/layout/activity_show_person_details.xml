@@ -16,26 +16,26 @@
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/rental_person_details_textView"
                 android:text="@string/company" />
 
             <EditText android:enabled="false"
                 android:id="@+id/companyName"
                 android:autofillHints="@string/company"
                 android:inputType="text"
-                style="@style/editView_middle_right"
+                style="@style/rental_person_details_editView"
                 android:hint="@string/company" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/rental_person_details_textView"
                 android:text="@string/name_cn" />
 
             <EditText
                 android:id="@+id/name" android:enabled="false"
-                style="@style/editView_middle_right"
+                style="@style/rental_person_details_editView"
                 android:autofillHints="@string/name_cn"
                 android:inputType="text"
                 android:hint="@string/name_cn" />
@@ -44,38 +44,38 @@
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/rental_person_details_textView"
                 android:text="@string/rental_codeNumber_cn" />
 
             <EditText
                 android:autofillHints="@string/rental_codeNumber_cn"
                 android:inputType="phone"
                 android:id="@+id/codeNumber" android:enabled="false"
-                style="@style/editView_middle_right"
+                style="@style/rental_person_details_editView"
                 android:hint="@string/rental_codeNumber_cn" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
             <TextView
-                style="@style/textView_1th"
+                style="@style/rental_person_details_textView"
                 android:text="@string/tel" />
 
             <EditText
                 android:autofillHints="@string/tel"
                 android:inputType="phone"
                 android:id="@+id/tel"
-                style="@style/editView_middle_right" android:enabled="false"
+                style="@style/rental_person_details_editView"
                 android:hint="@string/tel" />
         </TableRow>
 
         <TableRow style="@style/rental_room_details_tableRow">
 
-            <EditText
+            <EditText android:layout_marginStart="@dimen/rental_main_gridview_margin_6"
                 android:autofillHints="@string/remark_cn"
                 android:inputType="textMultiLine"
                 android:id="@+id/remark"
-                style="@style/editView_middle_right"
+                style="@style/rental_person_details_editView"
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:layout_span="2"

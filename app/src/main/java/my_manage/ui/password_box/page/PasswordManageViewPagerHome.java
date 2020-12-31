@@ -1,9 +1,8 @@
-package my_manage.ui.password_box.page;
+package my_manage.password_box.page;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
@@ -15,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnPageChange;
 import my_manage.ui.adapter_page.PwdPageAdapter;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.pojo.UserItem;
 import my_manage.tool.PageUtils;
 import my_manage.tool.database.DbHelper;

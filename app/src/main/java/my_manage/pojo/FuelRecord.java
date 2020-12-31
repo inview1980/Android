@@ -65,7 +65,7 @@ public final class FuelRecord {
     }
 
     public void setMoney(double money) {
-        this.money = (int) Math.round(money * 100);
+        this.money = (long) Math.round(money * 100);
     }
 
     public double getMarketPrice() {

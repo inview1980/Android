@@ -5,66 +5,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.orhanobut.dialogplus.DialogPlus;
-
-import java.util.Optional;
-
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.database.DbHelper;
-import my_manage.ui.rent_manage.page.viewholder.AddRoomViewHolder;
-import my_manage.pojo.RoomDetails;
 import my_manage.pojo.show.ShowRoomDetails;
 import my_manage.tool.PageUtils;
-import my_manage.tool.StrUtils;
 
 public final class RoomListener {
-    /**
-     * 小区编辑，新建
-     */
-    private static <T extends Activity & IShowList> void addCommunity(T activity, String communityString) {
-        AddRoomViewHolder viewHolder = new AddRoomViewHolder(activity, communityString);
-        DialogPlus dialog = DialogPlus.newDialog(activity)
-                .setOnClickListener((dialog1, view) -> {
-                    if (R.id.rental_addRoom_OkBtn == view.getId()) {
-                        //确定
-                         addRoom(activity, viewHolder, dialog1);
-                    }
-                })
-                .setExpanded(true, 1000)  // This will enable the expand feature, (similar to android L share dialog)
-                .setContentHolder(viewHolder)
-                .create();
-        dialog.show();
-    }
-
-    private static <T extends Activity & IShowList> void addRoom(T activity, AddRoomViewHolder viewHolder, DialogPlus dialog1) {
-        if (StrUtils.isAnyBlank(viewHolder.getCommunityName().getSelectedItem().toString(),
-                viewHolder.getHouseNumber().getText().toString())) {
-            showMessageDialog(activity, "小区名或房号不能为空！");
-            return;
-        }
-        try {
-            RoomDetails roomDetails = new RoomDetails();
-            roomDetails.setCommunityName(viewHolder.getCommunityName().getSelectedItem().toString());
-            roomDetails.setRoomNumber(viewHolder.getHouseNumber().getText().toString());
-            roomDetails.setElectricMeter(viewHolder.getMeterNumber().getText().toString());
-            roomDetails.setWaterMeter(viewHolder.getWaterMeter().getText().toString());
-            if (StrUtils.isNotBlank(viewHolder.getArea().getText().toString()))
-                roomDetails.setRoomArea(Double.parseDouble(viewHolder.getArea().getText().toString()));
-            if (StrUtils.isNotBlank(viewHolder.getPropertyPrice().getText().toString()))
-                roomDetails.setPropertyPrice(Double.parseDouble(viewHolder.getPropertyPrice().getText().toString()));
-            boolean isOK = DbHelper.getInstance().saveRoomDes(roomDetails);
-            if (isOK) {
-                showMessage(activity, "保存房源成功");
-                activity.showList();
-            } else showMessage(activity, "保存失败");
-        } catch (Exception e) {
-            showMessage(activity, "保存失败");
-            dialog1.dismiss();
-        }
-        dialog1.dismiss();
-    }
-
     /**
      * 恢复已删除的房源
      */
@@ -81,18 +28,6 @@ public final class RoomListener {
         }).show();
     }
 
-    /**
-     * 新建小区、户型
-     */
-    public static <T extends Activity & IShowList> void addRoomDetails(T activity, ShowRoomDetails room) {
-        if (room == null)
-            room = new ShowRoomDetails();
-
-        String title = Optional.ofNullable(room.getRoomDetails().getCommunityName()).orElse("");
-        if (title.contains("全部"))
-            title = "";
-        addCommunity(activity, title);
-    }
 
     private static void showMessageDialog(Activity activity, String s) {
         androidx.appcompat.app.AlertDialog.Builder d2 = new androidx.appcompat.app.AlertDialog.Builder(activity);

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum MenuTypesEnum {
-    IsBorrowed(2), NotRented(3), PasswordType(1),DeletedRooms(4);
+    IsBorrowed(2), NotRented(3), PasswordType(1),DeletedRooms(4),LivingExpenses(5);
     private int id;
 }

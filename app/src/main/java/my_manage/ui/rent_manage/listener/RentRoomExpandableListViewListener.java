@@ -3,27 +3,18 @@ package my_manage.ui.rent_manage.listener;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.DialogPlusBuilder;
-import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import my_manage.iface.IShowList;
-import my_manage.ui.password_box.R;
+import my_manage.password_box.R;
 import my_manage.tool.database.DbBase;
 import my_manage.tool.database.DbHelper;
 import my_manage.ui.rent_manage.page.RoomDetailsByToolbarActivity;
@@ -31,23 +22,9 @@ import my_manage.ui.rent_manage.page.RoomHistoryActivity;
 import my_manage.pojo.RentalRecord;
 import my_manage.pojo.RoomDetails;
 import my_manage.pojo.show.ShowRoomDetails;
-import my_manage.tool.StrUtils;
 import my_manage.tool.enums.ShowRoomType;
 
 public class RentRoomExpandableListViewListener {
-    @FunctionalInterface
-    public interface ISetValue {
-        void setValue(double value);
-    }
-
-    /**
-     * 续租、续签合同、续物业费
-     */
-    public static <T extends Activity & IShowList> void continueOperation(T activity, ShowRoomDetails showRoomDetails, Class tClass) {
-        Intent intent = new Intent(activity, tClass);
-        intent.putExtra(showRoomDetails.getClass().getSimpleName(), JSON.toJSONString(showRoomDetails));
-        activity.startActivity(intent);
-    }
 
     public static <T extends Activity & IShowList> void notRent(T activity, ShowRoomDetails showRoomDetails) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
@@ -128,55 +105,11 @@ public class RentRoomExpandableListViewListener {
         activity.startActivity(intent);
     }
 
-    /**
-     * 调出调整押金、月租金的对话框，
-     * @param setValueFunc 自定义接口函数式接口ISetValue
-     * @param showTxt 原押金、月租金的金额
-     * @param title 只为：押金、月租金
-     */
-    public static <T extends Activity & IShowList> void showDialog(T activity, ISetValue setValueFunc,
-                                                                    ShowRoomDetails sr, String showTxt, String title) {
-        if (sr == null) return;
-        ViewHolder viewHolder = new ViewHolder(R.layout.rental_change_dialog) {
-            @Override
-            public View getView(LayoutInflater inflater, ViewGroup parent) {
-                View     view   = super.getView(inflater, parent);
-                TextView oldNum = view.findViewById(R.id.rental_changeRent_oldNum);
-                EditText newNum = view.findViewById(R.id.rental_changeRent_newNum);
-                ((TextView) view.findViewById(R.id.rental_change_dialog_title)).setText("调整" + title);
-                ((TextView) view.findViewById(R.id.rental_change_dialog_lable1)).setText("原" + title + "为:");
-                ((TextView) view.findViewById(R.id.rental_change_dialog_lable2)).setText("调整" + title + "为:");
-                oldNum.setText(showTxt);
-                newNum.setText(showTxt);
-                return view;
-            }
-        };
-        DialogPlusBuilder db = DialogPlus.newDialog(activity).setExpanded(true).setContentHolder(viewHolder);
-        db.setOnClickListener((dialog1, view) -> {
-            try {
-                if (view.getId() == R.id.rental_changeRent_okBtn) {
-                    EditText text = db.getHolder().getInflatedView().findViewById(R.id.rental_changeRent_newNum);
-                    if (StrUtils.isNotBlank(text.getText().toString())) {
-                        setValueFunc.setValue(Double.parseDouble(text.getText().toString()));
-                        if (sr.getRentalRecord().getPrimary_id() != 0 && DbBase.update(sr.getRentalRecord()) > 0) {
-                            //成功，刷新
-                            activity.showList();
-                            Toast.makeText(activity, "调整" + title + "成功", Toast.LENGTH_SHORT).show();
-                            dialog1.dismiss();
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).create().show();
-    }
 
     /**
      * 查看详情
      */
     public static void showDetails(Activity activity, List<ShowRoomDetails> data, int position) {
-//        Intent intent = new Intent(activity, RoomDetailsActivity.class);
         Intent intent = new Intent(activity, RoomDetailsByToolbarActivity.class);
         Bundle bundle = new Bundle();
         if (position != -1) {
